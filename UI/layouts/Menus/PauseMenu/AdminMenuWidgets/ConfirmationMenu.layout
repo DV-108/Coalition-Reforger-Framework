@@ -51,7 +51,7 @@ FrameWidgetClass {
      Name "ActionButtonText"
      Slot ButtonWidgetSlot "{62992E44F11398F5}" {
      }
-     Text "EXCUTE"
+     Text "EXECUTE"
      "Font Size" 15
      "Min Font Size" 15
     }

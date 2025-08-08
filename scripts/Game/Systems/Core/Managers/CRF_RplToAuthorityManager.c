@@ -69,10 +69,10 @@ class CRF_RplToAuthorityManager : ScriptComponent
 		Rpc(RpcAsk_ToggleBombPlanted, sitePlanted, togglePlanted); 
 	}
 	
-	void RequestAdvanceGamemodeState(bool overriden)
+	void RequestAdvanceGamemodeState(bool overriden = false, string winner = "NONE")
 	{
 		if(SCR_Global.IsAdmin())
-			Rpc(RpcAsk_RequestAdvanceGamemodeState, overriden);
+			Rpc(RpcAsk_RequestAdvanceGamemodeState, overriden, winner);
 	}
 	
 	void RequestAdvanceSlottingPhase()
@@ -254,9 +254,9 @@ class CRF_RplToAuthorityManager : ScriptComponent
 	}
 
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
-	protected void RpcAsk_RequestAdvanceGamemodeState(bool overriden)
+	protected void RpcAsk_RequestAdvanceGamemodeState(bool overriden, string winner)
 	{
-		m_Gamemode.AdvanceGamemodeState(overriden);
+		m_Gamemode.AdvanceGamemodeState(overriden, winner);
 	}
 	
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]

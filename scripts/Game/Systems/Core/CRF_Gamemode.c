@@ -40,6 +40,9 @@ class CRF_Gamemode : SCR_BaseGameMode
 	[RplProp()]
 	int m_SlottingState = CRF_ESlottingState.LEADERSANDMEDICS;
 	
+	[RplProp()]
+	string m_Winner;
+	
 	// General Gamemode Settings
 	//------------------------------------------------------------------------------------
 	[Attribute("45", "auto", "Mission Time (set to -1 to disable)", category: "CRF Gamemode General")]
@@ -195,13 +198,14 @@ class CRF_Gamemode : SCR_BaseGameMode
 	 * Progress to the next gamemode state
 	 * @param overriden Set to true to allow advancing from AAR or GAME states
 	 */
-	void AdvanceGamemodeState(bool overriden = false)
+	void AdvanceGamemodeState(bool overriden = false, string winner = "NONE")
 	{
 		// Prevent advancing from AAR or GAME unless explicitly overridden
 		if ((m_GamemodeState == CRF_EGamemodeState.AAR || m_GamemodeState == CRF_EGamemodeState.GAME) && !overriden)
 			return;
 
 		m_GamemodeState += 1;
+		m_Winner = winner;
 		Replication.BumpMe();
 		OnGamemodeStateChanged();
 	}
@@ -261,6 +265,8 @@ class CRF_Gamemode : SCR_BaseGameMode
 		// Server only just in case
 		if (Replication.IsClient())
 			return;
+		
+		PrintFormat("Winner: %1", m_Winner); // Collect winning side for this mission
 		
 		//Print("[CRF] EnterAAR()");
 		SCR_DataCollectorComponent dataCollector = GetGame().GetDataCollector();

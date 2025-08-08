@@ -77,6 +77,8 @@ class CRF_AdminMenu : ChimeraMenuBase
 	// Gear Script List
 	protected ref CRF_GearScriptConfigStruct m_gearsetlist;
 	
+	protected string confirmAction;
+	
 	//-----------------------------------------------------------------------------
 	// General UI Methods
 	//-----------------------------------------------------------------------------
@@ -1617,16 +1619,13 @@ class CRF_AdminMenu : ChimeraMenuBase
 		Widget gamerTimer = m_wMenuContent.FindAnyWidget("GameTimer");
 		Widget ticketCounters = m_wMenuContent.FindAnyWidget("Tickets");
 		Widget gearSets = m_wMenuContent.FindAnyWidget("GearSets");
+		Widget aarButtons = m_wMenuContent.FindAnyWidget("AAR");
 		
 		// Load Buttons
 		SCR_ButtonTextComponent resetGearButton = GetMenuButton("ApplyGearSets", gearSets);
-		SCR_ButtonTextComponent aarGearButton = GetMenuButton("EnterAAR");
-		if (!resetGearButton || !aarGearButton)
-			return;
 		
 		// Setup invokers
 		resetGearButton.m_OnClicked.Insert(ConfirmAction);
-		aarGearButton.m_OnClicked.Insert(EnterAAR);
 		
 		/*
 		*	!!!!! Changing the time delta is done below and in the menu layout !!!!!
@@ -1674,6 +1673,20 @@ class CRF_AdminMenu : ChimeraMenuBase
 					button.m_OnClicked.Insert(UpdateTicket);
 				}
 			}
+		}
+		
+		// Load Menu Buttons for AAR
+		
+		// Options names
+		ref array<string> aarOptions = {"BLUFOR", "OPFOR", "INDFOR", "CIVILIAN", "DRAW"};
+		
+		foreach (string aarOption : aarOptions)
+		{
+				SCR_ButtonTextComponent button = GetMenuButton(aarOption, aarButtons);
+				if (!button)
+					return;
+					
+				button.m_OnClicked.Insert(ConfirmAction);
 		}
 		
 		// Load config files into listboxs and array
@@ -1787,14 +1800,18 @@ class CRF_AdminMenu : ChimeraMenuBase
 		SCR_ButtonTextComponent cancelButton = GetMenuButton("CancelButton", m_wConfirmationMenu);
 		
 		// Get the function that needs confirming from the button name in the layout
-		string confirmActionFunc = button.GetName();
+		confirmAction = button.GetName();
 
 		// Setup script invokers
 		cancelButton.m_OnClicked.Insert(CloseConfirmAction);
-		switch (confirmActionFunc)
+		switch (confirmAction)
 		{
-			case "EnterAAR" : runButton.m_OnClicked.Insert(EnterAAR); break;
 			case "ApplyGearSets" : runButton.m_OnClicked.Insert(UpdateGearSets); break;
+			case "BLUFOR" : runButton.m_OnClicked.Insert(EnterAAR); break;
+			case "OPFOR" : runButton.m_OnClicked.Insert(EnterAAR); break;
+			case "INDFOR" : runButton.m_OnClicked.Insert(EnterAAR); break;
+			case "CIVILIAN" : runButton.m_OnClicked.Insert(EnterAAR); break;
+			case "DRAW" : runButton.m_OnClicked.Insert(EnterAAR); break;
 		}
 	}
 	
@@ -1815,7 +1832,7 @@ class CRF_AdminMenu : ChimeraMenuBase
 		if (!CRF_EGamemodeState.AAR)
 			return;
 
-		CRF_RplToAuthorityManager.GetInstance().RequestAdvanceGamemodeState(true);
+		CRF_RplToAuthorityManager.GetInstance().RequestAdvanceGamemodeState(true, confirmAction);
 		CloseConfirmAction();
 	}
 	
