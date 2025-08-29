@@ -1,62 +1,101 @@
+$grp SCR_VehicleSpawn {
+ {
+  coords 2244.91 34.486 3602.163
+  angleY 88.926
+  m_rnPrefab "{C8656AECF5DF41D9}Prefabs/Vehicles/Wheeled/M923A1/M923A1_repair_MERDC.et"
+  respawnDelay 10000
+ }
+ {
+  coords 2266.734 34.369 3580.378
+  m_rnPrefab "{26013123314183EA}Prefabs/Vehicles/Wheeled/M923A1/M923A1_tanker_MERDC.et"
+  respawnDelay 10000
+ }
+ {
+  coords 2265.503 34.597 3592.899
+  m_rnPrefab "{EC657C9B3C73E192}Prefabs/Vehicles/Wheeled/M923A1/M923A1_ammo_MERDC.et"
+  respawnDelay 10000
+ }
+ {
+  coords 2250.23 34.953 3587.637
+  m_rnPrefab "{DDDD9B51F1234DF3}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed.et"
+  respawnDelay 10000
+ }
+ {
+  coords 2138.854 44.049 3530.346
+  angleY 24.296
+  m_rnPrefab "{5168FEA3054D6D15}Prefabs/Vehicles/Wheeled/M151A2/M151A2_M2HB_MERDC.et"
+  respawnDelay 10000
+ }
+ {
+  coords 2133.698 44.062 3532.674
+  angleY 24.296
+  m_rnPrefab "{5168FEA3054D6D15}Prefabs/Vehicles/Wheeled/M151A2/M151A2_M2HB_MERDC.et"
+  respawnDelay 10000
+ }
+ {
+  coords 2138.865 44.073 3544.7
+  angleY -155.957
+  m_rnPrefab "{86D830868F026D54}Prefabs/Vehicles/Wheeled/M151A2/M151A2_MERDC.et"
+  respawnDelay 10000
+ }
+ {
+  coords 2136.301 44.091 3545.843
+  angleY -155.957
+  m_rnPrefab "{86D830868F026D54}Prefabs/Vehicles/Wheeled/M151A2/M151A2_MERDC.et"
+  respawnDelay 10000
+ }
+ {
+  coords 2133.29 44.093 3547.187
+  angleY -155.957
+  m_rnPrefab "{86D830868F026D54}Prefabs/Vehicles/Wheeled/M151A2/M151A2_MERDC.et"
+  respawnDelay 10000
+ }
+ {
+  coords 2130.069 44.093 3548.623
+  angleY -155.957
+  m_rnPrefab "{86D830868F026D54}Prefabs/Vehicles/Wheeled/M151A2/M151A2_MERDC.et"
+  respawnDelay 10000
+ }
+ {
+  coords 2010.82 65.718 3537.925
+  m_rnPrefab "{DDDD9B51F1234DF3}Prefabs/Vehicles/Helicopters/UH1H/UH1H_armed.et"
+  respawnDelay 10000
+ }
+ {
+  coords 1084.474 21.364 877.255
+ }
+}
 Vehicle M923A1_transport_MERDC1 : "{3F2AA823B6C65E1E}Prefabs/Vehicles/Wheeled/M923A1/M923A1_transport_MERDC.et" {
- coords 248.858 1.716 2432.481
- angleY 82.951
+ coords 2129.504 44.094 3558.443
+ angleY 96.566
  {
   $grp Vehicle : "{3F2AA823B6C65E1E}Prefabs/Vehicles/Wheeled/M923A1/M923A1_transport_MERDC.et" {
    M923A1_transport_MERDC2 {
-    coords -4.068 0.145 0
+    coords -4.068 0 0
    }
    M923A1_transport_MERDC3 {
-    coords -8.006 0.296 -0
+    coords -8.006 0 0
    }
    M923A1_transport_MERDC4 {
-    coords -11.833 0.291 -0
+    coords -11.833 0 0
    }
    M923A1_transport_MERDC5 {
-    coords -16.184 0.206 0
+    coords -16.184 0 0
    }
    M923A1_transport_MERDC6 {
-    coords -20.468 0.061 -0
+    coords -20.468 0 0
    }
    M923A1_transport_MERDC7 {
-    coords -25.166 -0.102 0.001
+    coords -25.166 -0.032 0.001
    }
    M923A1_transport_MERDC8 {
-    coords -29.618 -0.154 0.001
+    coords -29.618 -0.06 0.001
    }
   }
  }
 }
-$grp Vehicle : "{5168FEA3054D6D15}Prefabs/Vehicles/Wheeled/M151A2/M151A2_M2HB_MERDC.et" {
- M151A2_M2HB_MERDC1 {
-  coords 266.789 1.783 2430.91
-  angleY -101.754
- }
- M151A2_M2HB_MERDC2 {
-  coords 267.392 1.752 2428.011
-  angleY -101.754
- }
-}
 GenericEntity : "{62865C82AB534D91}Prefabs/Structures/FlagPoles/RespawnPoles/BLUFOR_Respawn.et" {
- coords 152.082 1.437 2411.411
-}
-$grp Vehicle : "{86D830868F026D54}Prefabs/Vehicles/Wheeled/M151A2/M151A2_MERDC.et" {
- M151A2_MERDC1 {
-  coords 267.439 1.505 2422.407
-  angleY -102.467
- }
- M151A2_MERDC2 {
-  coords 268.021 1.466 2419.777
-  angleY -102.467
- }
- M151A2_MERDC3 {
-  coords 268.611 1.447 2417.108
-  angleY -102.467
- }
- M151A2_MERDC4 {
-  coords 269.162 1.456 2414.617
-  angleY -102.467
- }
+ coords 2137.211 43.877 3593.091
 }
 SCR_AIGroup : "{EE91BF23FBC94408}Prefabs/Groups/BLUFOR/Standard/Command/CRF_BLUFOR_Company_p.et" {
  components {
@@ -64,8 +103,10 @@ SCR_AIGroup : "{EE91BF23FBC94408}Prefabs/Groups/BLUFOR/Standard/Command/CRF_BLUF
    DefaultFormation "Rw"
   }
  }
- coords 145.123 3.235 2404.285
- angleY 73.196
+ coords 2135.001 43.46 3599.711
+ angleX -3.751
+ angleY 87.715
+ angleZ -4.312
  {
   SCR_AIGroup : "{D0B17EDF43465305}Prefabs/Groups/BLUFOR/Standard/Support/CRF_BLUFOR_MedicTeam_p.et" {
    components {
@@ -73,8 +114,10 @@ SCR_AIGroup : "{EE91BF23FBC94408}Prefabs/Groups/BLUFOR/Standard/Command/CRF_BLUF
      DefaultFormation "Rw"
     }
    }
-   coords 2.965 0.004 9.623
-   angleY -4.281
+   coords 8.974 0.238 6.668
+   angleX 3.259
+   angleY 16.084
+   angleZ 1.699
    {
     SCR_AIGroup : "{3D4D53B053964445}Prefabs/Groups/BLUFOR/Standard/Command/CRF_BLUFOR_Platoon_p.et" {
      components {
@@ -82,8 +125,10 @@ SCR_AIGroup : "{EE91BF23FBC94408}Prefabs/Groups/BLUFOR/Standard/Command/CRF_BLUF
        DefaultFormation "Rw"
       }
      }
-     coords -17.754 -0.004 12.029
-     angleY 2.878
+     coords -16.588 0.276 4.084
+     angleX -3.689
+     angleY 4.933
+     angleZ 5.367
      {
       SCR_AIGroup : "{9C45BAF40F909576}Prefabs/Groups/BLUFOR/Standard/Infantry/CRF_BLUFOR_RifleSquad_p.et" {
        components {
@@ -91,8 +136,10 @@ SCR_AIGroup : "{EE91BF23FBC94408}Prefabs/Groups/BLUFOR/Standard/Command/CRF_BLUF
          DefaultFormation "Rw"
         }
        }
-       coords -2.568 0.031 8.773
-       angleY -2.046
+       coords 0.13 0.356 3.941
+       angleX 5.389
+       angleY -1.669
+       angleZ 0.715
        {
         SCR_AIGroup : "{9C45BAF40F909576}Prefabs/Groups/BLUFOR/Standard/Infantry/CRF_BLUFOR_RifleSquad_p.et" {
          components {
@@ -100,7 +147,8 @@ SCR_AIGroup : "{EE91BF23FBC94408}Prefabs/Groups/BLUFOR/Standard/Command/CRF_BLUF
            DefaultFormation "Rw"
           }
          }
-         coords -0.001 0 -2.919
+         coords -0.489 0 2.101
+         angleY 0.653
          {
           SCR_AIGroup : "{2F07AC5EE3DE3921}Prefabs/Groups/BLUFOR/Standard/Support/CRF_BLUFOR_MMGTeam_p.et" {
            components {
@@ -108,8 +156,10 @@ SCR_AIGroup : "{EE91BF23FBC94408}Prefabs/Groups/BLUFOR/Standard/Command/CRF_BLUF
              DefaultFormation "Rw"
             }
            }
-           coords 20.01 0.188 -3.26
-           angleY -2.977
+           coords 0.113 -0.004 3.027
+           angleX -0.627
+           angleY -2.578
+           angleZ -1.095
            {
             SCR_AIGroup : "{3D4D53B053964445}Prefabs/Groups/BLUFOR/Standard/Command/CRF_BLUFOR_Platoon_p.et" {
              components {
@@ -117,8 +167,10 @@ SCR_AIGroup : "{EE91BF23FBC94408}Prefabs/Groups/BLUFOR/Standard/Command/CRF_BLUF
                DefaultFormation "Rw"
               }
              }
-             coords 1.593 -0.188 -4.363
-             angleY 3.612
+             coords 11.978 0.596 -8.934
+             angleX -0.253
+             angleY 3.479
+             angleZ -7.618
              {
               SCR_AIGroup : "{9C45BAF40F909576}Prefabs/Groups/BLUFOR/Standard/Infantry/CRF_BLUFOR_RifleSquad_p.et" {
                components {
@@ -126,8 +178,10 @@ SCR_AIGroup : "{EE91BF23FBC94408}Prefabs/Groups/BLUFOR/Standard/Command/CRF_BLUF
                  DefaultFormation "Rw"
                 }
                }
-               coords -2.751 0.031 10.422
-               angleY -0.635
+               coords 0.751 -0.06 5.075
+               angleX -0.617
+               angleY 1.583
+               angleZ 1.664
                {
                 SCR_AIGroup : "{9C45BAF40F909576}Prefabs/Groups/BLUFOR/Standard/Infantry/CRF_BLUFOR_RifleSquad_p.et" {
                  components {
@@ -135,7 +189,10 @@ SCR_AIGroup : "{EE91BF23FBC94408}Prefabs/Groups/BLUFOR/Standard/Command/CRF_BLUF
                    DefaultFormation "Rw"
                   }
                  }
-                 coords -0 -0.031 -2.919
+                 coords -0.627 -0.003 3.607
+                 angleX 0.181
+                 angleY 1.076
+                 angleZ 1.987
                  {
                   SCR_AIGroup : "{2F07AC5EE3DE3921}Prefabs/Groups/BLUFOR/Standard/Support/CRF_BLUFOR_MMGTeam_p.et" {
                    components {
@@ -143,8 +200,18 @@ SCR_AIGroup : "{EE91BF23FBC94408}Prefabs/Groups/BLUFOR/Standard/Command/CRF_BLUF
                      DefaultFormation "Rw"
                     }
                    }
-                   coords -17.833 -0.032 -2.425
-                   angleY -0.922
+                   coords -1.921 0.196 4.852
+                   angleX -4.323
+                   angleY -1.894
+                   angleZ 5.241
+                   {
+                    SCR_AIGroup : "{ABEBD4386CA25E24}Prefabs/Groups/BLUFOR/Standard/Vehicle/CRF_BLUFOR_AirCrew_p.et" {
+                     coords -2.732 -1.669 -13.859
+                     angleX 7.839
+                     angleY 56.155
+                     angleZ 1.327
+                    }
+                   }
                   }
                  }
                 }
