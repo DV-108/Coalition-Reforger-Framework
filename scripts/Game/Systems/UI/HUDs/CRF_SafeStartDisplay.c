@@ -22,6 +22,7 @@ class CRF_SafeStartDisplay : SCR_InfoDisplayExtended
 	protected TextWidget m_wIndforReady;
 	protected TextWidget m_wCivReady;
 	protected PanelWidget m_wFactionsPanel;
+	protected Widget m_wTimeout;
 	
 	//------------------------------------------------------------------------------------------------
 	// Manager references
@@ -53,6 +54,11 @@ class CRF_SafeStartDisplay : SCR_InfoDisplayExtended
 			InitializeReferences();
 			return;
 		}
+				
+		if (m_SafestartManager.m_bTimeOut)
+			m_wTimeout.SetVisible(true);
+		else
+			m_wTimeout.SetVisible(false);
 		
 		// Handle HUD visibility
 		if (!CRF_PlayerControllerManager.GetInstance().m_bHUDVisible)
@@ -139,6 +145,7 @@ class CRF_SafeStartDisplay : SCR_InfoDisplayExtended
 		m_wIndforReady = TextWidget.Cast(m_wRoot.FindAnyWidget("IndforReady"));
 		m_wCivReady = TextWidget.Cast(m_wRoot.FindAnyWidget("CivReady"));
 		m_wFactionsPanel = PanelWidget.Cast(m_wRoot.FindAnyWidget("FactionsPanel"));
+		m_wTimeout = m_wRoot.FindAnyWidget("Timeout");
 	}
 	
 	/**

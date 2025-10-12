@@ -410,6 +410,16 @@ class CRF_RplToAuthorityManager : ScriptComponent
 		Rpc(RpcAsk_CleanUpBodies);
 	}
 	
+	void ToggleSafestart()
+	{
+		Rpc(RpcAsk_ToggleSafestart);
+	}
+	
+	void CallTimeout()
+	{
+		Rpc(RpcAsk_CallTimeout);
+	}
+	
 	//------------------------------------------------------------------------------------------------
 	// SERVER-SIDE RPC HANDLERS - Executed on the authority (server)
 	//------------------------------------------------------------------------------------------------
@@ -1229,5 +1239,17 @@ class CRF_RplToAuthorityManager : ScriptComponent
 	void RpcAsk_CleanUpBodies()
 	{
 		CRF_GamemodeManager.GetInstance().CleanUpBodies();
+	}
+	
+	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
+	void RpcAsk_ToggleSafestart()
+	{
+		CRF_SafestartManager.GetInstance().ToggleSafeStartServer(!CRF_SafestartManager.GetInstance().GetSafestartStatus());
+	}
+	
+	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
+	void RpcAsk_CallTimeout()
+	{
+		CRF_SafestartManager.GetInstance().CallTimeout();
 	}
 };

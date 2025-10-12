@@ -1515,7 +1515,7 @@ FrameWidgetClass {
    }
   }
   FrameWidgetClass "{66909C8EE843E3E6}" {
-   Name "Respawns0"
+   Name "Gamemode"
    Slot FrameWidgetSlot "{659CDD578CE45868}" {
     Anchor 0.5 0.5 0.5 0.5
     PositionX -792
@@ -1576,6 +1576,68 @@ FrameWidgetClass {
        Slot ButtonWidgetSlot "{62992E44F11398F5}" {
        }
        Text "Enable AI"
+       "Font Size" 15
+       "Min Font Size" 15
+      }
+     }
+    }
+    ButtonWidgetClass "{66988708107D07B9}" {
+     Name "EnableSafestartButton"
+     Slot FrameWidgetSlot "{62992E477A603216}" {
+      PositionX 12.172
+      OffsetLeft 12.172
+      PositionY 73.102
+      OffsetTop 73.102
+      SizeX 173.86
+      OffsetRight -186.032
+      SizeY 29.999
+      OffsetBottom -103.101
+     }
+     "Z Order" 5
+     Color 0.013 0.0152 0.0176 1
+     components {
+      SCR_ButtonTextComponent "{62993E178E05DA3C}" {
+       m_bCanBeToggled 1
+       m_sTextWidgetName ""
+      }
+     }
+     {
+      TextWidgetClass "{66988708107D07B8}" {
+       Name "ActionButtonText"
+       Slot ButtonWidgetSlot "{62992E44F11398F5}" {
+       }
+       Text "Enable Safestart"
+       "Font Size" 15
+       "Min Font Size" 15
+      }
+     }
+    }
+    ButtonWidgetClass "{669887080409661A}" {
+     Name "TimeoutButton"
+     Slot FrameWidgetSlot "{62992E477A603216}" {
+      PositionX 12.172
+      OffsetLeft 12.172
+      PositionY 108.267
+      OffsetTop 108.267
+      SizeX 173.86
+      OffsetRight -186.032
+      SizeY 29.999
+      OffsetBottom -138.266
+     }
+     "Z Order" 5
+     Color 0.013 0.0152 0.0176 1
+     components {
+      SCR_ButtonTextComponent "{62993E178E05DA3C}" {
+       m_bCanBeToggled 1
+       m_sTextWidgetName ""
+      }
+     }
+     {
+      TextWidgetClass "{669887080409661C}" {
+       Name "ActionButtonText"
+       Slot ButtonWidgetSlot "{62992E44F11398F5}" {
+       }
+       Text "Call Timeout"
        "Font Size" 15
        "Min Font Size" 15
       }

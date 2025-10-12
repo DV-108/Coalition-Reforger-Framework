@@ -1708,6 +1708,24 @@ class CRF_AdminMenu : ChimeraMenuBase
 		//Setting AI Enabled Button
 		SCR_ButtonTextComponent toggleAI = SCR_ButtonTextComponent.Cast(m_wMenuContent.FindAnyWidget("EnableAIButton").FindHandler(SCR_ButtonTextComponent));
 		toggleAI.m_OnClicked.Insert(ToggleAI);
+		
+		SCR_ButtonTextComponent toggleSafestart = SCR_ButtonTextComponent.Cast(m_wMenuContent.FindAnyWidget("EnableSafestartButton").FindHandler(SCR_ButtonTextComponent));
+		toggleSafestart.m_OnClicked.Insert(ConfirmAction);
+		
+		SCR_ButtonTextComponent callTimeout = SCR_ButtonTextComponent.Cast(m_wMenuContent.FindAnyWidget("TimeoutButton").FindHandler(SCR_ButtonTextComponent));
+		callTimeout.m_OnClicked.Insert(ConfirmAction);
+	}
+	
+	void CallTimeOut()
+	{
+		CloseConfirmAction();
+		CRF_RplToAuthorityManager.GetInstance().CallTimeout();
+	}
+	
+	void ToggleSafestart()
+	{
+		CloseConfirmAction();
+		CRF_RplToAuthorityManager.GetInstance().ToggleSafestart();
 	}
 	
 	void ToggleAI()
@@ -1829,6 +1847,8 @@ class CRF_AdminMenu : ChimeraMenuBase
 		{
 			case "EnterAAR" : runButton.m_OnClicked.Insert(EnterAAR); break;
 			case "ApplyGearSets" : runButton.m_OnClicked.Insert(UpdateGearSets); break;
+			case "EnableSafestartButton" : runButton.m_OnClicked.Insert(ToggleSafestart); break;
+			case "TimeoutButton": runButton.m_OnClicked.Insert(CallTimeOut); break;
 		}
 	}
 	
@@ -1944,6 +1964,20 @@ class CRF_AdminMenu : ChimeraMenuBase
 		{
 			AIEnabledButtonText.SetText("AI Disabled");
 			AIEnabledButtonText.SetColorInt(Color.RED);
+		}
+		
+		bool safeStartEnabled = CRF_SafestartManager.GetInstance().GetSafestartStatus();
+		Widget safeStartEnabledButton = m_wMenuContent.FindAnyWidget("EnableSafestartButton");
+		TextWidget safeStartEnabledText = TextWidget.Cast(safeStartEnabledButton.FindWidget("ActionButtonText"));
+		if (safeStartEnabled)
+		{
+			safeStartEnabledText.SetText("Safestart Enabled");
+			safeStartEnabledText.SetColorInt(Color.GREEN);
+		}
+		else
+		{
+			safeStartEnabledText.SetText("Safestart Disabled");
+			safeStartEnabledText.SetColorInt(Color.RED);
 		}
 	}
 	

@@ -17,6 +17,8 @@ class CRF_SafestartManager : ScriptComponent
 	[RplProp()]
 	int m_iTimeMissionEnds;
 	int m_iSafeStartTimeRemaining;
+	
+	[RplProp()] bool m_bTimeOut = false;
 
 	protected bool m_bBluforReady = false;
 	protected bool m_bOpforReady = false;
@@ -57,6 +59,18 @@ class CRF_SafestartManager : ScriptComponent
 	static CRF_SafestartManager GetInstance()
 	{
 		return m_sInstance;
+	}
+	
+	void CallTimeout()
+	{
+		if (m_bTimeOut)
+			return;
+		
+		m_bTimeOut = true;
+		Replication.BumpMe();
+		
+		if (!GetSafestartStatus())
+			ToggleSafeStartServer(true);
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -399,7 +413,7 @@ class CRF_SafestartManager : ScriptComponent
 
 	//Call from server
 	//------------------------------------------------------------------------------------------------
-	protected void ToggleSafeStartServer(bool status)
+	void ToggleSafeStartServer(bool status)
 	{
 		if (status)
 		{ // Turn on safestart
@@ -448,11 +462,14 @@ class CRF_SafestartManager : ScriptComponent
 			m_bCheckPlayersAlive = true;
 
 			if (m_Gamemode.m_iTimeLimitMinutes > 0) {
-				m_iTimeMissionEnds = GetGame().GetWorld().GetWorldTime() + (m_Gamemode.m_iTimeLimitMinutes * 60000);
+				if (!m_bTimeOut)
+					m_iTimeMissionEnds = GetGame().GetWorld().GetWorldTime() + (m_Gamemode.m_iTimeLimitMinutes * 60000);
 				m_bUpdateMissionEndTimer = true;
 			} else {
 				m_GamemodeManager.SetServerWorldTime("N/A");
 			};
+			
+			m_bTimeOut = false;
 
 			Replication.BumpMe();//Broadcast change
 
