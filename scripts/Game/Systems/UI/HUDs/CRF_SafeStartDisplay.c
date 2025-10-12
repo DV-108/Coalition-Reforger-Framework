@@ -55,7 +55,7 @@ class CRF_SafeStartDisplay : SCR_InfoDisplayExtended
 			return;
 		}
 				
-		if (m_SafestartManager.m_bTimeOut)
+		if (m_SafestartManager.m_bTimeOut && !m_EditorManager.IsOpened())
 			m_wTimeout.SetVisible(true);
 		else
 			m_wTimeout.SetVisible(false);
