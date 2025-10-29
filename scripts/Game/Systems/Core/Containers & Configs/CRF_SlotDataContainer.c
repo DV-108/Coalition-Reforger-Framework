@@ -6,6 +6,8 @@ class CRF_SlotDataContainer
 	protected vector m_vSlotVectorFour;
 	
 	protected int m_iSlotCurrentPlayerId;
+	protected string m_sSlotCurrentGUID;
+	int m_iSlotGroupId;
 	protected RplId m_iSlotCurrentGroup = RplId.Invalid();
 	protected RplId m_iSlotCurrentCharacter = RplId.Invalid();
 	protected CRF_ESlotType m_iSlotType = CRF_ESlotType.GENERAL_INFANTRY;
@@ -60,6 +62,14 @@ class CRF_SlotDataContainer
 	void SetSlotCurrentPlayerId(int playerId)
 	{
 		m_iSlotCurrentPlayerId = playerId;
+		
+		InvokeDataUpdate();
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	void SetSlotCurrentGUID(string GUID)
+	{
+		m_sSlotCurrentGUID = GUID;
 		
 		InvokeDataUpdate();
 	}
@@ -147,6 +157,12 @@ class CRF_SlotDataContainer
 	}
 	
 	//------------------------------------------------------------------------------------------------
+	void SetSlotCurrentGUIDSilent(string GUID)
+	{
+		m_sSlotCurrentGUID = GUID;
+	}
+	
+	//------------------------------------------------------------------------------------------------
 	void SetSlotCurrentGroupSilent(RplId groupRplId)
 	{
 		m_iSlotCurrentGroup = groupRplId;
@@ -195,6 +211,10 @@ class CRF_SlotDataContainer
 		// Only update values that are different from defaults or current values
 		if (playerId != -1 && m_iSlotCurrentPlayerId != playerId)
 		{
+			if (playerId > 0)
+				m_sSlotCurrentGUID = GetGame().GetBackendApi().GetPlayerIdentityId(playerId);
+			else
+				m_sSlotCurrentGUID = "";
 			m_iSlotCurrentPlayerId = playerId;
 			hasChanges = true;
 		}
@@ -262,6 +282,12 @@ class CRF_SlotDataContainer
 			return 0;
 		else
 			return m_iSlotCurrentPlayerId;
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	string GetSlotCurrentGUID()
+	{
+		return m_sSlotCurrentGUID;
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -369,6 +395,7 @@ class CRF_SlotDataContainer
 	    writer.WriteString(m_rSlotIconResource);
 	    writer.WriteString(m_rSlotResource);
 	    writer.WriteString(m_SlotFactionKey);
+		writer.WriteString(m_sSlotCurrentGUID);
 	
 	    // Bools = 1 bit
 	    writer.Write(m_bIsLockedSlot, 1);
@@ -393,6 +420,7 @@ class CRF_SlotDataContainer
 	    reader.ReadString(m_rSlotIconResource);
 	    reader.ReadString(m_rSlotResource);
 	    reader.ReadString(m_SlotFactionKey);
+		reader.ReadString(m_sSlotCurrentGUID);
 	
 	    reader.Read(m_bIsLockedSlot, 1);
 	    reader.Read(m_bIsDeadSlot, 1);
@@ -416,6 +444,7 @@ class CRF_SlotDataContainer
 	    snapshot.SerializeString(instance.m_rSlotIconResource);
 	    snapshot.SerializeString(instance.m_rSlotResource);
 	    snapshot.SerializeString(instance.m_SlotFactionKey);
+	 	snapshot.SerializeString(instance.m_sSlotCurrentGUID);
 	
 	    snapshot.SerializeBytes(instance.m_bIsLockedSlot, 4);
 	    snapshot.SerializeBytes(instance.m_bIsDeadSlot, 4);
@@ -438,6 +467,7 @@ class CRF_SlotDataContainer
 	    snapshot.SerializeString(instance.m_rSlotIconResource);
 	    snapshot.SerializeString(instance.m_rSlotResource);
 	    snapshot.SerializeString(instance.m_SlotFactionKey);
+		snapshot.SerializeString(instance.m_sSlotCurrentGUID);
 	
 	    snapshot.SerializeBytes(instance.m_bIsLockedSlot, 4);
 	    snapshot.SerializeBytes(instance.m_bIsDeadSlot, 4);
@@ -456,6 +486,7 @@ class CRF_SlotDataContainer
 		snapshot.EncodeInt(packet);
 		snapshot.EncodeInt(packet);
 		
+		snapshot.EncodeString(packet);
 		snapshot.EncodeString(packet);
 		snapshot.EncodeString(packet);
 		snapshot.EncodeString(packet);
@@ -481,6 +512,7 @@ class CRF_SlotDataContainer
 		snapshot.DecodeString(packet);
 		snapshot.DecodeString(packet);
 		snapshot.DecodeString(packet);
+		snapshot.DecodeString(packet);
 		
 		snapshot.DecodeBool(packet);
 		snapshot.DecodeBool(packet);
@@ -502,6 +534,7 @@ class CRF_SlotDataContainer
 	        && lhs.CompareStringSnapshots(rhs)
 	        && lhs.CompareStringSnapshots(rhs)
 	        && lhs.CompareStringSnapshots(rhs)
+			&& lhs.CompareStringSnapshots(rhs)
 	        && lhs.CompareSnapshots(rhs, 4)
 	        && lhs.CompareSnapshots(rhs, 4);
 	}
@@ -520,6 +553,7 @@ class CRF_SlotDataContainer
 	        && snapshot.CompareString(instance.m_rSlotIconResource)
 	        && snapshot.CompareString(instance.m_rSlotResource)
 	        && snapshot.CompareString(instance.m_SlotFactionKey)
+			&& snapshot.CompareString(instance.m_SlotFactionKey)
 	        && snapshot.Compare(instance.m_bIsLockedSlot, 4)
 	        && snapshot.Compare(instance.m_bIsDeadSlot, 4);
 	}

@@ -360,6 +360,33 @@ class CRF_Gamemode : SCR_BaseGameMode
 		m_PlayerData.CalculateStatsChange();
 	}
 	
+	override void OnPlayerConnected(int playerId)
+	{
+		super.OnPlayerConnected(playerId);
+		string guid = GetGame().GetBackendApi().GetPlayerIdentityId(playerId);
+		//TODO: REMOVE DEBUG GUID VALUES!!!!
+		guid = "test";
+		Print(guid);
+		
+		array<CRF_SlotDataContainer> slotsToRemove = {};
+		foreach (CRF_SlotDataContainer slot: m_SlottingManager.GetSlotsWaitingArray())
+		{
+			Print(slot.GetSlotCurrentGUID());
+			if (slot.GetSlotCurrentGUID() != guid)
+				continue;
+			
+			m_SlottingManager.BatchUpdateSlot(m_SlottingManager.GetSlotDataArray().Find(slot), playerId, slot.GetSlotCurrentGroup(), 
+			slot.GetSlotCurrentCharacter(), slot.GetSlotResource(), slot.GetSlotName(), slot.GetIsLockedSlot(), slot.GetIsDeadSlot());
+			
+			slotsToRemove.Insert(slot);
+		}
+		
+		foreach (CRF_SlotDataContainer slot: slotsToRemove)
+		{
+			m_SlottingManager.GetSlotsWaitingArray().RemoveItem(slot);
+		}
+	}
+	
 	/**
 	 * Process player connection after authentication
 	 * @param iPlayerID ID of the connecting player

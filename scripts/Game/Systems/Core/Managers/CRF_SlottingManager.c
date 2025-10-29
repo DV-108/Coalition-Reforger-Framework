@@ -12,6 +12,10 @@ class CRF_SlottingManager : ScriptComponent
 	[RplProp()]
 	protected ref array<ref CRF_SlotDataContainer> m_aSlotsData = {}; 
 	
+	//Used to store slots that get searched for players reconnecting on loading a save state
+	//Player joins, we search this array for slots waiting for their old player
+	protected ref array<ref CRF_SlotDataContainer> m_aSlotsWaiting = {};
+	
 	// Latest Slot ID used
 	protected int m_iLatestSlotID;
 	
@@ -40,6 +44,24 @@ class CRF_SlottingManager : ScriptComponent
 	static CRF_SlottingManager GetInstance()
 	{
 		return m_sInstance;
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	array<int> GetSlotKeys()
+	{
+		return m_aSlotsKey;
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	array<ref CRF_SlotDataContainer> GetSlotDataArray()
+	{
+		return m_aSlotsData;
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	array<ref CRF_SlotDataContainer> GetSlotsWaitingArray()
+	{
+		return m_aSlotsData;
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -719,6 +741,14 @@ class CRF_SlottingManager : ScriptComponent
 		
 		// Set group and faction
 		RplComponent groupRplComp = RplComponent.Cast(group.FindComponent(RplComponent));
+		int groupSlotId = 0;
+		foreach (CRF_SlotDataContainer slot: m_aSlotsData)
+		{
+			if (slot.GetSlotCurrentGroup() == groupRplComp.Id())
+				groupSlotId++;
+		}
+		
+		slotData.m_iSlotGroupId = groupSlotId;
 		slotData.SetSlotCurrentGroup(groupRplComp.Id());
 		slotData.SetSlotFactionKey(group.GetFaction().GetFactionKey());
 		
