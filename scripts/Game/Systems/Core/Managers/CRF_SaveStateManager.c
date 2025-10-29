@@ -95,6 +95,11 @@ class CRF_SaveStateManager: SCR_BaseGameModeComponent
 		array<ref CRF_SlotDataContainer> slots = m_SlottingManager.GetSlotDataArray();
 		array<int> players = {};
 		GetGame().GetPlayerManager().GetPlayers(players);
+		map<int, string> playerGUIDMap = new map<int, string>;
+		foreach (int playerId: players)
+		{
+			playerGUIDMap.Insert(playerId, GetGame().GetBackendApi().GetPlayerIdentityId(playerId));
+		}
 		foreach (CRF_SaveStateSlotData newSlot: loadedSlots)
 		{
 			int index = -1;
@@ -114,11 +119,16 @@ class CRF_SaveStateManager: SCR_BaseGameModeComponent
 				
 				if (newSlot.m_iGroupSlotId != slot.m_iSlotGroupId)
 					continue;
-	
-				m_SlottingManager.BatchUpdateSlot(m_SlottingManager.GetSlotKeys().Get(index), 1);
 				
-				//TODO: REMOVE DEBUG GUID VALUES!!!!
-				slot.SetSlotCurrentGUID("test");
+				int playerId = 0;
+				foreach(int player, string guid: playerGUIDMap)
+				{
+					if (guid == newSlot.m_sSlotGUID)
+						playerId = player;
+				}
+	
+				m_SlottingManager.BatchUpdateSlot(m_SlottingManager.GetSlotKeys().Get(index), playerId);
+				slot.SetSlotCurrentGUID(newSlot.m_sSlotGUID);
 				m_SlottingManager.GetSlotsWaitingArray().Insert(slot);
 			}
 		}

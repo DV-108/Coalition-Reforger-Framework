@@ -364,9 +364,6 @@ class CRF_Gamemode : SCR_BaseGameMode
 	{
 		super.OnPlayerConnected(playerId);
 		string guid = GetGame().GetBackendApi().GetPlayerIdentityId(playerId);
-		//TODO: REMOVE DEBUG GUID VALUES!!!!
-		guid = "test";
-		Print(guid);
 		
 		array<CRF_SlotDataContainer> slotsToRemove = {};
 		foreach (CRF_SlotDataContainer slot: m_SlottingManager.GetSlotsWaitingArray())
