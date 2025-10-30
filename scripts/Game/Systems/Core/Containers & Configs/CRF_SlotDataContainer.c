@@ -20,6 +20,9 @@ class CRF_SlotDataContainer
 	protected bool m_bIsLockedSlot = false;
 	protected bool m_bIsDeadSlot = false;
 	
+	protected bool m_bStoredSpawn = false;
+	protected vector m_vStoredSpawn[4];
+	
 	// Invoker for data updates
 	protected ref ScriptInvoker m_OnDataUpdate;
 	
@@ -57,6 +60,18 @@ class CRF_SlotDataContainer
 		
 		InvokeDataUpdate();
 	}	
+	
+	//------------------------------------------------------------------------------------------------
+	void SetStoredSpawn(vector spawn[4])
+	{
+		m_vStoredSpawn = spawn;
+		SetIsStoredSpawn(true);
+	}
+	
+	void SetIsStoredSpawn(bool input)
+	{
+		m_bStoredSpawn = input;
+	}
 	
 	//------------------------------------------------------------------------------------------------
 	void SetSlotCurrentPlayerId(int playerId)
@@ -265,6 +280,16 @@ class CRF_SlotDataContainer
 	//------------------------------------------------------------------------------------------------
 	// GETTERS
 	//------------------------------------------------------------------------------------------------
+	
+	bool HasStoredSpawn()
+	{
+		return m_bStoredSpawn;
+	}
+	
+	void GetStoredSpawn(out vector spawn[4])
+	{
+		spawn = m_bStoredSpawn;
+	}
 	
 	//------------------------------------------------------------------------------------------------
 	void GetSlotVector(out vector vec[4])

@@ -640,6 +640,64 @@ class CRF_SlottingManager : ScriptComponent
 		return playerCharacter;
 	}
 	
+	SCR_ChimeraCharacter SpawnPlayableEntityNoPlayer(int slotId)
+	{	
+		ref CRF_SlotDataContainer slot = GetSlotMap().Get(slotId);
+		ResourceName resourceName = slot.GetSlotResource();
+		if (resourceName.IsEmpty())
+			return null;
+		
+		vector spawnVector[4];
+		if (slot.HasStoredSpawn())
+		{
+			slot.GetStoredSpawn(spawnVector);
+			slot.SetIsStoredSpawn(false);
+		}	
+		else
+			slot.GetSlotVector(spawnVector);
+
+		// Setup spawn parameters
+		EntitySpawnParams spawnParams = new EntitySpawnParams();
+		spawnParams.TransformMode = ETransformMode.WORLD;
+
+		spawnParams.Transform = spawnVector;
+
+		spawnParams.Transform[3][1] + spawnParams.Transform[3][1] + 0.5; //Go up 1 incase theres some weird slope, floor issue
+		vector surface;
+		SCR_TerrainHelper.SnapToGeometry(surface, spawnParams.Transform[3], {}, GetGame().GetWorld());
+		spawnParams.Transform[3] = surface;
+		SCR_TerrainHelper.OrientToTerrain(spawnParams.Transform);
+		
+		GetSafeSpawnTransform(spawnParams.Transform, 12, spawnParams.Transform);
+		
+		// Spawn the character
+		Resource resource = Resource.Load(resourceName);
+		SCR_ChimeraCharacter playerCharacter = SCR_ChimeraCharacter.Cast(
+			GetGame().SpawnEntityPrefab(resource, GetGame().GetWorld(), spawnParams)
+		);
+		
+		if (!playerCharacter)
+			return null;
+	
+		// Update slot data
+		RplComponent charRplComp = RplComponent.Cast(playerCharacter.FindComponent(RplComponent));
+		if (charRplComp)
+		{
+			UpdateSlotCharacter(slotId, charRplComp.Id());
+			UpdateSlotDeathState(slotId, false);
+		}
+		
+		// Set playable flag if component exists
+		CRF_PlayableCharacter playableCharComp = CRF_PlayableCharacter.Cast(
+			playerCharacter.FindComponent(CRF_PlayableCharacter)
+		);
+		
+		if (playableCharComp)
+			playableCharComp.SetIsSlotSpawned();
+		
+		return playerCharacter;	
+	}
+	
 	//------------------------------------------------------------------------------------------------
 	void GetSafeSpawnTransform(vector baseTransform[4], float radius, out vector trasnformOut[4])
 	{

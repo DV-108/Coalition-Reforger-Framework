@@ -100,7 +100,6 @@ class CRF_SaveStateManager: SCR_BaseGameModeComponent
 		foreach (CRF_SaveStateSlotData newSlot: loadedSlots)
 		{
 			int index = -1;
-			Print(newSlot.m_sGroupName);
 			foreach (CRF_SlotDataContainer slot: slots)
 			{
 				index++;
@@ -118,25 +117,43 @@ class CRF_SaveStateManager: SCR_BaseGameModeComponent
 				if (newSlot.m_iGroupSlotId != slot.m_iSlotGroupId)
 					continue;
 				
-				Print("SlotId matched");
-				
 				int playerId = 0;
-				Print(m_Gamemode.m_PlayerGUIDs.Count());
 				foreach(int player, string guid: m_Gamemode.m_PlayerGUIDs)
 				{
-					Print(guid);
-					Print(newSlot.m_sSlotGUID);
 					if (guid == newSlot.m_sSlotGUID)
 						playerId = player;
 				}
 				
-				Print(playerId);
-	
+				vector storedSpawn[4] = {newSlot.m_vTransform1, newSlot.m_vTransform2, newSlot.m_vTransform3, newSlot.m_vTransform4};
+				
+				m_SlottingManager.SpawnPlayableEntityNoPlayer(m_SlottingManager.GetSlotKeys().Get(index));
 				m_SlottingManager.BatchUpdateSlot(m_SlottingManager.GetSlotKeys().Get(index), playerId);
 				slot.SetSlotCurrentGUID(newSlot.m_sSlotGUID);
+				slot.SetStoredSpawn(storedSpawn);
 				if (playerId == 0)
 					m_SlottingManager.GetSlotsWaitingArray().Insert(slot);
 			}
+		}
+	}
+	
+	//Delayed to give server time to process all the batch slot updates.
+	void AdvanceToGame()
+	{
+		if (m_Gamemode.m_GamemodeState == CRF_EGamemodeState.AAR || m_Gamemode.m_GamemodeState == CRF_EGamemodeState.GAME)
+			return;
+		
+		if (m_Gamemode.m_GamemodeState == CRF_EGamemodeState.BRIEFING)
+		{
+				m_Gamemode.AdvanceGamemodeState();
+				m_Gamemode.AdvanceSlottingState();
+				m_Gamemode.AdvanceSlottingState();
+				m_Gamemode.AdvanceGamemodeState();
+		}
+		else if (m_Gamemode.m_GamemodeState == CRF_EGamemodeState.SLOTTING)
+		{
+				m_Gamemode.AdvanceSlottingState();
+				m_Gamemode.AdvanceSlottingState();
+				m_Gamemode.AdvanceGamemodeState();
 		}
 	}
 }
