@@ -139,6 +139,8 @@ class CRF_Gamemode : SCR_BaseGameMode
 	protected CRF_LoggingManager m_LoggingManager;
 	
 	protected static CRF_Gamemode m_sInstance;
+	
+	ref map<int, string> m_PlayerGUIDs = new map<int, string>;
 
 	//===================================================================================
 	// STATIC METHODS
@@ -363,23 +365,32 @@ class CRF_Gamemode : SCR_BaseGameMode
 	override void OnPlayerConnected(int playerId)
 	{
 		super.OnPlayerConnected(playerId);
+		#ifdef WORKBENCH
+		string guid = GetGame().GetBackendApi().GetLocalIdentityId();
+		#else
 		string guid = GetGame().GetBackendApi().GetPlayerIdentityId(playerId);
+		#endif
 		
-		array<CRF_SlotDataContainer> slotsToRemove = {};
+		m_PlayerGUIDs.Insert(playerId, guid);
+		Print(guid);
+		Print(playerId);
+		
+		int index = -1;
 		foreach (CRF_SlotDataContainer slot: m_SlottingManager.GetSlotsWaitingArray())
 		{
-			Print(slot.GetSlotCurrentGUID());
+			index++;
+			if (!slot)
+			{
+				m_SlottingManager.GetSlotsWaitingArray().Remove(index);
+				return;
+			}
+				
 			if (slot.GetSlotCurrentGUID() != guid)
 				continue;
 			
-			m_SlottingManager.BatchUpdateSlot(m_SlottingManager.GetSlotDataArray().Find(slot), playerId, slot.GetSlotCurrentGroup(), 
-			slot.GetSlotCurrentCharacter(), slot.GetSlotResource(), slot.GetSlotName(), slot.GetIsLockedSlot(), slot.GetIsDeadSlot());
+			m_SlottingManager.BatchUpdateSlot(m_SlottingManager.GetSlotKeys().Get(m_SlottingManager.GetSlotDataArray().Find(slot)), playerId);
 			
-			slotsToRemove.Insert(slot);
-		}
-		
-		foreach (CRF_SlotDataContainer slot: slotsToRemove)
-		{
+			Print("Slotted with JIP");
 			m_SlottingManager.GetSlotsWaitingArray().RemoveItem(slot);
 		}
 	}

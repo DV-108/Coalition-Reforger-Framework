@@ -61,7 +61,7 @@ class CRF_SlottingManager : ScriptComponent
 	//------------------------------------------------------------------------------------------------
 	array<ref CRF_SlotDataContainer> GetSlotsWaitingArray()
 	{
-		return m_aSlotsData;
+		return m_aSlotsWaiting;
 	}
 	
 	//------------------------------------------------------------------------------------------------

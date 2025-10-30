@@ -5,6 +5,7 @@ class CRF_SaveStateManagerClass: SCR_BaseGameModeComponentClass
 class CRF_SaveStateManager: SCR_BaseGameModeComponent
 {
 	protected CRF_SlottingManager m_SlottingManager;
+	protected CRF_Gamemode m_Gamemode;
 	private string m_sLastFileName = "";
 	
 	override void OnPostInit(IEntity owner)
@@ -12,6 +13,7 @@ class CRF_SaveStateManager: SCR_BaseGameModeComponent
 		super.OnPostInit(owner);
 		SetEventMask(owner, EntityEvent.FIXEDFRAME);
 		m_SlottingManager = CRF_SlottingManager.GetInstance();
+		m_Gamemode = CRF_Gamemode.GetInstance();
 	}
 	
 	float m_fTimeBuffer = 0;
@@ -95,21 +97,17 @@ class CRF_SaveStateManager: SCR_BaseGameModeComponent
 		array<ref CRF_SlotDataContainer> slots = m_SlottingManager.GetSlotDataArray();
 		array<int> players = {};
 		GetGame().GetPlayerManager().GetPlayers(players);
-		map<int, string> playerGUIDMap = new map<int, string>;
-		foreach (int playerId: players)
-		{
-			playerGUIDMap.Insert(playerId, GetGame().GetBackendApi().GetPlayerIdentityId(playerId));
-		}
 		foreach (CRF_SaveStateSlotData newSlot: loadedSlots)
 		{
 			int index = -1;
+			Print(newSlot.m_sGroupName);
 			foreach (CRF_SlotDataContainer slot: slots)
 			{
 				index++;
 				SCR_AIGroup group = SCR_AIGroup.Cast(RplComponent.Cast(Replication.FindItem(slot.GetSlotCurrentGroup())).GetEntity());
 				string company, platoon, squad, character, format;
 				group.GetCallsigns(company, platoon, squad, character, format);
-				Print(squad);
+				
 				
 				if (slot.GetSlotFactionKey() != newSlot.m_sFactionKey)
 					continue;
@@ -120,16 +118,24 @@ class CRF_SaveStateManager: SCR_BaseGameModeComponent
 				if (newSlot.m_iGroupSlotId != slot.m_iSlotGroupId)
 					continue;
 				
+				Print("SlotId matched");
+				
 				int playerId = 0;
-				foreach(int player, string guid: playerGUIDMap)
+				Print(m_Gamemode.m_PlayerGUIDs.Count());
+				foreach(int player, string guid: m_Gamemode.m_PlayerGUIDs)
 				{
+					Print(guid);
+					Print(newSlot.m_sSlotGUID);
 					if (guid == newSlot.m_sSlotGUID)
 						playerId = player;
 				}
+				
+				Print(playerId);
 	
 				m_SlottingManager.BatchUpdateSlot(m_SlottingManager.GetSlotKeys().Get(index), playerId);
 				slot.SetSlotCurrentGUID(newSlot.m_sSlotGUID);
-				m_SlottingManager.GetSlotsWaitingArray().Insert(slot);
+				if (playerId == 0)
+					m_SlottingManager.GetSlotsWaitingArray().Insert(slot);
 			}
 		}
 	}
