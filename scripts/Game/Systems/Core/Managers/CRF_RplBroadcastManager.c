@@ -229,6 +229,15 @@ class CRF_RplBroadcastManager : ScriptComponent
 		#endif
 	}
 	
+	void BroadcastEndgame()
+	{
+		#ifdef WORKBENCH
+		RpcDo_BroadcastEndgame();
+		#else
+		Rpc(RpcDo_BroadcastEndgame);
+		#endif
+	}
+	
 	//------------------------------------------------------------------------------------------------
 	void TestTargetedBroadcast(int targetPlayerId, int testValue)
 	{
@@ -1185,5 +1194,17 @@ class CRF_RplBroadcastManager : ScriptComponent
 	void RpcDo_BroadcastMessage(string message)
 	{
 		SCR_PopUpNotification.GetInstance().PopupMsg(message);
+	}
+	
+	[RplRpc(RplChannel.Reliable, RplRcver.Broadcast)]
+	void RpcDo_BroadcastEndgame()
+	{
+		AudioSystem.PlaySound("{EADBF7A6DAFE1705}Sounds/ThisIsWar.wav");
+		GetGame().GetCallqueue().CallLater(OpenOutro, 77300, false);
+	}
+	
+	void OpenOutro()
+	{
+		GetGame().GetMenuManager().OpenMenu(ChimeraMenuPreset.CRF_Outro);
 	}
 };

@@ -1,0 +1,51 @@
+$grp CRF_VehicleSpawner {
+ {
+  coords 8603.149 95.891 9295.609
+  angles 0.475 -132.963 4.442
+  m_rVehicle "{B7A8BAA37CB0AC2B}Prefabs/Vehicles/Wheeled/LAV25/LAV25_MERDC.et"
+  m_bShouldRespawnOnSideRespawn 0
+  m_iTicketsPerRespawn 4
+ }
+ {
+  coords 8608.844 95.78 9300.822
+  angles 0.475 -132.963 4.442
+  m_rVehicle "{B7A8BAA37CB0AC2B}Prefabs/Vehicles/Wheeled/LAV25/LAV25_MERDC.et"
+  m_bShouldRespawnOnSideRespawn 0
+  m_iTicketsPerRespawn 4
+ }
+ {
+  coords 8615.699 95.639 9306.152
+  angles 0.475 -132.963 4.442
+  m_rVehicle "{B7A8BAA37CB0AC2B}Prefabs/Vehicles/Wheeled/LAV25/LAV25_MERDC.et"
+  m_bShouldRespawnOnSideRespawn 0
+  m_iTicketsPerRespawn 4
+ }
+ {
+  coords 8621.653 95.513 9311.248
+  angles -0.089 -132.988 2.529
+  m_rVehicle "{B7A8BAA37CB0AC2B}Prefabs/Vehicles/Wheeled/LAV25/LAV25_MERDC.et"
+  m_bShouldRespawnOnSideRespawn 0
+  m_iTicketsPerRespawn 4
+ }
+ {
+  coords 8605.243 96.126 9278.383
+  angles 0 -37.963 0
+  m_rVehicle "{C8D62059548EC894}Prefabs/Vehicles/Wheeled/M923A1/BLUFOR/BLUFOR_AMMO.et"
+  m_bShouldRespawnOnSideRespawn 0
+  m_iTicketsPerRespawn 1
+ }
+ {
+  coords 8589.107 96.174 9280.892
+  angles 0.655 47.03 -0.61
+  m_rVehicle "{2BE1F8B9299B67C1}Prefabs/Vehicles/Wheeled/M923A1/M923A1_tanker.et"
+  m_bShouldRespawnOnSideRespawn 0
+  m_iTicketsPerRespawn 1
+ }
+ {
+  coords 8608.017 96.125 9280.925
+  angles 0 -37.963 0
+  m_rVehicle "{C8D62059548EC894}Prefabs/Vehicles/Wheeled/M923A1/BLUFOR/BLUFOR_AMMO.et"
+  m_bShouldRespawnOnSideRespawn 0
+  m_iTicketsPerRespawn 1
+ }
+}

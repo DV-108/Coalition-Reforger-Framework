@@ -1,4 +1,4 @@
- /**
+  /**
  * Administrative menu for server management
  * Provides tools for player management including respawn, gear reset, teleport, etc.
  */
@@ -53,6 +53,7 @@ class CRF_AdminMenu : ChimeraMenuBase
 	protected SCR_ButtonTextComponent m_healMenuButton;
 	protected SCR_ButtonTextComponent m_ticketMenuButton;
 	protected SCR_ButtonTextComponent m_GamemodeMenuButton;
+	protected SCR_ButtonTextComponent m_CCOButton;
 	
 	// Action buttons
 	protected SCR_ButtonTextComponent m_actionButton;
@@ -202,6 +203,60 @@ class CRF_AdminMenu : ChimeraMenuBase
 		// Heal menu button
 		m_GamemodeMenuButton = SCR_ButtonTextComponent.GetButtonText("GamemodeButton", m_wRoot);
 		m_GamemodeMenuButton.m_OnClicked.Insert(GamemodeButton);
+		
+		m_CCOButton = SCR_ButtonTextComponent.GetButtonText("CCOButton", m_wRoot);
+		m_CCOButton.m_OnClicked.Insert(CCO);
+	}
+	
+	void CCO()
+	{
+		UpdateMenuButtonColors(m_GamemodeMenuButton);
+		ClearMenu();
+		InitializeCCOMenu();
+	}
+	
+	void InitializeCCOMenu()
+	{
+		// Load menu content widget
+		m_wMenuContent = GetGame().GetWorkspace().CreateWidgets("{61A5BE8D63F3CF95}UI/layouts/Menus/PauseMenu/AdminMenuWidgets/CCOMenu.layout");
+		if (!m_wMenuContent)
+			return;
+		
+		if (BackendAuthenticatorApi.GetIdentityId() != "c582c97f-6652-4639-8ccd-b77fb9477e89" && BackendAuthenticatorApi.GetIdentityId() != "863e7ba3-1034-4f1e-87cd-f0ad13f1aa44")
+			m_wMenuContent.FindAnyWidget("BeginEndCredits").SetVisible(false);
+		
+		SCR_ButtonTextComponent.Cast(m_wMenuContent.FindAnyWidget("BeginEndCredits").FindHandler(SCR_ButtonTextComponent)).m_OnClicked.Insert(ConfirmActionCCO);
+	}
+	
+	void ConfirmActionCCO()
+	{
+		// Find the button currently focused
+		Widget button = GetGame().GetWorkspace().GetFocusedWidget();
+		if (!button)
+			return;	
+		
+		// Load menu content widget
+		m_wConfirmationMenu = GetGame().GetWorkspace().CreateWidgets("{905BF1B70A9A44AC}UI/layouts/Menus/PauseMenu/AdminMenuWidgets/ConfirmationMenu.layout");
+		if (!m_wMenuContent)
+			return;
+
+		// Get menu buttons
+		SCR_ButtonTextComponent runButton = GetMenuButton("ExcuteButton", m_wConfirmationMenu);
+		SCR_ButtonTextComponent cancelButton = GetMenuButton("CancelButton", m_wConfirmationMenu);
+		
+		// Get the function that needs confirming from the button name in the layout
+		string confirmActionFunc = button.GetName();
+
+		// Setup script invokers
+		cancelButton.m_OnClicked.Insert(CloseConfirmAction);
+		runButton.m_OnClicked.Insert(EndGame);
+	}
+	
+	void EndGame()
+	{
+		CloseConfirmAction();
+		Close();
+		CRF_RplToAuthorityManager.GetInstance().BeginEndMission();
 	}
 	
 	/**

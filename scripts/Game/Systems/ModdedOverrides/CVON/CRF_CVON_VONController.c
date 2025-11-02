@@ -83,6 +83,12 @@ modded class SCR_VONController
 	    bool    normalizePeak  = true
 	)
 	{
+		if (CRF_Gamemode.GetInstance().m_bIsInEndCredits)
+		{
+			outLeft = 0;
+			outRight = 0;
+			return;
+		}
 		float specLeft;
 		float specRight;
 		if (SpectatorLRCheck(playerId, specLeft, specRight))

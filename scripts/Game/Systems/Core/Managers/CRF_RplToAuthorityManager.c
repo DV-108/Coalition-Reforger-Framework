@@ -430,6 +430,11 @@ class CRF_RplToAuthorityManager : ScriptComponent
 		Rpc(RpcAsk_RearmVehicle, truckId, supplyItems, supplyCounts, rearmTruckId);
 	}
 	
+	void BeginEndMission()
+	{
+		Rpc(RpcAsk_BeginEndGame);
+	}
+	
 	//------------------------------------------------------------------------------------------------
 	// SERVER-SIDE RPC HANDLERS - Executed on the authority (server)
 	//------------------------------------------------------------------------------------------------
@@ -1318,5 +1323,11 @@ class CRF_RplToAuthorityManager : ScriptComponent
 		supplyComp.UpdateCurrentSupply();
 		
 		Vehicle.Cast(truck).UpdateVehicleSupplies(CRF_GearscriptManager.GetInstance().GetSuppliesInTruck(truck));
+	}
+	
+	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
+	void RpcAsk_BeginEndGame()
+	{
+		CRF_Gamemode.GetInstance().StartEndMission();
 	}
 };

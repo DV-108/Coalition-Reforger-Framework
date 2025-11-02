@@ -1,0 +1,399 @@
+SCR_AIWorld : "{672531FAC0834C06}Prefabs/AI/SCR_AIWorld_Cain.et" {
+ components {
+  NavmeshWorldComponent "{5584F30E67F617AD}" {
+   NavmeshSettings NavmeshWorld "{50FC63BEBE3973C5}" {
+    NavmeshFilesConfig BaseNavmeshFilesConfig "{60B8A297F9E52831}" {
+     NavmeshFile "{ACBE49C3E71A9E65}worlds/GameMaster/Navmeshes/GM_Cain.nmn"
+    }
+   }
+  }
+  NavmeshWorldComponent "{5584F30EEFEE1223}" {
+   NavmeshSettings ChimeraNavmeshWorld "{50FC63BEBE3973C5}" {
+    NavmeshFilesConfig BaseNavmeshFilesConfig "{60B8A297F3B4EE8A}" {
+     NavmeshFile "{27D8B11BF4E78009}worlds/GameMaster/Navmeshes/GM_Cain_vehicles.nmn"
+    }
+   }
+  }
+ }
+ coords 8631.638 95.412 9328.757
+}
+CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et" {
+ coords 7260.9 383.086 7275.257
+ EnableAIInGameState 1
+ m_aMissionDescriptors {
+  CRF_MissionDescriptor "{644250503DF684C0}" {
+   m_sTextData "The actions on ISLE FOX are a simultaneous, shaping operation in direct support of B CO, 1-36 IN’s push inland in Northern Germany. With the Sea of Japan and Sakhalin exchanges escalating into a broader NATO–Warsaw Pact confrontation, Soviet airlift and early-warning assets in the Baltic are extending the enemy’s ability to prosecute rapid counter-punches against NATO spearheads. Seizing ISLE FOX denies a forward radar/airfield node to the Soviets and interrupts Baltic sea lanes used for resupply and fast reaction elements — reducing detection and shortening the reaction window available to Warsaw Pact QRFs responding to the northern German salient."\
+   ""\
+   "BLUFOR Composition: Armored/Infantry/Mechanized/Etc.."\
+   "BLUFOR Assets:"\
+   "IFV"\
+   "SNIPER"\
+   "MORTAR"\
+   ""\
+   "OPFOR Composition: Armored/Infantry/Mechanized/Etc.."\
+   "OPFOR Assets:"\
+   ""\
+   "Time:"\
+   ""\
+   "Weather:"
+  }
+  CRF_MissionDescriptor "{64425051F2E00216}" {
+   m_sTextData "OBJ GOLD - 50% Domination of the objective"\
+   "OBJ EMERALD - 50% Domination of the objective"\
+   "OBJ PLATINUM - Locate the enemy C2 Vehicle in the forest"\
+   "OBJ GRANITE - Clear the port of all contact"
+  }
+ }
+ m_BLUFORGearScriptSettings CRF_GearScriptContainer "{64570ACB9B419A7B}" {
+  m_rGearScript "{60802EB9ACCA4A89}Configs/Gearscripts/Standard/CCO21/CCONortherFlight_BLUFOR.conf"
+  m_bEnableGIRadios 0
+ }
+ m_OPFORGearScriptSettings CRF_GearScriptContainer "{64570ACB9B11EAAD}" {
+  m_rGearScript "{16117625BC94DA48}Configs/Gearscripts/Standard/CCO21/CCONortherFlight_OPFOR.conf"
+ }
+ m_bRespawnEnabled 1
+ m_bWaveRespawn 1
+ m_iBLUFORTickets 60
+ {
+  SCR_FactionManager "66C4CD60C2815B34" {
+   ID "632A77473B3CC3A8"
+   Factions {
+    SCR_Faction "{628B22E9B4056C88}" {
+     m_CallsignInfo SCR_FactionCallsignInfo "{5DA0F2A6677ADA9E}" {
+      m_aSquadNames {
+       SCR_CallsignInfo "{66C4CD60061430F5}" {
+        m_sCallsign "Medic"
+       }
+       SCR_CallsignInfo "{55CCB792D13759D8}" {
+        m_sCallsign "LOGI"
+       }
+       SCR_CallsignInfo "{55CCB792D1218E95}" {
+        m_sCallsign "1-1 IFV"
+       }
+       SCR_CallsignInfo "{55CCB792D0C8B3CE}" {
+        m_sCallsign "1-1"
+       }
+       SCR_CallsignInfo "{66C4C1165A192A08}" {
+        m_sCallsign "1-2 IFV"
+       }
+       SCR_CallsignInfo "{66C4C1165AB8C2FA}" {
+        m_sCallsign "1-2"
+       }
+       SCR_CallsignInfo "{66C4C1165B309822}" {
+        m_sCallsign "1-3 IFV"
+       }
+       SCR_CallsignInfo "{66C4C1165BC61205}" {
+        m_sCallsign "1-3"
+       }
+       SCR_CallsignInfo "{66C4C1166F60D440}" {
+        m_sCallsign "Mortar"
+       }
+      }
+     }
+    }
+   }
+  }
+ }
+}
+$grp BaseGameTriggerEntity {
+ Zone1 {
+  coords 9644.794 131.84 10026.229
+  userScript "	string m_sAttackKey = \"BLUFOR\";"\
+  "	string m_sDefenderKey = \"OPFOR\";"\
+  "	float percentToWin = 0.50;"\
+  "	"\
+  "	void PhaseWin()"\
+  "	{"\
+  "		SCR_PopUpNotification.GetInstance().PopupMsg(\"OBJ Gold is under our control!\", 10, \"Continue mission to the next objective!\");"\
+  "		delete this;"\
+  "	}"
+  TriggerShapeType Sphere
+  SphereRadius 100
+  PeriodicQueries 1
+  UpdatePeriod 10
+  OnQueryFinished ""\
+  "		QueryEntitiesInside();"\
+  "		array<IEntity> entities = {};"\
+  "		GetEntitiesInside(entities);"\
+  "		int attackerCount = 0;"\
+  "		int defenderCount = 0;"\
+  "		foreach (IEntity entity: entities)"\
+  "		{"\
+  "			if (!ChimeraCharacter.Cast(entity))"\
+  "				continue;"\
+  "			"\
+  "			if (!entity.FindComponent(FactionAffiliationComponent))"\
+  "				continue;"\
+  "			"\
+  "			switch (FactionAffiliationComponent.Cast(entity.FindComponent(FactionAffiliationComponent)).GetAffiliatedFactionKey())"\
+  "			{"\
+  "				case m_sAttackKey:"\
+  "				attackerCount++;"\
+  "				break;"\
+  "				case m_sDefenderKey:"\
+  "				defenderCount++;"\
+  "				break;"\
+  "			}"\
+  "		}"\
+  "		"\
+  "		if (attackerCount == 0)"\
+  "			return;"\
+  "		"\
+  "		if (attackerCount > 0 && defenderCount == 0)"\
+  "		{"\
+  "			PhaseWin();"\
+  "			return;"\
+  "		}"\
+  "		"\
+  "		if (attackerCount == 0 && defenderCount == 0)"\
+  "			return;"\
+  "		"\
+  "		if ((defenderCount / attackerCount) <= percentToWin)"\
+  "			PhaseWin();"\
+  "	"
+ }
+ Zone2 {
+  coords 9813.052 56.215 9475.448
+  userScript "	string m_sAttackKey = \"BLUFOR\";"\
+  "	string m_sDefenderKey = \"OPFOR\";"\
+  "	float percentToWin = 0.50;"\
+  "	"\
+  "	void PhaseWin()"\
+  "	{"\
+  "		SCR_PopUpNotification.GetInstance().PopupMsg(\"OBJ Ruby is under our control!\", 10, \"Continue mission to the next objective!\");"\
+  "		delete this;"\
+  "	}"
+  TriggerShapeType Sphere
+  SphereRadius 100
+  PeriodicQueries 1
+  UpdatePeriod 10
+  OnQueryFinished ""\
+  "		QueryEntitiesInside();"\
+  "		array<IEntity> entities = {};"\
+  "		GetEntitiesInside(entities);"\
+  "		int attackerCount = 0;"\
+  "		int defenderCount = 0;"\
+  "		foreach (IEntity entity: entities)"\
+  "		{"\
+  "			if (!ChimeraCharacter.Cast(entity))"\
+  "				continue;"\
+  "			"\
+  "			if (!entity.FindComponent(FactionAffiliationComponent))"\
+  "				continue;"\
+  "			"\
+  "			switch (FactionAffiliationComponent.Cast(entity.FindComponent(FactionAffiliationComponent)).GetAffiliatedFactionKey())"\
+  "			{"\
+  "				case m_sAttackKey:"\
+  "				attackerCount++;"\
+  "				break;"\
+  "				case m_sDefenderKey:"\
+  "				defenderCount++;"\
+  "				break;"\
+  "			}"\
+  "		}"\
+  "		"\
+  "		if (attackerCount == 0)"\
+  "			return;"\
+  "		"\
+  "		if (attackerCount > 0 && defenderCount == 0)"\
+  "		{"\
+  "			PhaseWin();"\
+  "			return;"\
+  "		}"\
+  "		"\
+  "		if (attackerCount == 0 && defenderCount == 0)"\
+  "			return;"\
+  "		"\
+  "		if ((defenderCount / attackerCount) <= percentToWin)"\
+  "			PhaseWin();"\
+  "	"
+ }
+ BTR {
+  coords 10370.024 60.356 9936.619
+  userScript "	IEntity m_BTR;"\
+  "	bool m_bBTRHasBeenSet = false;"\
+  "	ResourceName m_sPrefabeToLookFor = \"{C012BB3488BEA0C2}Prefabs/Vehicles/Wheeled/BTR70/BTR70.et\";"\
+  "	"\
+  "	void PhaseWin()"\
+  "	{"\
+  "		SCR_PopUpNotification.GetInstance().PopupMsg(\"OBJ Platinum has been destroyed!\", 10, \"Push the FIA off this Island!\");"\
+  "		delete this;"\
+  "	}"
+  TriggerShapeType Sphere
+  SphereRadius 20.6
+  DrawShape 1
+  PeriodicQueries 1
+  UpdatePeriod 5
+  OnQueryFinished ""\
+  "		if (!m_BTR)"\
+  "		{"\
+  "			QueryEntitiesInside();"\
+  "			array<IEntity> entities = {};"\
+  "			GetEntitiesInside(entities);"\
+  "			"\
+  "			foreach (IEntity entity: entities)"\
+  "			{"\
+  "				if (!Vehicle.Cast(entity))"\
+  "					continue;"\
+  "				"\
+  "				if (entity.GetPrefabData().GetPrefabName() == m_sPrefabeToLookFor)"\
+  "				{"\
+  "					m_BTR = entity;"\
+  "					m_bBTRHasBeenSet = true;"\
+  "				}"\
+  "					"\
+  "			}"\
+  "		}"\
+  "		"\
+  "		if (!m_bBTRHasBeenSet)"\
+  "			return;"\
+  "		"\
+  "		if (!m_BTR)"\
+  "			PhaseWin();"\
+  "		"\
+  "		SCR_WheeledDamageManagerComponent damageMan = SCR_WheeledDamageManagerComponent.Cast(m_BTR.FindComponent(SCR_WheeledDamageManagerComponent));"\
+  "		if (damageMan.GetDefaultHitZone().GetDamageState() == EDamageState.DESTROYED)"\
+  "			PhaseWin();"\
+  "	"
+ }
+ AirRaid1 {
+  coords 10039.78 58.342 9614.523
+  EOnInit ""\
+  "		#ifdef WORKBENCH"\
+  "		CRF_Gamemode.GetInstance().m_aAirRaidLocations.Insert(owner.GetOrigin());"\
+  "		#else"\
+  "		if (!System.IsConsoleApp())"\
+  "			return;"\
+  "		"\
+  "		CRF_Gamemode.GetInstance().m_aAirRaidLocations.Insert(owner.GetOrigin());"\
+  "		#endif"\
+  "	"
+ }
+ AirRaid2 {
+  coords 10129.852 176.725 10309.965
+  EOnInit ""\
+  "		#ifdef WORKBENCH"\
+  "		CRF_Gamemode.GetInstance().m_aAirRaidLocations.Insert(owner.GetOrigin());"\
+  "		#else"\
+  "		if (!System.IsConsoleApp())"\
+  "			return;"\
+  "		"\
+  "		CRF_Gamemode.GetInstance().m_aAirRaidLocations.Insert(owner.GetOrigin());"\
+  "		#endif"\
+  "	"
+ }
+}
+$grp CRF_VehicleSpawner {
+ {
+  coords 8635.761 95.549 9323.55
+  angles 1.174 -132.932 2.574
+  m_rVehicle "{27E2E58E734A80EC}Prefabs/Vehicles/Wheeled/M998/M1025_MERDC.et"
+  m_bShouldRespawnOnSideRespawn 0
+  m_iTicketsPerRespawn 4
+  m_aAdditionalVehicleItems {
+   CRF_VehicleGearScriptAdditionalItem "{66C48CC02EF3C35B}" {
+    m_Prefab "{62B704DD79A3B5BE}Prefabs/Items/Equipment/Mortars/M252/Part_M252_Barrel.et"
+    m_iAmountOfItemSupplyTruck 0
+   }
+   CRF_VehicleGearScriptAdditionalItem "{66C48CC3C53A8403}" {
+    m_Prefab "{0D540E16A6E53433}Prefabs/Items/Equipment/Mortars/M252/Part_M252_BasePlate.et"
+    m_iAmountOfItemSupplyTruck 0
+   }
+   CRF_VehicleGearScriptAdditionalItem "{66C48CC3C4EF163B}" {
+    m_Prefab "{80D38046CB4D4663}Prefabs/Items/Equipment/Mortars/M252/Part_M252_Bipod.et"
+    m_iAmountOfItemSupplyTruck 0
+   }
+   CRF_VehicleGearScriptAdditionalItem "{66C48CC3DDE37E27}" {
+    m_Prefab "{38BAE094333E31BF}Prefabs/Weapons/Ammo/Ammo_Shell_81mm_HE_M821.et"
+    m_iAmountOfItemSupplyTruck 40
+    m_iAmountOfItemRegularVehicle 100
+   }
+   CRF_VehicleGearScriptAdditionalItem "{66C48CC3D228CDD1}" {
+    m_Prefab "{F7807293E94D3C88}Prefabs/Weapons/Ammo/Ammo_Shell_81mm_Smoke_M819.et"
+    m_iAmountOfItemSupplyTruck 80
+    m_iAmountOfItemRegularVehicle 200
+   }
+  }
+ }
+ {
+  coords 8630.611 95.506 9318.638
+  angles 1.174 -132.932 2.574
+  m_rVehicle "{27E2E58E734A80EC}Prefabs/Vehicles/Wheeled/M998/M1025_MERDC.et"
+  m_bShouldRespawnOnSideRespawn 0
+  m_iTicketsPerRespawn 4
+  m_aAdditionalVehicleItems {
+   CRF_VehicleGearScriptAdditionalItem "{66C48CC02EF3C35B}" {
+    m_Prefab "{62B704DD79A3B5BE}Prefabs/Items/Equipment/Mortars/M252/Part_M252_Barrel.et"
+    m_iAmountOfItemSupplyTruck 0
+   }
+   CRF_VehicleGearScriptAdditionalItem "{66C48CC3C53A8403}" {
+    m_Prefab "{0D540E16A6E53433}Prefabs/Items/Equipment/Mortars/M252/Part_M252_BasePlate.et"
+    m_iAmountOfItemSupplyTruck 0
+   }
+   CRF_VehicleGearScriptAdditionalItem "{66C48CC3C4EF163B}" {
+    m_Prefab "{80D38046CB4D4663}Prefabs/Items/Equipment/Mortars/M252/Part_M252_Bipod.et"
+    m_iAmountOfItemSupplyTruck 0
+   }
+   CRF_VehicleGearScriptAdditionalItem "{66C48CC3DDE37E27}" {
+    m_Prefab "{38BAE094333E31BF}Prefabs/Weapons/Ammo/Ammo_Shell_81mm_HE_M821.et"
+    m_iAmountOfItemSupplyTruck 40
+    m_iAmountOfItemRegularVehicle 100
+   }
+   CRF_VehicleGearScriptAdditionalItem "{66C48CC3D228CDD1}" {
+    m_Prefab "{F7807293E94D3C88}Prefabs/Weapons/Ammo/Ammo_Shell_81mm_Smoke_M819.et"
+    m_iAmountOfItemSupplyTruck 80
+    m_iAmountOfItemRegularVehicle 200
+   }
+  }
+ }
+ {
+  coords 10372.194 60.54 9939.198
+  angles 0 -132.932 -15
+  m_rVehicle "{C012BB3488BEA0C2}Prefabs/Vehicles/Wheeled/BTR70/BTR70.et"
+  m_bShouldRespawnOnSideRespawn 0
+  m_iTicketsPerRespawn 4
+ }
+}
+GenericEntity : "{B24C7A63EE4F0A5D}Prefabs/Compositions/Misc/CombatOps/CP_Headquarters_S_USSR_01.et" {
+ coords 10370.761 62.8 9949.16
+ angles -7.378 -140.635 -10.51
+}
+$grp CRF_ManualMarker : "{E256B56F799AEB41}PrefabsEditable/Markers/BLUFORSpawnMarker.et" {
+ {
+  coords 8612.143 95.376 9318.162
+ }
+ {
+  coords 9642.797 131.046 10023.934
+  m_MarkerColor 0 0 0 1
+  m_sQuadName "objective-marker"
+  m_sDescription "OBJ GOLD"
+ }
+ {
+  coords 9814.746 56.377 9475.34
+  m_MarkerColor 0 0 0 1
+  m_sQuadName "objective-marker"
+  m_sDescription "OBJ EMERALD"
+ }
+ {
+  coords 10309.063 96.486 10007.076
+  m_MarkerColor 0 0 0 1
+  m_sQuadName "objective-marker"
+  m_sDescription "OBJ PLATINUM"
+ }
+ {
+  coords 11955.822 4.535 10638.577
+  m_MarkerColor 0 0 0 1
+  m_sQuadName "objective-marker"
+  m_sDescription "OBJ GRANITE"
+ }
+}
+GenericEntity : "{F287B6C31BFC28AA}Prefabs/Structures/Military/CamoNets/FIA/CamoNet_Tent_FIA_01_V1.et" {
+ components {
+  RigidBody "{52F0B4B05F6D4CE2}" {
+   SimState None
+   ModelGeometry 0
+  }
+ }
+ coords 10372.469 60.568 9939.264
+ angles -1.765 -131.549 -12.578
+}

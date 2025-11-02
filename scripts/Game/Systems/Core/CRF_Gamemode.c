@@ -65,7 +65,14 @@ class CRF_Gamemode : SCR_BaseGameMode
 	// Mission Descriptors (shown in briefing)
 	[Attribute("", category: "CRF Gamemode General")]
 	ref	array<ref CRF_MissionDescriptor> m_aMissionDescriptors;
-
+	
+	[RplProp()] bool m_bBeginEndCredits = false;
+	bool m_bIsInEndCredits = false;
+	
+	ref array<vector> m_aAirRaidLocations = {};
+	ref array<vector> m_aNukeSpawns = {};
+	
+	
 	// Faction Settings
 	//------------------------------------------------------------------------------------
 	[Attribute("1", "auto", "", category: "CRF Gamemode Slotting")]
@@ -185,6 +192,104 @@ class CRF_Gamemode : SCR_BaseGameMode
 		m_GearscriptManager = CRF_GearscriptManager.GetInstance();
 		m_RplBroadcastManager = CRF_RplBroadcastManager.GetInstance();
 		m_LoggingManager = CRF_LoggingManager.GetInstance();
+	}
+	
+	void StartEndMission()
+	{
+		m_bBeginEndCredits = true;
+		CRF_RplBroadcastManager.GetInstance().BroadcastEndgame();
+		SCR_BaseGameMode.Cast(GetGame().GetGameMode()).GMFX_SetNukeEnabled(true);
+		GetGame().GetCallqueue().CallLater(SoundAirHorns, 26000, false);
+		
+		//Figure out why nukes are flacid
+		//GetGame().GetCallqueue().CallLater(SpawnNukes, 56000, false);
+		
+		array<int> playerIds = {};
+		PlayerManager pm = GetGame().GetPlayerManager();
+		pm.GetPlayers(playerIds);
+		
+		foreach (int playerId: playerIds)
+		{
+			if (pm.GetPlayerControlledEntity(playerId))
+				SetSafeStartEHs(pm.GetPlayerControlledEntity(playerId));
+		}
+		
+	}
+	
+	protected ref map<IEntity, bool> m_mEntitiesWithEHsMap = new map<IEntity, bool>();
+	protected void SetSafeStartEHs(IEntity controlledEntity)
+	{
+		SCR_CharacterDamageManagerComponent damageHandler = SCR_CharacterDamageManagerComponent.Cast(controlledEntity.FindComponent(SCR_CharacterDamageManagerComponent));
+		if (damageHandler)
+			damageHandler.EnableDamageHandling(false);
+
+		EventHandlerManagerComponent eventHandler = EventHandlerManagerComponent.Cast(controlledEntity.FindComponent(EventHandlerManagerComponent));
+		CharacterControllerComponent charComp = CharacterControllerComponent.Cast(controlledEntity.FindComponent(CharacterControllerComponent));
+
+		bool alreadyHasEventHandlers = m_mEntitiesWithEHsMap.Get(controlledEntity);
+
+		if (!alreadyHasEventHandlers && charComp && eventHandler) {
+			charComp.SetSafety(true, true);
+			eventHandler.RegisterScriptHandler("OnProjectileShot", this, OnWeaponFired);
+			eventHandler.RegisterScriptHandler("OnGrenadeThrown", this, OnGrenadeThrown);
+			m_mEntitiesWithEHsMap.Set(controlledEntity, true);
+		};
+	};
+	
+	//------------------------------------------------------------------------------------------------
+	protected void OnWeaponFired(int playerId, BaseWeaponComponent weapon, IEntity entity)
+	{
+		// Get projectile and delete it
+		delete entity;
+	}
+
+	//------------------------------------------------------------------------------------------------
+	protected void OnGrenadeThrown(int playerId, BaseWeaponComponent weapon, IEntity entity)
+	{
+		if (!weapon)
+			return;
+
+		// Get grenade and delete it
+		delete entity;
+	}
+	
+	void SpawnNukes()
+	{
+		foreach (vector spawn: m_aNukeSpawns)
+		{
+			EntitySpawnParams params = new EntitySpawnParams();
+			params.Transform[3] = spawn;
+			
+			IEntity nuke = GetGame().SpawnEntityPrefab(Resource.Load("{3399B41124F52F47}Prefabs/Systems/Artillery/ArtilleryWrapper_TacNuke.et"), null, params);
+			array<int> players = {};
+			GetGame().GetPlayerManager().GetPlayers(players);
+			foreach (int player: players)
+			{
+				RplComponent rplComp = RplComponent.Cast(nuke.FindComponent(RplComponent));
+           		RplIdentity rplIdentity = GetGame().GetPlayerManager().GetPlayerController(player).GetRplIdentity();
+           		rplComp.EnableStreamingConNode(rplIdentity, true);
+			}
+			Print(nuke);
+		}
+	}
+	
+	void SoundAirHorns()
+	{
+		foreach (vector spawn: m_aAirRaidLocations)
+		{
+			EntitySpawnParams params = new EntitySpawnParams();
+			params.Transform[3] = spawn;
+			
+			IEntity airHorn = GetGame().SpawnEntityPrefab(Resource.Load("{93FC2145F05A1EEE}Prefabs/Systems/Sound/sound_airraidsiren.et"), null, params);
+			array<int> players = {};
+			GetGame().GetPlayerManager().GetPlayers(players);
+			foreach (int player: players)
+			{
+				RplComponent rplComp = RplComponent.Cast(airHorn.FindComponent(RplComponent));
+           		RplIdentity rplIdentity = GetGame().GetPlayerManager().GetPlayerController(player).GetRplIdentity();
+           		rplComp.EnableStreamingConNode(rplIdentity, true);
+			}
+		}
 	}
 	
 	//===================================================================================

@@ -264,6 +264,39 @@ FrameWidgetClass {
       }
      }
     }
+    ButtonWidgetClass "{66C48CC8DBF2610E}" {
+     Name "CCOButton"
+     Slot FrameWidgetSlot "{62992E477A603216}" {
+      Anchor 0 0 0 0
+      PositionX 0.139
+      OffsetLeft 0.139
+      PositionY 237.723
+      OffsetTop 237.723
+      SizeX 47.402
+      OffsetRight -47.541
+      SizeY 34.138
+      OffsetBottom -271.861
+     }
+     "Z Order" 2
+     Color 0.587 0.587 0.587 0
+     components {
+      SCR_ButtonTextComponent "{62993E179FB21E0C}" {
+       m_bMouseOverToFocus 1
+       m_bCanBeToggled 1
+       m_bIsToggled 1
+      }
+     }
+     {
+      TextWidgetClass "{66C48CC8EE49DDD6}" {
+       Name "Text0"
+       Slot ButtonWidgetSlot "{66C48CC8EE49DDF0}" {
+       }
+       Text "CCO"
+       "Horizontal Alignment" Center
+       "Vertical Alignment" Center
+      }
+     }
+    }
    }
   }
   FrameWidgetClass "{6548E8DE2895CF9A}" {
