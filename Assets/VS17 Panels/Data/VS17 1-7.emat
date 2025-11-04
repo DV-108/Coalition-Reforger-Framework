@@ -1,0 +1,4 @@
+MatPBRBasic {
+ RoughnessScale 0.772
+ BCRMap "{277B15185CE206D5}Assets/VS17 Panels/Data/1-7_BCR.edds"
+}

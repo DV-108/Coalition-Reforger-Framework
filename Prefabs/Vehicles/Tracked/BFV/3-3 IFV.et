@@ -1,0 +1,21 @@
+Tank : "{D990D456D80994F8}Prefabs/Vehicles/Tracked/BFV/CCO Brad Base.et" {
+ ID "BBCBA43A9778AE21"
+ components {
+  SlotManagerComponent "{55BCE45E438E4CFF}" {
+   Slots {
+    RegisteringComponentSlotInfo Turret {
+     Prefab "{BB2DD1A4F69CABA8}Prefabs/Vehicles/Tracked/BFV/VehParts/Turret/3-3 Turret.et"
+    }
+   }
+  }
+ }
+ m_OverridedVehicleLoadout CRF_VehicleGearScriptLoadout "{66C95615A7B1C52D}" {
+  m_iAmountofAutoCannonAmmo 450
+  m_iAmountofMachineGunAmmo 1600
+ }
+ m_aAdditionalVehicleItems {
+  CRF_VehicleGearScriptAdditionalItem "{66C95615A1DB0C82}" {
+   m_iAmountOfItemRegularVehicle 4
+  }
+ }
+}

@@ -1,0 +1,15 @@
+Turret : "{70E0492DD7B8C988}Prefabs/Vehicles/Tracked/BFV/VehParts/Turret/M2A2_Turret_BASE.et" {
+ ID "51ACD0965653D003"
+ components {
+  SlotManagerComponent "{5E4A2EC25CB7BC2F}" {
+   Slots {
+    EntitySlotInfo VS17 {
+     PivotID "v_turret_01"
+     Offset -0.1243 0.5122 -1.7343
+     Angles 0 90 90
+     Prefab "{64BE3C79B03D7763}Prefabs/Vehicles/Helicopters/UH1H/VehParts/VS-17 1-1.et"
+    }
+   }
+  }
+ }
+}

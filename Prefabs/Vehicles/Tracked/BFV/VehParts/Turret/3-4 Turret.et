@@ -1,0 +1,18 @@
+Turret : "{1D6E3408366BB9B4}Prefabs/Vehicles/Tracked/BFV/VehParts/Turret/CCO BFV Turret Base.et" {
+ ID "51ACD0965653D003"
+ components {
+  SlotManagerComponent "{5E4A2EC25CB7BC2F}" {
+   Slots {
+    EntitySlotInfo VS17 {
+     Prefab "{7AA20F83C720006A}Prefabs/Vehicles/Helicopters/UH1H/VehParts/VS-17 3-4.et"
+    }
+   }
+  }
+  WeaponSlotComponent "{51ACD09C6BFEEE6A}" {
+   WeaponTemplate "{DD5B2BA2F8AF1870}Prefabs/Weapons/Cannons/Cannon_M242/Cannon_M242_M2A2_APDST_Weapons.et"
+  }
+  WeaponSlotComponent "{62EF35330BA3910E}" {
+   WeaponTemplate "{8E2137C14D4EF154}Prefabs/Weapons/Cannons/Cannon_M242/Cannon_M242_M2A2_HEIT_Weapons.et"
+  }
+ }
+}

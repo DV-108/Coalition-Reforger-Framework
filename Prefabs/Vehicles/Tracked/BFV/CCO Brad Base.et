@@ -1,0 +1,73 @@
+Tank : "{ABCC1FF0D6096E47}Prefabs/Vehicles/Tracked/BFV/M2A2_BODY_BASE.et" {
+ ID "BBCBA43A9778AE21"
+ components {
+  MeshObject "{51DAA09FEFBFC0E7}" {
+   Materials {
+    MaterialAssignClass "{66C8CC57D27C3F9E}" {
+     SourceMaterial "BODY"
+     AssignedMaterial "{FD704944FE3CE371}Assets/Vehicles/Tracked/BFV/data/BODY.emat"
+    }
+   }
+  }
+  SCR_BaseCompartmentManagerComponent "{20FB66C5DCB8DF72}" {
+   CompartmentSlots {
+    CargoCompartmentSlot Passenger_L01 {
+     PassengerPositionInfo EntitySlotInfo "{699366C6D607AD06}" {
+      Offset -0.1131 0 0
+     }
+    }
+    CargoCompartmentSlot Passenger_L02 {
+     PassengerPositionInfo EntitySlotInfo "{699366C6D607AD06}" {
+      Offset -0.2342 0 0
+     }
+    }
+    CargoCompartmentSlot Passenger_L03 {
+     PassengerPositionInfo EntitySlotInfo "{699366C6D607AD06}" {
+      Offset -0.2342 0 0
+     }
+    }
+    CargoCompartmentSlot Passenger_R01 {
+     PassengerPositionInfo EntitySlotInfo "{699366C6D607AD06}" {
+      Offset 0.2342 0 0
+     }
+    }
+    CargoCompartmentSlot Passenger_R02 {
+     PassengerPositionInfo EntitySlotInfo "{699366C6D607AD06}" {
+      Offset 0.2342 0 0
+     }
+    }
+    CargoCompartmentSlot Passenger_R03 {
+     PassengerPositionInfo EntitySlotInfo "{699366C6D607AD06}" {
+      Offset 0.2342 0 0
+     }
+    }
+    CargoCompartmentSlot Passenger_L04 : Passenger_L03 {
+     PassengerPositionInfo EntitySlotInfo "{699366C6D607AD06}" {
+      Offset 0.2342 0 0
+     }
+    }
+    CargoCompartmentSlot Passenger_R04 : Passenger_R03 {
+     PassengerPositionInfo EntitySlotInfo "{699366C6D607AD06}" {
+      Offset -0.2342 0 0
+     }
+    }
+   }
+  }
+  SlotManagerComponent "{55BCE45E438E4CFF}" {
+   Slots {
+    RegisteringComponentSlotInfo Turret {
+     Prefab "{1D6E3408366BB9B4}Prefabs/Vehicles/Tracked/BFV/VehParts/Turret/CCO BFV Turret Base.et"
+    }
+   }
+  }
+ }
+ m_OverridedVehicleLoadout CRF_VehicleGearScriptLoadout "{66C95615A7B1C52D}" {
+ }
+ m_aAdditionalVehicleItems {
+  CRF_VehicleGearScriptAdditionalItem "{66C95615A1DB0C82}" {
+   m_Prefab "{E7B6EE8A99C7F760}Prefabs/Weapons/Ammo/Ammo_Missile_BGM-71_BFV.et"
+   m_iAmountOfItemSupplyTruck 0
+   m_iAmountOfItemRegularVehicle 2
+  }
+ }
+}

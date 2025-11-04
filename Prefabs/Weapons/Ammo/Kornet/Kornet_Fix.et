@@ -1,0 +1,40 @@
+GenericEntity : "{92C68643676C43EE}Prefabs/Weapons/AircraftWeapons/MissilePods/Pod_XM65_2x_BFV.et" {
+ ID "629D11C8BD6AE717"
+ components {
+  MeshObject "{629D11CADAD0C383}" {
+   Object "{2D89E6143665B77A}Assets/Weapons/Tripods/9M133_Kornet/9M133_Kornet_Tube.xob"
+  }
+  WCS_Armament_WeaponComponent "{629D11C992611C79}" {
+   m_DefaultProjectile "{A17C446F7A4BF10D}Prefabs/Weapons/Ammo/Kornet/9M133_Fix.et"
+  }
+  SlotManagerComponent "{629D11C99AEE634A}" {
+   Slots {
+    WCS_Armament_ProjectileSlotInfo W_0 {
+     PivotID ""
+     Offset 0 0 0
+    }
+    WCS_Armament_ProjectileSlotInfo W_1 {
+     Offset 0 0.7595 0.0498
+     AutoTransform 0
+     Enabled 0
+    }
+    WCS_Armament_ProjectileSlotInfo W_2 {
+     Offset 0 0.8443 0.0498
+    }
+   }
+  }
+  ActionsManagerComponent "{629D11CAB6B28AE6}" {
+   additionalActions {
+    WCS_RearmPodAtRepairStationAction "{629D11D464DEC282}" {
+     m_sProjectileToRearm "{A17C446F7A4BF10D}Prefabs/Weapons/Ammo/Kornet/9M133_Fix.et"
+    }
+    WCS_Armament_RearmFromVehicleAction "{64F11B255E08F292}" {
+     m_sCompatibleProjectiles {
+      "{A17C446F7A4BF10D}Prefabs/Weapons/Ammo/Kornet/9M133_Fix.et"
+     }
+    }
+   }
+  }
+ }
+ coords 371.937 64.391 5241.029
+}

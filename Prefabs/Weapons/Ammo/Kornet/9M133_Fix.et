@@ -1,0 +1,17 @@
+Projectile : "{E7B6EE8A99C7F760}Prefabs/Weapons/Ammo/Ammo_Missile_BGM-71_BFV.et" {
+ ID "629D11C7F7353F80"
+ components {
+  InventoryItemComponent "{62EB07A083C43139}" {
+   Attributes SCR_ItemAttributeCollection "{62EB07A083C43135}" {
+    CustomAttributes {
+     PreviewRenderAttributes "{62EB07A083C43132}" {
+      PreviewModel "{2D89E6143665B77A}Assets/Weapons/Tripods/9M133_Kornet/9M133_Kornet_Tube.xob"
+     }
+    }
+   }
+  }
+ }
+ coords 373.379 64.375 5237.234
+ ProjectileModel "{607D42EE5BF5B842}Assets/Weapons/Ammo/Missiles/9M133/9M133.xob"
+ CartridgeModel "{0BC131811414E787}Assets/Weapons/Tripods/9M133_Kornet/9M133_Kornet_Tube_EndCaps.xob"
+}

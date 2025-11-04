@@ -1,0 +1,12 @@
+Turret : "{1D6E3408366BB9B4}Prefabs/Vehicles/Tracked/BFV/VehParts/Turret/CCO BFV Turret Base.et" {
+ ID "51ACD0965653D003"
+ components {
+  SlotManagerComponent "{5E4A2EC25CB7BC2F}" {
+   Slots {
+    EntitySlotInfo VS17 {
+     Prefab "{08EA08990CF9F84D}Prefabs/Vehicles/Helicopters/UH1H/VehParts/VS-17 1-2.et"
+    }
+   }
+  }
+ }
+}

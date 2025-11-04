@@ -1,0 +1,13 @@
+Turret : "{D8F441C6A145C009}Prefabs/Vehicles/Wheeled/UAZ469/VehParts/WeapMounts/UAZ469_weapon_mount_Kornet.et" {
+ ID "51ACD0965653D003"
+ components {
+  WCS_Armament_LoadoutComponent "{652D1702F0649545}" {
+   m_ArmamentGroups {
+    WCS_ArmamentWeaponGroup "{652D1702F1901573}" {
+     prefab "{348936311250E886}Prefabs/Weapons/Ammo/Kornet/Kornet_Fix.et"
+    }
+   }
+  }
+ }
+ coords 376.019 64.357 5238.841
+}

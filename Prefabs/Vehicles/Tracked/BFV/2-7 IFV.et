@@ -1,0 +1,12 @@
+Tank : "{D990D456D80994F8}Prefabs/Vehicles/Tracked/BFV/CCO Brad Base.et" {
+ ID "BBCBA43A9778AE21"
+ components {
+  SlotManagerComponent "{55BCE45E438E4CFF}" {
+   Slots {
+    RegisteringComponentSlotInfo Turret {
+     Prefab "{2292951ACEA160B0}Prefabs/Vehicles/Tracked/BFV/VehParts/Turret/2-7 Turret.et"
+    }
+   }
+  }
+ }
+}

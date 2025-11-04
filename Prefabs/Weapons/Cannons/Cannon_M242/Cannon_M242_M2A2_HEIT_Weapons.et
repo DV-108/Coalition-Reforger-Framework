@@ -1,0 +1,35 @@
+GenericEntity : "{0F320350F079A48E}Prefabs/Weapons/Cannons/Cannon_M242/Cannon_M242_M2A2_base.et" {
+ ID "CFBAA4B725411E45"
+ components {
+  WeaponComponent "{CFBAA4B706BA66E8}" {
+   components {
+    MuzzleComponent "{50F64C4591CD7AA6}" {
+     components {
+      CaseEjectingEffectComponent "{5122AAD190FCA21D}" {
+       ParticleEffect "{0102B71CE880771A}Particles/Weapon/Casing_25x137.ptc"
+       EffectPosition EntitySlotInfo "{513A938439231378}" {
+        PivotID "barrel_muzzle"
+        Offset 0.0435 0.1039 -1.8274
+        Angles 8.3804 4.6894 29.3721
+       }
+      }
+      SCR_MuzzleEffectComponent "{C9B3271BB22CDB68}" {
+       ParticleEffect "{7FF03E344559C477}Particles/Weapon/Muzzle_M242.ptc"
+      }
+      SCR_OptimizedMuzzleEffectComponent "{66C8DC2846EBB9C2}" {
+       ParticleEffect "{8CBCADBCD072D380}Particles/Weapon/Smoke_M242.ptc"
+       EffectPosition EntitySlotInfo smoke {
+        PivotID "barrel_muzzle"
+       }
+       ResetOnFire 0
+      }
+     }
+     MagazinePosition InventoryStorageSlot "{B80A64F4C834E9CB}" {
+      PivotID ""
+     }
+     MagazineTemplate "{9A9E1384461EEBF4}Prefabs/Weapons/Magazines/Magazine_M242/Box_25x137_M242_230rnd_HEIT_Weapons.et"
+    }
+   }
+  }
+ }
+}
