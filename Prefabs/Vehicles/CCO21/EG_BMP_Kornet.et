@@ -1,0 +1,20 @@
+Tank : "{3868E03D9A4AF186}Prefabs/Vehicles/Tracked/BMP1/BMP1P_base.et" {
+ ID "BBCBA43A9778AE21"
+ components {
+  SlotManagerComponent "{55BCE45E438E4CFF}" {
+   Slots {
+    EntitySlotInfo DecalL {
+     Offset -0.4649 1.7986 0.2573
+     Angles 0 40.618 41.436
+     Prefab "{D8A72ECD421FF473}Prefabs/Vehicles/Shared/decal_vehicle_EastGermany.et"
+    }
+    EntitySlotInfo DecalR {
+     Offset 0.4911 1.7986 0.2573
+     Angles 2.6664 136.9758 43.9025
+     Prefab "{D8A72ECD421FF473}Prefabs/Vehicles/Shared/decal_vehicle_EastGermany.et"
+    }
+   }
+  }
+ }
+ coords 375.032 64.385 5240.603
+}

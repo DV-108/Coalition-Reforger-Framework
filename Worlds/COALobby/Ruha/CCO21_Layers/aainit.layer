@@ -1,0 +1,243 @@
+SCR_AIWorld : "{65DEC16960498027}Prefabs/AI/SCR_AIWorld_Ruha.et" {
+ coords 513.572 64.682 5251.33
+}
+CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et" {
+ coords 439.388 64.278 5227.793
+ m_iTimeLimitMinutes 240
+ EnableAIInGameState 1
+ m_BLUFORGearScriptSettings CRF_GearScriptContainer "{64570ACB9B419A7B}" {
+  m_rGearScript "{60802EB9ACCA4A89}Configs/Gearscripts/Standard/CCO21/CCONortherFlight_BLUFOR.conf"
+  m_aAdditionalVehicleItems {
+   CRF_VehicleGearScriptAdditionalItem "{66CA27D13245E4F7}" {
+    m_Prefab "{33B2DFDCD0EBA3DB}Prefabs/Items/Equipment/Kits/RepairKit_01/RepairKit_01_wrench.et"
+   }
+  }
+  m_aAdditonalItemsForSupplyArsenal {
+   "{38BAE094333E31BF}Prefabs/Weapons/Ammo/Ammo_Shell_81mm_HE_M821.et"
+   "{F7807293E94D3C88}Prefabs/Weapons/Ammo/Ammo_Shell_81mm_Smoke_M819.et"
+   "{DD2065AE34D8DFA9}Prefabs/Weapons/Ammo/Ammo_Shell_81mm_Illum_M853A1.et"
+  }
+ }
+ m_OPFORGearScriptSettings CRF_GearScriptContainer "{64570ACB9B11EAAD}" {
+  m_rGearScript "{16117625BC94DA48}Configs/Gearscripts/Standard/CCO21/CCONortherFlight_OPFOR.conf"
+ }
+ m_INDFORGearScriptSettings CRF_GearScriptContainer "{64570ACB9AE1C9ED}" {
+  m_rGearScript "{A04D2390B29F6E22}Configs/Gearscripts/Standard/CCO21/CCONortherFlight_INDFOR.conf"
+ }
+ {
+  SCR_FactionManager {
+   ID "632A77473B3CC3A8"
+   Factions {
+    SCR_Faction "{628B22E9B4056C88}" {
+     m_CallsignInfo SCR_FactionCallsignInfo "{5DA0F2A6677ADA9E}" {
+      m_aSquadNames {
+       SCR_CallsignInfo "{55CCB792D10AD8F4}" {
+        m_sCallsign "COY"
+       }
+       SCR_CallsignInfo "{55CCB792D13759D8}" {
+        m_sCallsign "Medic"
+       }
+       SCR_CallsignInfo "{55CCB792D1218E95}" {
+        m_sCallsign "Logi"
+       }
+       SCR_CallsignInfo "{55CCB792D0C8B3CE}" {
+        m_sCallsign "Mortar"
+       }
+       SCR_CallsignInfo "{66CA27D0B2688839}" {
+        m_sCallsign "1PLT"
+       }
+       SCR_CallsignInfo "{66CA27D0B2D92437}" {
+        m_sCallsign "1-1 IFV"
+       }
+       SCR_CallsignInfo "{66CA27D0B29DBE60}" {
+        m_sCallsign "1-1 Dismounts"
+       }
+       SCR_CallsignInfo "{66CA27D0B329DD2E}" {
+        m_sCallsign "1-2 IFV"
+       }
+       SCR_CallsignInfo "{66CA27D0B3997204}" {
+        m_sCallsign "1-2 Dismounts"
+       }
+       SCR_CallsignInfo "{66CA27D04C7DA95B}" {
+        m_sCallsign "1-3 IFV"
+       }
+       SCR_CallsignInfo "{66CA27D04C2BFD3A}" {
+        m_sCallsign "1-3 Dismounts"
+       }
+       SCR_CallsignInfo "{66CA27D04C8AB6A0}" {
+        m_sCallsign "1-7"
+       }
+       SCR_CallsignInfo "{66CA27D052E40874}" {
+        m_sCallsign "2PLT"
+       }
+       SCR_CallsignInfo "{66CA27D05374A9C5}" {
+        m_sCallsign "2-1 IFV"
+       }
+       SCR_CallsignInfo "{66CA27D0539EECF4}" {
+        m_sCallsign "2-1 Dismounts"
+       }
+       SCR_CallsignInfo "{66CA27D06C7E534F}" {
+        m_sCallsign "2-2 IFV"
+       }
+       SCR_CallsignInfo "{66CA27D06C32537C}" {
+        m_sCallsign "2-2 Dismounts"
+       }
+       SCR_CallsignInfo "{66CA27D06CE40A98}" {
+        m_sCallsign "2-3 IFV"
+       }
+       SCR_CallsignInfo "{66CA27D06D4B0581}" {
+        m_sCallsign "2-3 Dismounts"
+       }
+       SCR_CallsignInfo "{66CA27D06D35445C}" {
+        m_sCallsign "2-7"
+       }
+       SCR_CallsignInfo "{66CA27D07A11C48E}" {
+        m_sCallsign "3PLT"
+       }
+       SCR_CallsignInfo "{66CA27D07AA058AA}" {
+        m_sCallsign "3-1 IFV"
+       }
+       SCR_CallsignInfo "{66CA27D07B234607}" {
+        m_sCallsign "3-1 MMG"
+       }
+       SCR_CallsignInfo "{66CA27D07BB70919}" {
+        m_sCallsign "3-2 IFV"
+       }
+       SCR_CallsignInfo "{66CA27D0746BC9EB}" {
+        m_sCallsign "3-2 MMG"
+       }
+       SCR_CallsignInfo "{66CA27D074D69207}" {
+        m_sCallsign "3-3 IFV"
+       }
+       SCR_CallsignInfo "{66CA27D074889A5B}" {
+        m_sCallsign "3-3 Dismounts"
+       }
+       SCR_CallsignInfo "{66CA27D0757AA81D}" {
+        m_sCallsign "3-4 IFV"
+       }
+       SCR_CallsignInfo "{66CA27D07503162E}" {
+        m_sCallsign "3-4 Dismounts"
+       }
+       SCR_CallsignInfo "{66CA27D3F9FBB861}" {
+        m_sCallsign "Zeus"
+       }
+      }
+     }
+    }
+   }
+  }
+ }
+}
+$grp CRF_VehicleSpawner {
+ {
+  coords 441.517 74.036 7910.074
+  angles 0.853 -4.205 11.451
+  m_rVehicle "{B55C6990A6A9411B}Prefabs/Vehicles/Wheeled/M998/M998_covered.et"
+  m_sFactionKey "BLUFOR"
+  m_bShouldRespawnOnSideRespawn 0
+  m_iTicketsPerRespawn 2
+  m_aAdditionalVehicleItems {
+   CRF_VehicleGearScriptAdditionalItem "{66CA27D16811D2BA}" {
+    m_Prefab "{62B704DD79A3B5BE}Prefabs/Items/Equipment/Mortars/M252/Part_M252_Barrel.et"
+    m_iAmountOfItemSupplyTruck 0
+   }
+   CRF_VehicleGearScriptAdditionalItem "{66CA27D1630B58FB}" {
+    m_Prefab "{0D540E16A6E53433}Prefabs/Items/Equipment/Mortars/M252/Part_M252_BasePlate.et"
+    m_iAmountOfItemSupplyTruck 0
+   }
+   CRF_VehicleGearScriptAdditionalItem "{66CA27D17C397454}" {
+    m_Prefab "{80D38046CB4D4663}Prefabs/Items/Equipment/Mortars/M252/Part_M252_Bipod.et"
+    m_iAmountOfItemSupplyTruck 0
+   }
+   CRF_VehicleGearScriptAdditionalItem "{66CA27D114CE2366}" {
+    m_Prefab "{38BAE094333E31BF}Prefabs/Weapons/Ammo/Ammo_Shell_81mm_HE_M821.et"
+    m_iAmountOfItemSupplyTruck 0
+    m_iAmountOfItemRegularVehicle 40
+   }
+   CRF_VehicleGearScriptAdditionalItem "{66CA27D12F72402E}" {
+    m_Prefab "{F7807293E94D3C88}Prefabs/Weapons/Ammo/Ammo_Shell_81mm_Smoke_M819.et"
+    m_iAmountOfItemSupplyTruck 0
+    m_iAmountOfItemRegularVehicle 20
+   }
+   CRF_VehicleGearScriptAdditionalItem "{66CA27D125C4F049}" {
+    m_Prefab "{DD2065AE34D8DFA9}Prefabs/Weapons/Ammo/Ammo_Shell_81mm_Illum_M853A1.et"
+    m_iAmountOfItemSupplyTruck 0
+    m_iAmountOfItemRegularVehicle 20
+   }
+  }
+ }
+ {
+  coords 441.964 74.581 7903.514
+  angles -4.724 -4.941 7.529
+  m_rVehicle "{B55C6990A6A9411B}Prefabs/Vehicles/Wheeled/M998/M998_covered.et"
+  m_sFactionKey "BLUFOR"
+  m_bShouldRespawnOnSideRespawn 0
+  m_iTicketsPerRespawn 2
+  m_aAdditionalVehicleItems {
+   CRF_VehicleGearScriptAdditionalItem "{66CA27D16811D2BA}" {
+    m_Prefab "{62B704DD79A3B5BE}Prefabs/Items/Equipment/Mortars/M252/Part_M252_Barrel.et"
+    m_iAmountOfItemSupplyTruck 0
+   }
+   CRF_VehicleGearScriptAdditionalItem "{66CA27D1630B58FB}" {
+    m_Prefab "{0D540E16A6E53433}Prefabs/Items/Equipment/Mortars/M252/Part_M252_BasePlate.et"
+    m_iAmountOfItemSupplyTruck 0
+   }
+   CRF_VehicleGearScriptAdditionalItem "{66CA27D17C397454}" {
+    m_Prefab "{80D38046CB4D4663}Prefabs/Items/Equipment/Mortars/M252/Part_M252_Bipod.et"
+    m_iAmountOfItemSupplyTruck 0
+   }
+   CRF_VehicleGearScriptAdditionalItem "{66CA27D114CE2366}" {
+    m_Prefab "{38BAE094333E31BF}Prefabs/Weapons/Ammo/Ammo_Shell_81mm_HE_M821.et"
+    m_iAmountOfItemSupplyTruck 0
+    m_iAmountOfItemRegularVehicle 40
+   }
+   CRF_VehicleGearScriptAdditionalItem "{66CA27D12F72402E}" {
+    m_Prefab "{F7807293E94D3C88}Prefabs/Weapons/Ammo/Ammo_Shell_81mm_Smoke_M819.et"
+    m_iAmountOfItemSupplyTruck 0
+    m_iAmountOfItemRegularVehicle 20
+   }
+   CRF_VehicleGearScriptAdditionalItem "{66CA27D125C4F049}" {
+    m_Prefab "{DD2065AE34D8DFA9}Prefabs/Weapons/Ammo/Ammo_Shell_81mm_Illum_M853A1.et"
+    m_iAmountOfItemSupplyTruck 0
+    m_iAmountOfItemRegularVehicle 20
+   }
+  }
+ }
+ {
+  coords 442.83 74.233 7896.043
+  angles 8.435 -3.214 7.468
+  m_rVehicle "{B55C6990A6A9411B}Prefabs/Vehicles/Wheeled/M998/M998_covered.et"
+  m_sFactionKey "BLUFOR"
+  m_bShouldRespawnOnSideRespawn 0
+  m_iTicketsPerRespawn 2
+  m_aAdditionalVehicleItems {
+   CRF_VehicleGearScriptAdditionalItem "{66CA27D16811D2BA}" {
+    m_Prefab "{62B704DD79A3B5BE}Prefabs/Items/Equipment/Mortars/M252/Part_M252_Barrel.et"
+    m_iAmountOfItemSupplyTruck 0
+   }
+   CRF_VehicleGearScriptAdditionalItem "{66CA27D1630B58FB}" {
+    m_Prefab "{0D540E16A6E53433}Prefabs/Items/Equipment/Mortars/M252/Part_M252_BasePlate.et"
+    m_iAmountOfItemSupplyTruck 0
+   }
+   CRF_VehicleGearScriptAdditionalItem "{66CA27D17C397454}" {
+    m_Prefab "{80D38046CB4D4663}Prefabs/Items/Equipment/Mortars/M252/Part_M252_Bipod.et"
+    m_iAmountOfItemSupplyTruck 0
+   }
+   CRF_VehicleGearScriptAdditionalItem "{66CA27D114CE2366}" {
+    m_Prefab "{38BAE094333E31BF}Prefabs/Weapons/Ammo/Ammo_Shell_81mm_HE_M821.et"
+    m_iAmountOfItemSupplyTruck 0
+    m_iAmountOfItemRegularVehicle 40
+   }
+   CRF_VehicleGearScriptAdditionalItem "{66CA27D12F72402E}" {
+    m_Prefab "{F7807293E94D3C88}Prefabs/Weapons/Ammo/Ammo_Shell_81mm_Smoke_M819.et"
+    m_iAmountOfItemSupplyTruck 0
+    m_iAmountOfItemRegularVehicle 20
+   }
+   CRF_VehicleGearScriptAdditionalItem "{66CA27D125C4F049}" {
+    m_Prefab "{DD2065AE34D8DFA9}Prefabs/Weapons/Ammo/Ammo_Shell_81mm_Illum_M853A1.et"
+    m_iAmountOfItemSupplyTruck 0
+    m_iAmountOfItemRegularVehicle 20
+   }
+  }
+ }
+}

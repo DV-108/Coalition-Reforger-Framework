@@ -1,0 +1,13 @@
+SCR_AIGroup : "{E5143827D374F6DD}Prefabs/Groups/OPFOR/Standard/Vehicle/CRF_OPFOR_3manVehicleCrew_p.et" {
+ ID "0000000000000001"
+ components {
+  SCR_AIGroupSettingsComponent "{6260EB4E8D5C6608}" {
+   m_aDefaultSettings {
+    SCR_AIGroupCombatModeSetting "{66CA11ED55025C66}" {
+     m_eCombatMode HOLD_FIRE
+    }
+   }
+  }
+ }
+ coords 378.088 64.069 5264.518
+}

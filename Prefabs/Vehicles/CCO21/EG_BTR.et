@@ -1,0 +1,20 @@
+Vehicle : "{C012BB3488BEA0C2}Prefabs/Vehicles/Wheeled/BTR70/BTR70.et" {
+ ID "BBCBA43A9778AE21"
+ components {
+  SlotManagerComponent "{55BCE45E438E4CFF}" {
+   Slots {
+    EntitySlotInfo DecalL {
+     Offset 0.5619 2.0237 0.9346
+     Angles 0 180 39.3643
+     Prefab "{D8A72ECD421FF473}Prefabs/Vehicles/Shared/decal_vehicle_EastGermany.et"
+    }
+    EntitySlotInfo DecalR {
+     Offset -0.5648 2.0253 0.9346
+     Angles 0 0 39.3643
+     Prefab "{D8A72ECD421FF473}Prefabs/Vehicles/Shared/decal_vehicle_EastGermany.et"
+    }
+   }
+  }
+ }
+ coords 377.728 64.395 5242.648
+}

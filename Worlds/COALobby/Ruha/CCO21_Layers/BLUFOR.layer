@@ -1,0 +1,390 @@
+SCR_AIGroup : "{EE91BF23FBC94408}Prefabs/Groups/BLUFOR/Standard/Command/CRF_BLUFOR_Company_p.et" {
+ coords 414.169 79.788 7988.855
+ {
+  SCR_AIGroup : "{D0B17EDF43465305}Prefabs/Groups/BLUFOR/Standard/Support/CRF_BLUFOR_MedicTeam_p.et" {
+   components {
+    AIFormationComponent "{507E9DC12F541FE6}" {
+     DefaultFormation "Column"
+    }
+   }
+   coords -23.287 -5.191 -80.642
+   m_aUnitPrefabSlots +{
+    "{4F201B6446013397}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_Medic_P.et"
+    "{4F201B6446013397}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_Medic_P.et"
+   }
+   {
+    SCR_AIGroup : "{E882CACEF106E15B}Prefabs/Groups/BLUFOR/Standard/Support/CRF_BLUFOR_LogiTeam_p.et" {
+     components {
+      AIFormationComponent "{507E9DC12F541FE6}" {
+       DefaultFormation "Line"
+      }
+     }
+     coords 39.716 -0.128 -59.431
+     {
+      SCR_AIGroup : "{3CF105AFDCEA45A3}Prefabs/Groups/BLUFOR/Standard/Support/CRF_BLUFOR_IndirectTeam_p.et" {
+       components {
+        AIFormationComponent "{507E9DC12F541FE6}" {
+         DefaultFormation "Column"
+        }
+       }
+       coords 3.184 0.94 60.148
+       m_aUnitPrefabSlots +{
+        "{E6875FC6CEED7B4B}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_IndirectGunner_P.et"
+        "{4ACCBC7F35D46EF7}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_IndirectLoader_P.et"
+       }
+       {
+        SCR_AIGroup : "{93B14C52DA54543D}Prefabs/Groups/BLUFOR/Standard/Command/CRF_BLUFOR_Platoon-Large_p.et" {
+         coords -4.556 0.495 51.471
+         angles 3.562 0.223 3.583
+         m_aUnitPrefabSlots {
+          "{C62B8D48AAA03249}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_PL_P.et"
+          "{6BB714F2C0835B67}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_PSG_P.et"
+          "{2A15A7803EAF5EE9}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_FO_P.et"
+         }
+         {
+          SCR_AIGroup : "{679BC3454FEDD0EE}Prefabs/Groups/BLUFOR/Standard/Vehicle/CRF_BLUFOR_2manCrew_p.et" {
+           components {
+            AIFormationComponent "{507E9DC12F541FE6}" {
+             DefaultFormation "Line"
+            }
+           }
+           coords 6.287 -0.328 -8.465
+           angles 3.549 -0.222 -1.786
+           {
+            SCR_AIGroup : "{9C45BAF40F909576}Prefabs/Groups/BLUFOR/Standard/Infantry/CRF_BLUFOR_RifleSquad_p.et" {
+             components {
+              AIFormationComponent "{507E9DC12F541FE6}" {
+               DefaultFormation "Column"
+              }
+             }
+             coords 1.822 0.897 -8.96
+             angles -7.094 0.449 -3.635
+             m_aUnitPrefabSlots {
+              "{CC8EDD051CB0C1CE}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_SL_P.et"
+              "{4F201B6446013397}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_Medic_P.et"
+              "{1E08ED0385C765CC}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_TL_P.et"
+              "{232780260F9004E6}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_MMG_P.et"
+              "{0CF6A9358BCE5E57}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_AMMG_P.et"
+              "{1E08ED0385C765CC}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_TL_P.et"
+              "{EC7EF569E938BD63}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_Gren_P.et"
+              "{D4DB370FB7ED69BA}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_AT_P.et"
+              "{D4DB370FB7ED69BA}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_AT_P.et"
+             }
+             {
+              SCR_AIGroup : "{679BC3454FEDD0EE}Prefabs/Groups/BLUFOR/Standard/Vehicle/CRF_BLUFOR_2manCrew_p.et" {
+               components {
+                AIFormationComponent "{507E9DC12F541FE6}" {
+                 DefaultFormation "Line"
+                }
+               }
+               coords -6.04 0.769 8.982
+               angles 7.116 -0.111 2.706
+               {
+                SCR_AIGroup : "{9C45BAF40F909576}Prefabs/Groups/BLUFOR/Standard/Infantry/CRF_BLUFOR_RifleSquad_p.et" {
+                 components {
+                  AIFormationComponent "{507E9DC12F541FE6}" {
+                   DefaultFormation "Column"
+                  }
+                 }
+                 coords 1.848 0.896 -8.961
+                 angles -4.41 0.346 -4.493
+                 m_aUnitPrefabSlots {
+                  "{CC8EDD051CB0C1CE}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_SL_P.et"
+                  "{4F201B6446013397}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_Medic_P.et"
+                  "{1E08ED0385C765CC}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_TL_P.et"
+                  "{232780260F9004E6}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_MMG_P.et"
+                  "{0CF6A9358BCE5E57}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_AMMG_P.et"
+                  "{1E08ED0385C765CC}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_TL_P.et"
+                  "{EC7EF569E938BD63}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_Gren_P.et"
+                  "{D4DB370FB7ED69BA}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_AT_P.et"
+                  "{D4DB370FB7ED69BA}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_AT_P.et"
+                 }
+                 {
+                  SCR_AIGroup : "{679BC3454FEDD0EE}Prefabs/Groups/BLUFOR/Standard/Vehicle/CRF_BLUFOR_2manCrew_p.et" {
+                   components {
+                    AIFormationComponent "{507E9DC12F541FE6}" {
+                     DefaultFormation "Line"
+                    }
+                   }
+                   coords -5.981 0.502 8.718
+                   angles 7.062 -0.098 2.699
+                   {
+                    SCR_AIGroup : "{9C45BAF40F909576}Prefabs/Groups/BLUFOR/Standard/Infantry/CRF_BLUFOR_RifleSquad_p.et" {
+                     components {
+                      AIFormationComponent "{507E9DC12F541FE6}" {
+                       DefaultFormation "Column"
+                      }
+                     }
+                     coords 1.903 1.177 -8.836
+                     angles -5.27 -0.248 2.7
+                     m_aUnitPrefabSlots {
+                      "{CC8EDD051CB0C1CE}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_SL_P.et"
+                      "{4F201B6446013397}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_Medic_P.et"
+                      "{1E08ED0385C765CC}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_TL_P.et"
+                      "{232780260F9004E6}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_MMG_P.et"
+                      "{0CF6A9358BCE5E57}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_AMMG_P.et"
+                      "{1E08ED0385C765CC}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_TL_P.et"
+                      "{EC7EF569E938BD63}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_Gren_P.et"
+                      "{D4DB370FB7ED69BA}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_AT_P.et"
+                      "{D4DB370FB7ED69BA}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_AT_P.et"
+                     }
+                     {
+                      SCR_AIGroup : "{679BC3454FEDD0EE}Prefabs/Groups/BLUFOR/Standard/Vehicle/CRF_BLUFOR_2manCrew_p.et" {
+                       components {
+                        AIFormationComponent "{507E9DC12F541FE6}" {
+                         DefaultFormation "Line"
+                        }
+                       }
+                       coords -6.3 -0.254 9.528
+                       angles 3.536 0.595 0.009
+                       {
+                        SCR_AIGroup : "{93B14C52DA54543D}Prefabs/Groups/BLUFOR/Standard/Command/CRF_BLUFOR_Platoon-Large_p.et" {
+                         coords -13.61 -0.272 8.23
+                         angles -8.001 -0.138 -1.79
+                         m_aUnitPrefabSlots {
+                          "{C62B8D48AAA03249}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_PL_P.et"
+                          "{6BB714F2C0835B67}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_PSG_P.et"
+                          "{2A15A7803EAF5EE9}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_FO_P.et"
+                         }
+                         {
+                          SCR_AIGroup : "{679BC3454FEDD0EE}Prefabs/Groups/BLUFOR/Standard/Vehicle/CRF_BLUFOR_2manCrew_p.et" {
+                           components {
+                            AIFormationComponent "{507E9DC12F541FE6}" {
+                             DefaultFormation "Line"
+                            }
+                           }
+                           coords 7.58 -1.165 -9.146
+                           angles 8.878 -0.14 -0.906
+                           {
+                            SCR_AIGroup : "{9C45BAF40F909576}Prefabs/Groups/BLUFOR/Standard/Infantry/CRF_BLUFOR_RifleSquad_p.et" {
+                             components {
+                              AIFormationComponent "{507E9DC12F541FE6}" {
+                               DefaultFormation "Column"
+                              }
+                             }
+                             coords 1.865 0.889 -9.131
+                             angles -5.309 -0.112 -1.775
+                             m_aUnitPrefabSlots {
+                              "{CC8EDD051CB0C1CE}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_SL_P.et"
+                              "{4F201B6446013397}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_Medic_P.et"
+                              "{1E08ED0385C765CC}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_TL_P.et"
+                              "{232780260F9004E6}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_MMG_P.et"
+                              "{0CF6A9358BCE5E57}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_AMMG_P.et"
+                              "{1E08ED0385C765CC}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_TL_P.et"
+                              "{EC7EF569E938BD63}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_Gren_P.et"
+                              "{D4DB370FB7ED69BA}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_AT_P.et"
+                              "{D4DB370FB7ED69BA}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_AT_P.et"
+                             }
+                             {
+                              SCR_AIGroup : "{679BC3454FEDD0EE}Prefabs/Groups/BLUFOR/Standard/Vehicle/CRF_BLUFOR_2manCrew_p.et" {
+                               components {
+                                AIFormationComponent "{507E9DC12F541FE6}" {
+                                 DefaultFormation "Line"
+                                }
+                               }
+                               coords -6.015 0.294 9.223
+                               angles 7.026 -0.165 -0.898
+                               {
+                                SCR_AIGroup : "{9C45BAF40F909576}Prefabs/Groups/BLUFOR/Standard/Infantry/CRF_BLUFOR_RifleSquad_p.et" {
+                                 components {
+                                  AIFormationComponent "{507E9DC12F541FE6}" {
+                                   DefaultFormation "Column"
+                                  }
+                                 }
+                                 coords 1.821 0.807 -9.167
+                                 angles -7.919 0.127 2.661
+                                 m_aUnitPrefabSlots {
+                                  "{CC8EDD051CB0C1CE}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_SL_P.et"
+                                  "{4F201B6446013397}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_Medic_P.et"
+                                  "{1E08ED0385C765CC}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_TL_P.et"
+                                  "{232780260F9004E6}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_MMG_P.et"
+                                  "{0CF6A9358BCE5E57}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_AMMG_P.et"
+                                  "{1E08ED0385C765CC}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_TL_P.et"
+                                  "{EC7EF569E938BD63}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_Gren_P.et"
+                                  "{D4DB370FB7ED69BA}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_AT_P.et"
+                                  "{D4DB370FB7ED69BA}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_AT_P.et"
+                                 }
+                                 {
+                                  SCR_AIGroup : "{679BC3454FEDD0EE}Prefabs/Groups/BLUFOR/Standard/Vehicle/CRF_BLUFOR_2manCrew_p.et" {
+                                   components {
+                                    AIFormationComponent "{507E9DC12F541FE6}" {
+                                     DefaultFormation "Line"
+                                    }
+                                   }
+                                   coords -5.958 0.427 8.929
+                                   angles 6.153 -0.553 -3.589
+                                   {
+                                    SCR_AIGroup : "{9C45BAF40F909576}Prefabs/Groups/BLUFOR/Standard/Infantry/CRF_BLUFOR_RifleSquad_p.et" {
+                                     components {
+                                      AIFormationComponent "{507E9DC12F541FE6}" {
+                                       DefaultFormation "Column"
+                                      }
+                                     }
+                                     coords 1.795 0.35 -9.215
+                                     angles -7.068 0.112 3.556
+                                     m_aUnitPrefabSlots {
+                                      "{CC8EDD051CB0C1CE}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_SL_P.et"
+                                      "{4F201B6446013397}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_Medic_P.et"
+                                      "{1E08ED0385C765CC}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_TL_P.et"
+                                      "{232780260F9004E6}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_MMG_P.et"
+                                      "{0CF6A9358BCE5E57}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_AMMG_P.et"
+                                      "{1E08ED0385C765CC}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_TL_P.et"
+                                      "{EC7EF569E938BD63}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_Gren_P.et"
+                                      "{D4DB370FB7ED69BA}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_AT_P.et"
+                                      "{D4DB370FB7ED69BA}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_AT_P.et"
+                                     }
+                                     {
+                                      SCR_AIGroup : "{679BC3454FEDD0EE}Prefabs/Groups/BLUFOR/Standard/Vehicle/CRF_BLUFOR_2manCrew_p.et" {
+                                       components {
+                                        AIFormationComponent "{507E9DC12F541FE6}" {
+                                         DefaultFormation "Line"
+                                        }
+                                       }
+                                       coords -6.304 0.946 9.754
+                                       angles 5.324 -0.222 -1.796
+                                       {
+                                        SCR_AIGroup : "{93B14C52DA54543D}Prefabs/Groups/BLUFOR/Standard/Command/CRF_BLUFOR_Platoon-Large_p.et" {
+                                         coords -12.245 1.473 6.437
+                                         angles -7.117 0 2.684
+                                         m_aUnitPrefabSlots {
+                                          "{C62B8D48AAA03249}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_PL_P.et"
+                                          "{6BB714F2C0835B67}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_PSG_P.et"
+                                         }
+                                         {
+                                          SCR_AIGroup : "{679BC3454FEDD0EE}Prefabs/Groups/BLUFOR/Standard/Vehicle/CRF_BLUFOR_2manCrew_p.et" {
+                                           components {
+                                            AIFormationComponent "{507E9DC12F541FE6}" {
+                                             DefaultFormation "Line"
+                                            }
+                                           }
+                                           coords 5.373 -1.757 -6.961
+                                           angles 8.875 -0.364 -0.941
+                                           {
+                                            SCR_AIGroup : "{2F07AC5EE3DE3921}Prefabs/Groups/BLUFOR/Standard/Support/CRF_BLUFOR_MMGTeam_p.et" {
+                                             components {
+                                              AIFormationComponent "{507E9DC12F541FE6}" {
+                                               DefaultFormation "Column"
+                                              }
+                                             }
+                                             coords 1.96 0.173 -8.729
+                                             angles -2.647 0.027 -1.769
+                                             {
+                                              SCR_AIGroup : "{679BC3454FEDD0EE}Prefabs/Groups/BLUFOR/Standard/Vehicle/CRF_BLUFOR_2manCrew_p.et" {
+                                               components {
+                                                AIFormationComponent "{507E9DC12F541FE6}" {
+                                                 DefaultFormation "Line"
+                                                }
+                                               }
+                                               coords -6.005 0.24 8.663
+                                               angles 4.365 -0.054 -0.881
+                                               {
+                                                SCR_AIGroup : "{2F07AC5EE3DE3921}Prefabs/Groups/BLUFOR/Standard/Support/CRF_BLUFOR_MMGTeam_p.et" {
+                                                 components {
+                                                  AIFormationComponent "{507E9DC12F541FE6}" {
+                                                   DefaultFormation "Column"
+                                                  }
+                                                 }
+                                                 coords 1.953 0.401 -8.495
+                                                 angles -5.25 0.14 2.647
+                                                 {
+                                                  SCR_AIGroup : "{679BC3454FEDD0EE}Prefabs/Groups/BLUFOR/Standard/Vehicle/CRF_BLUFOR_2manCrew_p.et" {
+                                                   components {
+                                                    AIFormationComponent "{507E9DC12F541FE6}" {
+                                                     DefaultFormation "Line"
+                                                    }
+                                                   }
+                                                   coords -5.961 0.056 8.432
+                                                   angles 3.496 -0.329 -3.55
+                                                   {
+                                                    SCR_AIGroup : "{3B279F5833A489CE}Prefabs/Groups/BLUFOR/Standard/Support/CRF_BLUFOR_MATTeam_p.et" {
+                                                     components {
+                                                      AIFormationComponent "{507E9DC12F541FE6}" {
+                                                       DefaultFormation "Column"
+                                                      }
+                                                     }
+                                                     coords 2.101 0.265 -8.507
+                                                     angles -4.396 0.058 3.54
+                                                     {
+                                                      SCR_AIGroup : "{679BC3454FEDD0EE}Prefabs/Groups/BLUFOR/Standard/Vehicle/CRF_BLUFOR_2manCrew_p.et" {
+                                                       components {
+                                                        AIFormationComponent "{507E9DC12F541FE6}" {
+                                                         DefaultFormation "Line"
+                                                        }
+                                                       }
+                                                       coords -6.401 0.066 8.508
+                                                       angles 2.647 -0.235 -1.786
+                                                       {
+                                                        SCR_AIGroup : "{3B279F5833A489CE}Prefabs/Groups/BLUFOR/Standard/Support/CRF_BLUFOR_MATTeam_p.et" {
+                                                         components {
+                                                          AIFormationComponent "{507E9DC12F541FE6}" {
+                                                           DefaultFormation "Column"
+                                                          }
+                                                         }
+                                                         coords 2.84 0.239 -8.425
+                                                         angles -3.547 0.224 3.559
+                                                         {
+                                                          SCR_AIGroup : "{5F4B68E250ACF256}Prefabs/Groups/BLUFOR/Zeus/CRF_BLUFOR_Zeus.et" {
+                                                           coords 14.856 2.764 -35.924
+                                                           angles -3.576 0.013 -0.895
+                                                           m_aUnitPrefabSlots {
+                                                            "{15992AA89FF4475A}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_Zeus_P.et"
+                                                           }
+                                                          }
+                                                         }
+                                                        }
+                                                       }
+                                                      }
+                                                     }
+                                                    }
+                                                   }
+                                                  }
+                                                 }
+                                                }
+                                               }
+                                              }
+                                             }
+                                            }
+                                           }
+                                          }
+                                         }
+                                        }
+                                       }
+                                      }
+                                     }
+                                    }
+                                   }
+                                  }
+                                 }
+                                }
+                               }
+                              }
+                             }
+                            }
+                           }
+                          }
+                         }
+                        }
+                       }
+                      }
+                     }
+                    }
+                   }
+                  }
+                 }
+                }
+               }
+              }
+             }
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+ }
+}

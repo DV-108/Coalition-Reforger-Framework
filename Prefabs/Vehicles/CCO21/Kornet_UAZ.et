@@ -1,0 +1,29 @@
+Vehicle : "{E8D254FC24B032C2}Prefabs/Vehicles/Wheeled/UAZ469/UAZ469_Kornet.et" {
+ ID "BBCBA43A9778AE21"
+ components {
+  SlotManagerComponent "{55BCE45E438E4CFF}" {
+   Slots {
+    RegisteringComponentSlotInfo Weapon {
+     Prefab "{562C7B6E3282A7EA}Prefabs/Weapons/Ammo/Kornet/Kornet_Turret_Fix.et"
+    }
+    EntitySlotInfo DecalL {
+     Offset -0.9369 0.79 0.4712
+     Prefab "{D8A72ECD421FF473}Prefabs/Vehicles/Shared/decal_vehicle_EastGermany.et"
+    }
+    EntitySlotInfo DecalR {
+     Offset 0.9374 0.79 0.4712
+     Angles 0 180 0
+     Prefab "{D8A72ECD421FF473}Prefabs/Vehicles/Shared/decal_vehicle_EastGermany.et"
+    }
+   }
+  }
+ }
+ coords 377.197 64.375 5242.42
+ m_aAdditionalVehicleItems {
+  CRF_VehicleGearScriptAdditionalItem "{66C95CC66B372AED}" {
+   m_Prefab "{A17C446F7A4BF10D}Prefabs/Weapons/Ammo/Kornet/9M133_Fix.et"
+   m_iAmountOfItemSupplyTruck 0
+   m_iAmountOfItemRegularVehicle 2
+  }
+ }
+}

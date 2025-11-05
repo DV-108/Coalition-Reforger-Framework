@@ -1,0 +1,47 @@
+GenericEntity {
+ ID "66CA1B969A318013"
+ components {
+  SignalsManagerComponent "{66CA1B969A318019}" {
+  }
+  RHS_CASSoundComponent "{66CA1B969A318020}" {
+   Filenames {
+    "{3574BDE2E1F1001D}Sounds/Vehicles/Airplanes/su57/su57_engine.acp"
+   }
+   OnFrameUpdate 1
+   DistanceManagement 0
+   IncludeInactive 1
+   SoundPoints {
+    SoundPointInfo kh55 {
+     PivotID "v_flybyJet"
+     Offset -0.4576 0 -2.0566
+    }
+   }
+   m_sBoneName "v_flybyJet"
+  }
+  MeshObject "{66CA1B969A31802A}" {
+   Object "{5242D5702B85411B}Assets/Mig23/mig23.xob"
+   PixelSizeScale 10
+  }
+  SlotManagerComponent "{66CA1B969A31802B}" {
+   Slots {
+    EntitySlotInfo eng_l {
+     PivotID "v_flybyJet"
+     Offset 0.0967 1.2542 -8.5007
+     Angles 0 90 0
+     Enabled 0
+     Prefab "{CDE74FDEAD90D2C6}Prefabs/Particles/JetEngine.et"
+    }
+    EntitySlotInfo eng_r {
+     Offset 9.1011 1.2606 -0.04
+     Angles 0 180 0
+     Prefab "{CDE74FDEAD90D2C6}Prefabs/Particles/JetEngine.et"
+    }
+   }
+  }
+  RplComponent "{66CA1B969A31802F}" {
+  }
+  Hierarchy "{66CA1B969A318032}" {
+  }
+ }
+ coords 1095.713 51 1451.899
+}

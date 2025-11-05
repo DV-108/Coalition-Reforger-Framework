@@ -1,0 +1,14 @@
+Turret : "{E8F0DA0C05A8FED4}Prefabs/Weapons/Tripods/Kornet/Tripod_Kornet.et" {
+ ID "52D30EFBEBC74642"
+ components {
+  WCS_Armament_LoadoutComponent "{62E8E87892D31C6D}" {
+   m_ArmamentGroups {
+    WCS_ArmamentWeaponGroup "{62E9132135EBAFB3}" {
+     prefab "{348936311250E886}Prefabs/Weapons/Ammo/Kornet/Kornet_Fix.et"
+    }
+   }
+  }
+ }
+ coords 372.469 64.414 5242.905
+ angles 0.895 0.014 0.895
+}

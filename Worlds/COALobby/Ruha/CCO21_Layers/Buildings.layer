@@ -1,0 +1,94 @@
+GenericEntity : "{22D2EFA80AC9DBD1}Prefabs/Compositions/Slotted/SlotFlatSmall/SupplyCache_S_US_01.et" {
+ coords 450.01 74.522 7829.378
+ {
+  GenericEntity {
+   ID "62EACD01B6ED2B53"
+   {
+    GenericEntity {
+     ID "62F4A407B8DE2D97"
+     components {
+      SCR_ResourceComponent "{5D247A59598D71AE}" {
+       m_aContainers {
+        SCR_ResourceContainer "{5D3CDAE74F1A6127}" {
+         m_fResourceValueCurrent 10000
+         m_fResourceValueMax 10000
+        }
+       }
+      }
+     }
+    }
+    GenericEntity {
+     ID "62F4A407B8DE2DA9"
+     components {
+      SCR_ResourceComponent "{5D247A59598D71AE}" {
+       m_aContainers {
+        SCR_ResourceContainer "{5D3CDAE74F1A6127}" {
+         m_fResourceValueCurrent 10000
+         m_fResourceValueMax 10000
+        }
+       }
+      }
+     }
+    }
+    GenericEntity {
+     ID "62F4A407B8DFA02D"
+     components {
+      SCR_ResourceComponent "{5D247A59598D71AE}" {
+       m_aContainers {
+        SCR_ResourceContainer "{5D3CDAE74F1A6127}" {
+         m_fResourceValueCurrent 10000
+         m_fResourceValueMax 10000
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+ }
+}
+GenericEntity : "{869A4C4CA7F43C21}Prefabs/MP/Campaign/SupplyDepots/SupplyCache_S_FIA_06_Campaign.et" {
+ coords 467.146 74.036 7840.336
+ angles -4.467 -33 0
+ {
+  GenericEntity {
+   ID "5D45393949376AB5"
+   {
+    GenericEntity {
+     ID "5D4539397A9246E8"
+     components {
+      SCR_ResourceComponent "{5D247A59598D71AE}" {
+       m_aContainers {
+        SCR_ResourceContainer "{5D3CDAE74F1A6127}" {
+         m_fResourceValueCurrent 10000
+         m_fResourceValueMax 10000
+        }
+       }
+      }
+     }
+    }
+    GenericEntity {
+     ID "5D4539397A9246EE"
+     components {
+      SCR_ResourceComponent "{5D247A59598D71AE}" {
+       m_aContainers {
+        SCR_ResourceContainer "{5D3CDAE74F1A6127}" {
+         m_fResourceValueCurrent 10000
+         m_fResourceValueMax 10000
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+ }
+}
+GenericEntity : "{CBCF93346A850481}Prefabs/MP/Campaign/SupplyDepots/SupplyCache_S_FIA_02_Campaign_HQC.et" {
+ coords 458.784 74.606 7832.615
+ angles 0 -17 0
+}
+GenericEntity : "{DFA78D45BD5C4C5D}Prefabs/Compositions/SupplyArsenal/SupplyArsenal_BLUFOR.et" {
+ coords 446.307 74.185 7845.68
+ angles 0 -33 0
+}

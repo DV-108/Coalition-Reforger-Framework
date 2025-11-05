@@ -1,0 +1,144 @@
+Turret : "{28E2AD864580E3BE}Prefabs/Vehicles/Wheeled/BRDM2/VehParts/Turrets/BRDM2_turret.et" {
+ ID "51ACD0965653D003"
+ components {
+  MeshObject "{51ACD09C4E0B7D16}" {
+  }
+  WCS_Armament_LoadoutComponent "{66CA03F5B7B07B25}" {
+   m_ArmamentGroups {
+    WCS_ArmamentWeaponGroup "{66CA03F56722F0BE}" {
+     prefab "{348936311250E886}Prefabs/Weapons/Ammo/Kornet/Kornet_Fix.et"
+     weaponsInfo {
+      WCS_ArmamentWeaponInfo "{62A10D8ED7DA8AA6}" {
+       Position PointInfo "{62A10D8EDAF6E15F}" {
+        PivotID "v_gun_01"
+        Offset -0.3022 -0.0079 -0.2007
+       }
+      }
+     }
+     fireModes {
+      WCS_Armament_WeaponSingleFireMode "{630F535B7434A114}" {
+      }
+     }
+    }
+    WCS_ArmamentWeaponGroup "{66CA11EFA69670EE}" {
+     prefab "{348936311250E886}Prefabs/Weapons/Ammo/Kornet/Kornet_Fix.et"
+     weaponsInfo {
+      WCS_ArmamentWeaponInfo "{66CA11EFA6967351}" {
+       Position PointInfo "{66CA11EFA6967354}" {
+        PivotID "v_gun_01"
+        Offset -0.1007 -0.0079 -0.2007
+       }
+      }
+     }
+     fireModes {
+      WCS_Armament_WeaponSingleFireMode "{66CA11EFA6967355}" {
+      }
+     }
+     slotIndex 1
+    }
+    WCS_ArmamentWeaponGroup "{66CA11EFA7E6889A}" {
+     prefab "{348936311250E886}Prefabs/Weapons/Ammo/Kornet/Kornet_Fix.et"
+     weaponsInfo {
+      WCS_ArmamentWeaponInfo "{66CA11EFA7E688E8}" {
+       Position PointInfo "{66CA11EFA7E688EC}" {
+        PivotID "v_gun_01"
+        Offset 0.1001 -0.0079 -0.2007
+       }
+      }
+     }
+     fireModes {
+      WCS_Armament_WeaponSingleFireMode "{66CA11EFA7E688F2}" {
+      }
+     }
+     slotIndex 2
+    }
+    WCS_ArmamentWeaponGroup "{66CA11EFA02E2ABF}" {
+     prefab "{348936311250E886}Prefabs/Weapons/Ammo/Kornet/Kornet_Fix.et"
+     weaponsInfo {
+      WCS_ArmamentWeaponInfo "{66CA11EFA02E2D06}" {
+       Position PointInfo "{66CA11EFA02E2D05}" {
+        PivotID "v_gun_01"
+        Offset 0.3064 -0.0079 -0.2007
+       }
+      }
+     }
+     fireModes {
+      WCS_Armament_WeaponSingleFireMode "{66CA11EFA02E2D0A}" {
+      }
+     }
+     slotIndex 3
+    }
+   }
+   m_sPilotCompartmentUniqueName "hatch_gunner"
+  }
+  WCS_Armament_VehicleWeaponStationComponent "{66CA03F120BDF72E}" {
+  }
+  SlotManagerComponent "{66CA11EF0ABF71E3}" {
+   Slots {
+    EntitySlotInfo TurretCamera {
+    }
+   }
+  }
+  WeaponSlotComponent "{0AACE747111B1282}" {
+   Enabled 0
+  }
+  WeaponSlotComponent "{51ACD09C6BFEEE6A}" {
+   Enabled 0
+  }
+  WeaponSlotComponent "{66CA03F430CC86D8}" {
+   SignalsSourceAccess SignalsSourceAccessClass "{66CA03F5D472706B}" {
+    signalsSuffix "Turret"
+   }
+   useAimingType MainTurret
+   shouldHandleObstruction 0
+   AttachType InventoryStorageSlot "{66CA03F58621E55A}" {
+    PivotID "v_gun_01"
+   }
+   WeaponTemplate "{52120E4BA120661B}Prefabs/Weapons/Core/Armament_Empty.et"
+   WeaponSlotIndex 0
+  }
+  WeaponSlotComponent "{66CA11EE35EE7948}" {
+   SignalsSourceAccess SignalsSourceAccessClass "{66CA11EFFC54BBAD}" {
+    signalsSuffix "Turret"
+   }
+   useAimingType MainTurret
+   shouldHandleObstruction 0
+   AttachType InventoryStorageSlot "{66CA11EFF5543C97}" {
+    PivotID "v_gun_01"
+   }
+   WeaponTemplate "{52120E4BA120661B}Prefabs/Weapons/Core/Armament_Empty.et"
+   WeaponSlotIndex 1
+  }
+  WeaponSlotComponent "{66CA11EE38781A1B}" {
+   SignalsSourceAccess SignalsSourceAccessClass "{66CA11EF85900CC8}" {
+    signalsSuffix "Turret"
+   }
+   useAimingType MainTurret
+   shouldHandleObstruction 0
+   AttachType InventoryStorageSlot "{66CA11EF82E51DF7}" {
+    PivotID "v_gun_01"
+   }
+   WeaponTemplate "{52120E4BA120661B}Prefabs/Weapons/Core/Armament_Empty.et"
+   WeaponSlotIndex 2
+  }
+  WeaponSlotComponent "{66CA11EE3BC36526}" {
+   SignalsSourceAccess SignalsSourceAccessClass "{66CA11EF94088ED3}" {
+    signalsSuffix "Turret"
+   }
+   useAimingType MainTurret
+   shouldHandleObstruction 0
+   AttachType InventoryStorageSlot "{66CA11EFAC3DA62C}" {
+    PivotID "v_gun_01"
+   }
+   WeaponTemplate "{52120E4BA120661B}Prefabs/Weapons/Core/Armament_Empty.et"
+   WeaponSlotIndex 3
+  }
+ }
+ coords 371.198 64.473 5245.491
+ {
+  GameEnvironmentProbeEntity {
+   ID "654C8CCD03CBE797"
+   coords 0 1.544 0.026
+  }
+ }
+}

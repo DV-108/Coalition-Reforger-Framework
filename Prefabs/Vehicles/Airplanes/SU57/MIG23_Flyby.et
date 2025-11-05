@@ -1,0 +1,74 @@
+GenericEntity {
+ ID "66CA1B96F20593AB"
+ components {
+  SignalsManagerComponent "{66CA1B96F20593C0}" {
+  }
+  MeshObject "{66CA1B96F20593D5}" {
+   Object "{5242D5702B85411B}Assets/Mig23/mig23.xob"
+   PixelSizeScale 10
+  }
+  RHS_CAS_EditableEntityComponent "{66CA1B96F20593D8}" {
+   m_EntityType SYSTEM
+   m_UIInfo SCR_EditableEntityUIInfo "{66CA1B96F20593DD}" {
+    Name "MIG 23 FlyBy"
+    Icon "{7C780B2721C26EC0}UI/Textures/Editor/EditableEntities/Objectives/EditableEntity_Objective_Move.edds"
+    m_Image "{B36127275666572D}UI/Textures/EditorPreviews/Systems/Cas/Flyby_SU57.edds"
+    m_sFaction "OPFOR"
+    m_aAuthoredLabels {
+     ENTITYTYPE_SYSTEM FACTION_CRF_OPFOR CONTENT_MODDED
+    }
+    m_aAutoLabels {
+     SIZE_L TRAIT_EXPLOSIVE
+    }
+   }
+   m_aRHS_CASElementConfig {
+    RHS_CASElementConfig "{66CA1B96F20593E0}" {
+     m_sSlotName "Warhead"
+     m_iDeletionTime 22000
+     m_bIsWarhead 1
+    }
+    RHS_CASElementConfig "{66CA1B96F20593E6}" {
+     m_sSlotName "Payload"
+     m_iDeletionTime 25000
+    }
+   }
+   m_Flags 65601
+   m_fSelfDeleteTime 30
+  }
+  SCR_PreviewEntityComponent "{66CA1B96F20593E4}" {
+   m_aEntries {
+    SCR_BasePreviewEntry "{66CA1B96F20593EA}" {
+     m_Mesh "{5CFC7916225F9A7A}Assets/Vehicles/Airplanes/fa18a/preview_flyby.xob"
+     m_Flags 0
+     m_Shape MESH
+    }
+   }
+  }
+  SlotManagerComponent "{66CA1B96F20593E8}" {
+   Slots {
+    EntitySlotInfo Warhead {
+     Offset 0 1 0
+     Prefab "{D1D61A1D9B274E1A}Prefabs/Vehicles/Missles/Shared/CAS_Spawner_Flyby.et"
+    }
+    EntitySlotInfo Payload {
+     PivotID "v_flybyjet"
+     Offset -3.2034 0 1.4995
+     Angles -90 0 90
+     Prefab "{B6501D46AA8A2A41}Prefabs/Vehicles/Airplanes/SU57/MIG23_Mesh.et"
+    }
+   }
+  }
+  AnimationPlayerComponent "{66CA1B96F20593ED}" {
+   Animation "{045577310A8C52F0}Assets/Vehicles/Airplanes/su57/anm/v_flyby_1.anm"
+   Speed 0.8
+   AutoPlay 1
+  }
+  RplComponent "{66CA1B96F20593F3}" {
+   "Rpl State Override" Runtime
+   "Parent Node From Parent Entity" 0
+  }
+  Hierarchy "{66CA1B96F20593F1}" {
+  }
+ }
+ coords 1089.588 51 1456.32
+}
