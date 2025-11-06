@@ -1,0 +1,34 @@
+GenericEntity : "{76571A125EF9ECD7}Prefabs/Vehicles/Airplanes/FA18A/FA18A_Mesh.et" {
+ ID "5EF4E6634481AFCC"
+ components {
+  MeshObject "{5EF4E662BE492BEC}" {
+   Object "{71621A7B19CC4D69}Assets/Mig23/mig23Cas.xob"
+  }
+  RHS_ParticleEmiterSpawnerComponent "{64C4D14D4E57EA4B}" {
+   m_EmmitPoint PointInfo "{64C4D14D49AE9148}" {
+    PivotID "v_F18"
+   }
+  }
+  RHS_ParticleEmiterSpawnerComponent "{64C4D14DDDFA7F52}" {
+   m_EmmitPoint PointInfo "{64C4D14DDCF75172}" {
+    PivotID "v_F18"
+   }
+  }
+  SlotManagerComponent "{5EF4E6631E4EC6BB}" {
+   Slots {
+    EntitySlotInfo eng_left {
+     PivotID ""
+     Enabled 0
+    }
+    EntitySlotInfo eng_right {
+     PivotID "v_F18"
+     Offset -0.5 -0.1191 -5.3301
+    }
+    EntitySlotInfo Flares {
+     PivotID "v_F18"
+    }
+   }
+  }
+ }
+ coords 5543.428 64.336 6797.594
+}
