@@ -1,0 +1,19 @@
+GenericEntity : "{76571A125EF9ECD7}Prefabs/Vehicles/Airplanes/FA18A/FA18A_Mesh.et" {
+ ID "5EF4E6634481AFCC"
+ components {
+  MeshObject "{5EF4E662BE492BEC}" {
+   Object "{71621A7B19CC4D69}Assets/Mig23/mig23Cas.xob"
+  }
+  SlotManagerComponent "{5EF4E6631E4EC6BB}" {
+   Slots {
+    EntitySlotInfo eng_left {
+     Enabled 0
+    }
+    EntitySlotInfo eng_right {
+     Offset -0.5701 -0.0093 -4.9026
+    }
+   }
+  }
+ }
+ coords 776.116 80.032 7532.181
+}

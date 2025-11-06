@@ -11,6 +11,7 @@ class CRF_RplBroadcastManager : ScriptComponent
 	protected CRF_MenuManager m_MenuManager;
 	protected CRF_AdminMenuManager m_AdminMenuManager;
 	protected static CRF_RplBroadcastManager m_sInstance;
+	protected AudioHandle m_OutroMusic;
 	
 	void CRF_RplBroadcastManager(IEntityComponentSource src, IEntity ent, IEntity parent)
 	{
@@ -1243,12 +1244,18 @@ class CRF_RplBroadcastManager : ScriptComponent
 	[RplRpc(RplChannel.Reliable, RplRcver.Broadcast)]
 	void RpcDo_BroadcastEndgame()
 	{
-		AudioSystem.PlaySound("{EADBF7A6DAFE1705}Sounds/ThisIsWar.wav");
+		m_OutroMusic = AudioSystem.PlaySound("{EADBF7A6DAFE1705}Sounds/ThisIsWar.wav");
 		GetGame().GetCallqueue().CallLater(OpenOutro, 77300, false);
 	}
 	
 	void OpenOutro()
 	{
 		GetGame().GetMenuManager().OpenMenu(ChimeraMenuPreset.CRF_Outro);
+	}
+	
+	void ~CRF_RplBroadcastManager()
+	{
+		if (m_OutroMusic)
+			AudioSystem.TerminateSound(m_OutroMusic);
 	}
 };

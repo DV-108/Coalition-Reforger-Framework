@@ -1,0 +1,19 @@
+MetaFileClass {
+ Name "{A0EE681CD538EEBF}Prefabs/Groups/OPFOR/Standard/Infantry/CRF_OPFOR_RifleSquad_p_Garrison.et"
+ Configurations {
+  EntityTemplateResourceClass PC {
+  }
+  EntityTemplateResourceClass XBOX_ONE : PC {
+  }
+  EntityTemplateResourceClass XBOX_SERIES : PC {
+  }
+  EntityTemplateResourceClass PS4 : PC {
+  }
+  EntityTemplateResourceClass PS5 : PC {
+  }
+  EntityTemplateResourceClass HEADLESS : PC {
+  }
+  EntityTemplateResourceClass Xbox : PC {
+  }
+ }
+}

@@ -5,6 +5,7 @@ $grp CRF_VehicleSpawner {
   m_rVehicle "{C8D62059548EC894}Prefabs/Vehicles/Wheeled/M923A1/BLUFOR/BLUFOR_AMMO.et"
   m_sFactionKey "BLUFOR"
   m_bShouldRespawnOnSideRespawn 0
+  m_iRespawnTimer 600
   m_iTicketsPerRespawn 2
  }
  {
@@ -13,6 +14,7 @@ $grp CRF_VehicleSpawner {
   m_rVehicle "{C8D62059548EC894}Prefabs/Vehicles/Wheeled/M923A1/BLUFOR/BLUFOR_AMMO.et"
   m_sFactionKey "BLUFOR"
   m_bShouldRespawnOnSideRespawn 0
+  m_iRespawnTimer 600
   m_iTicketsPerRespawn 2
  }
  {
@@ -21,6 +23,7 @@ $grp CRF_VehicleSpawner {
   m_rVehicle "{5B5B685DF1BA1D2B}Prefabs/Vehicles/Wheeled/M923A1/BLUFOR/BLUFOR_TANKER.et"
   m_sFactionKey "BLUFOR"
   m_bShouldRespawnOnSideRespawn 0
+  m_iRespawnTimer 600
   m_iTicketsPerRespawn 2
  }
  {
@@ -29,6 +32,7 @@ $grp CRF_VehicleSpawner {
   m_rVehicle "{00C9BBE426F7D459}Prefabs/Vehicles/Wheeled/M998/M997_maxi_ambulance.et"
   m_sFactionKey "BLUFOR"
   m_bShouldRespawnOnSideRespawn 0
+  m_iRespawnTimer 600
   m_iTicketsPerRespawn 5
  }
  {
@@ -37,6 +41,7 @@ $grp CRF_VehicleSpawner {
   m_rVehicle "{99D8E96526104CCD}Prefabs/Vehicles/Wheeled/M923A1/BLUFOR/BLUFOR_REPAIR.et"
   m_sFactionKey "BLUFOR"
   m_bShouldRespawnOnSideRespawn 0
+  m_iRespawnTimer 600
   m_iTicketsPerRespawn 2
  }
  {
@@ -45,6 +50,7 @@ $grp CRF_VehicleSpawner {
   m_rVehicle "{99D8E96526104CCD}Prefabs/Vehicles/Wheeled/M923A1/BLUFOR/BLUFOR_REPAIR.et"
   m_sFactionKey "BLUFOR"
   m_bShouldRespawnOnSideRespawn 0
+  m_iRespawnTimer 600
   m_iTicketsPerRespawn 2
  }
  {
@@ -53,6 +59,7 @@ $grp CRF_VehicleSpawner {
   m_rVehicle "{C8D62059548EC894}Prefabs/Vehicles/Wheeled/M923A1/BLUFOR/BLUFOR_AMMO.et"
   m_sFactionKey "BLUFOR"
   m_bShouldRespawnOnSideRespawn 0
+  m_iRespawnTimer 600
   m_iTicketsPerRespawn 2
  }
  {
@@ -61,6 +68,7 @@ $grp CRF_VehicleSpawner {
   m_rVehicle "{99D8E96526104CCD}Prefabs/Vehicles/Wheeled/M923A1/BLUFOR/BLUFOR_REPAIR.et"
   m_sFactionKey "BLUFOR"
   m_bShouldRespawnOnSideRespawn 0
+  m_iRespawnTimer 600
   m_iTicketsPerRespawn 2
  }
  {
@@ -69,6 +77,7 @@ $grp CRF_VehicleSpawner {
   m_rVehicle "{C8D62059548EC894}Prefabs/Vehicles/Wheeled/M923A1/BLUFOR/BLUFOR_AMMO.et"
   m_sFactionKey "BLUFOR"
   m_bShouldRespawnOnSideRespawn 0
+  m_iRespawnTimer 600
   m_iTicketsPerRespawn 2
  }
  {
@@ -77,6 +86,7 @@ $grp CRF_VehicleSpawner {
   m_rVehicle "{5B5B685DF1BA1D2B}Prefabs/Vehicles/Wheeled/M923A1/BLUFOR/BLUFOR_TANKER.et"
   m_sFactionKey "BLUFOR"
   m_bShouldRespawnOnSideRespawn 0
+  m_iRespawnTimer 600
   m_iTicketsPerRespawn 2
  }
  {
@@ -85,6 +95,7 @@ $grp CRF_VehicleSpawner {
   m_rVehicle "{5B5B685DF1BA1D2B}Prefabs/Vehicles/Wheeled/M923A1/BLUFOR/BLUFOR_TANKER.et"
   m_sFactionKey "BLUFOR"
   m_bShouldRespawnOnSideRespawn 0
+  m_iRespawnTimer 600
   m_iTicketsPerRespawn 2
  }
  {
@@ -93,6 +104,7 @@ $grp CRF_VehicleSpawner {
   m_rVehicle "{5B5B685DF1BA1D2B}Prefabs/Vehicles/Wheeled/M923A1/BLUFOR/BLUFOR_TANKER.et"
   m_sFactionKey "BLUFOR"
   m_bShouldRespawnOnSideRespawn 0
+  m_iRespawnTimer 600
   m_iTicketsPerRespawn 2
  }
  {
@@ -101,6 +113,7 @@ $grp CRF_VehicleSpawner {
   m_rVehicle "{99D8E96526104CCD}Prefabs/Vehicles/Wheeled/M923A1/BLUFOR/BLUFOR_REPAIR.et"
   m_sFactionKey "BLUFOR"
   m_bShouldRespawnOnSideRespawn 0
+  m_iRespawnTimer 600
   m_iTicketsPerRespawn 2
  }
  {
@@ -109,7 +122,8 @@ $grp CRF_VehicleSpawner {
   m_rVehicle "{A91885ACFD13EE3D}Prefabs/Vehicles/Tracked/BFV/1-1 IFV.et"
   m_sFactionKey "BLUFOR"
   m_bShouldRespawnOnSideRespawn 0
-  m_iRespawnTimer 600
+  m_iRespawnTimer 1200
+  m_iTicketsPerRespawn 5
  }
  {
   coords 432.48 74.591 7946.426
@@ -117,7 +131,8 @@ $grp CRF_VehicleSpawner {
   m_rVehicle "{1BCFC747A2B1DDA5}Prefabs/Vehicles/Tracked/BFV/1-2 IFV.et"
   m_sFactionKey "BLUFOR"
   m_bShouldRespawnOnSideRespawn 0
-  m_iRespawnTimer 600
+  m_iRespawnTimer 1200
+  m_iTicketsPerRespawn 5
  }
  {
   coords 428.878 74.735 7946.426
@@ -125,7 +140,8 @@ $grp CRF_VehicleSpawner {
   m_rVehicle "{7582F91E97D0332D}Prefabs/Vehicles/Tracked/BFV/1-3 IFV.et"
   m_sFactionKey "BLUFOR"
   m_bShouldRespawnOnSideRespawn 0
-  m_iRespawnTimer 600
+  m_iRespawnTimer 1200
+  m_iTicketsPerRespawn 5
  }
  {
   coords 424.287 75.125 7946.426
@@ -133,7 +149,8 @@ $grp CRF_VehicleSpawner {
   m_rVehicle "{8E46E191EBBDBF9E}Prefabs/Vehicles/Tracked/BFV/1-7 IFV.et"
   m_sFactionKey "BLUFOR"
   m_bShouldRespawnOnSideRespawn 0
-  m_iRespawnTimer 600
+  m_iRespawnTimer 1200
+  m_iTicketsPerRespawn 5
  }
  {
   coords 405.868 75.388 7946.426
@@ -141,7 +158,8 @@ $grp CRF_VehicleSpawner {
   m_rVehicle "{CEB6C0B45DA13DD9}Prefabs/Vehicles/Tracked/BFV/2-7 IFV.et"
   m_sFactionKey "BLUFOR"
   m_bShouldRespawnOnSideRespawn 0
-  m_iRespawnTimer 600
+  m_iRespawnTimer 1200
+  m_iTicketsPerRespawn 5
  }
  {
   coords 417.871 75.285 7946.426
@@ -149,7 +167,8 @@ $grp CRF_VehicleSpawner {
   m_rVehicle "{E9E8A4894B0F6C7A}Prefabs/Vehicles/Tracked/BFV/2-1 IFV.et"
   m_sFactionKey "BLUFOR"
   m_bShouldRespawnOnSideRespawn 0
-  m_iRespawnTimer 600
+  m_iRespawnTimer 1200
+  m_iTicketsPerRespawn 5
  }
  {
   coords 414.061 75.244 7946.426
@@ -157,7 +176,8 @@ $grp CRF_VehicleSpawner {
   m_rVehicle "{5B3FE66214AD5FE2}Prefabs/Vehicles/Tracked/BFV/2-2 IFV.et"
   m_sFactionKey "BLUFOR"
   m_bShouldRespawnOnSideRespawn 0
-  m_iRespawnTimer 600
+  m_iRespawnTimer 1200
+  m_iTicketsPerRespawn 5
  }
  {
   coords 410.459 75.244 7946.426
@@ -165,7 +185,8 @@ $grp CRF_VehicleSpawner {
   m_rVehicle "{3572D83B21CCB16A}Prefabs/Vehicles/Tracked/BFV/2-3 IFV.et"
   m_sFactionKey "BLUFOR"
   m_bShouldRespawnOnSideRespawn 0
-  m_iRespawnTimer 600
+  m_iRespawnTimer 1200
+  m_iTicketsPerRespawn 5
  }
  {
   coords 386.702 74.79 7946.426
@@ -173,7 +194,8 @@ $grp CRF_VehicleSpawner {
   m_rVehicle "{8261C21AF751620D}Prefabs/Vehicles/Tracked/BFV/3-4 IFV.et"
   m_sFactionKey "BLUFOR"
   m_bShouldRespawnOnSideRespawn 0
-  m_iRespawnTimer 600
+  m_iRespawnTimer 1200
+  m_iTicketsPerRespawn 5
  }
  {
   coords 398.705 75.305 7946.426
@@ -181,7 +203,8 @@ $grp CRF_VehicleSpawner {
   m_rVehicle "{17E8E4CCBE5D0036}Prefabs/Vehicles/Tracked/BFV/3-1 IFV.et"
   m_sFactionKey "BLUFOR"
   m_bShouldRespawnOnSideRespawn 0
-  m_iRespawnTimer 600
+  m_iRespawnTimer 1200
+  m_iTicketsPerRespawn 5
  }
  {
   coords 394.895 75.109 7946.426
@@ -189,7 +212,8 @@ $grp CRF_VehicleSpawner {
   m_rVehicle "{CB72987ED49EDD26}Prefabs/Vehicles/Tracked/BFV/3-3 IFV.et"
   m_sFactionKey "BLUFOR"
   m_bShouldRespawnOnSideRespawn 0
-  m_iRespawnTimer 600
+  m_iRespawnTimer 1200
+  m_iTicketsPerRespawn 5
  }
  {
   coords 391.293 74.933 7946.426
@@ -197,6 +221,194 @@ $grp CRF_VehicleSpawner {
   m_rVehicle "{CB72987ED49EDD26}Prefabs/Vehicles/Tracked/BFV/3-3 IFV.et"
   m_sFactionKey "BLUFOR"
   m_bShouldRespawnOnSideRespawn 0
+  m_iRespawnTimer 1200
+  m_iTicketsPerRespawn 5
+ }
+ {
+  coords 412.745 74.657 7849.912
+  angles -8.066 39.057 1.467
+  m_rVehicle "{81FDAD5EB644CC3D}Prefabs/Vehicles/Wheeled/M923A1/M923A1_transport_covered.et"
+  m_sFactionKey "BLUFOR"
+  m_bShouldRespawnOnSideRespawn 0
   m_iRespawnTimer 600
+  m_iTicketsPerRespawn 0
+  m_aAdditionalVehicleItems {
+   CRF_VehicleGearScriptAdditionalItem "{66CA27D16811D2BA}" {
+    m_Prefab "{62B704DD79A3B5BE}Prefabs/Items/Equipment/Mortars/M252/Part_M252_Barrel.et"
+    m_iAmountOfItemSupplyTruck 0
+   }
+   CRF_VehicleGearScriptAdditionalItem "{66CA27D1630B58FB}" {
+    m_Prefab "{0D540E16A6E53433}Prefabs/Items/Equipment/Mortars/M252/Part_M252_BasePlate.et"
+    m_iAmountOfItemSupplyTruck 0
+   }
+   CRF_VehicleGearScriptAdditionalItem "{66CA27D17C397454}" {
+    m_Prefab "{80D38046CB4D4663}Prefabs/Items/Equipment/Mortars/M252/Part_M252_Bipod.et"
+    m_iAmountOfItemSupplyTruck 0
+   }
+   CRF_VehicleGearScriptAdditionalItem "{66CA27D114CE2366}" {
+    m_Prefab "{38BAE094333E31BF}Prefabs/Weapons/Ammo/Ammo_Shell_81mm_HE_M821.et"
+    m_iAmountOfItemSupplyTruck 0
+    m_iAmountOfItemRegularVehicle 40
+   }
+   CRF_VehicleGearScriptAdditionalItem "{66CA27D12F72402E}" {
+    m_Prefab "{F7807293E94D3C88}Prefabs/Weapons/Ammo/Ammo_Shell_81mm_Smoke_M819.et"
+    m_iAmountOfItemSupplyTruck 0
+    m_iAmountOfItemRegularVehicle 20
+   }
+   CRF_VehicleGearScriptAdditionalItem "{66CA27D125C4F049}" {
+    m_Prefab "{DD2065AE34D8DFA9}Prefabs/Weapons/Ammo/Ammo_Shell_81mm_Illum_M853A1.et"
+    m_iAmountOfItemSupplyTruck 0
+    m_iAmountOfItemRegularVehicle 20
+   }
+  }
+ }
+ {
+  coords 441.517 74.036 7910.074
+  angles 0.853 -4.205 11.451
+  m_rVehicle "{C76F6C6EA8CF38E1}Prefabs/Vehicles/Tracked/BFV/Mortar_HMMWV.et"
+  m_sFactionKey "BLUFOR"
+  m_bShouldRespawnOnSideRespawn 0
+  m_iRespawnTimer 600
+  m_iTicketsPerRespawn 2
+ }
+ {
+  coords 417.34 74.788 7846.367
+  angles -8.066 39.057 1.467
+  m_rVehicle "{81FDAD5EB644CC3D}Prefabs/Vehicles/Wheeled/M923A1/M923A1_transport_covered.et"
+  m_sFactionKey "BLUFOR"
+  m_bShouldRespawnOnSideRespawn 0
+  m_iRespawnTimer 600
+  m_iTicketsPerRespawn 0
+  m_aAdditionalVehicleItems {
+   CRF_VehicleGearScriptAdditionalItem "{66CA27D16811D2BA}" {
+    m_Prefab "{62B704DD79A3B5BE}Prefabs/Items/Equipment/Mortars/M252/Part_M252_Barrel.et"
+    m_iAmountOfItemSupplyTruck 0
+   }
+   CRF_VehicleGearScriptAdditionalItem "{66CA27D1630B58FB}" {
+    m_Prefab "{0D540E16A6E53433}Prefabs/Items/Equipment/Mortars/M252/Part_M252_BasePlate.et"
+    m_iAmountOfItemSupplyTruck 0
+   }
+   CRF_VehicleGearScriptAdditionalItem "{66CA27D17C397454}" {
+    m_Prefab "{80D38046CB4D4663}Prefabs/Items/Equipment/Mortars/M252/Part_M252_Bipod.et"
+    m_iAmountOfItemSupplyTruck 0
+   }
+   CRF_VehicleGearScriptAdditionalItem "{66CA27D114CE2366}" {
+    m_Prefab "{38BAE094333E31BF}Prefabs/Weapons/Ammo/Ammo_Shell_81mm_HE_M821.et"
+    m_iAmountOfItemSupplyTruck 0
+    m_iAmountOfItemRegularVehicle 40
+   }
+   CRF_VehicleGearScriptAdditionalItem "{66CA27D12F72402E}" {
+    m_Prefab "{F7807293E94D3C88}Prefabs/Weapons/Ammo/Ammo_Shell_81mm_Smoke_M819.et"
+    m_iAmountOfItemSupplyTruck 0
+    m_iAmountOfItemRegularVehicle 20
+   }
+   CRF_VehicleGearScriptAdditionalItem "{66CA27D125C4F049}" {
+    m_Prefab "{DD2065AE34D8DFA9}Prefabs/Weapons/Ammo/Ammo_Shell_81mm_Illum_M853A1.et"
+    m_iAmountOfItemSupplyTruck 0
+    m_iAmountOfItemRegularVehicle 20
+   }
+  }
+ }
+ {
+  coords 416.122 80.868 7995.631
+  angles 0.495 93.643 6.285
+  m_rVehicle "{E02D04FEFF5D772C}Prefabs/Vehicles/Tracked/BFV/US_MSP.et"
+  m_sFactionKey "BLUFOR"
+  m_bShouldRespawnOnSideRespawn 0
+  m_iRespawnTimer 600
+ }
+ {
+  coords 403.258 74.415 7855.836
+  angles -8.066 39.057 1.467
+  m_rVehicle "{81FDAD5EB644CC3D}Prefabs/Vehicles/Wheeled/M923A1/M923A1_transport_covered.et"
+  m_sFactionKey "BLUFOR"
+  m_bShouldRespawnOnSideRespawn 0
+  m_iRespawnTimer 600
+  m_iTicketsPerRespawn 0
+  m_aAdditionalVehicleItems {
+   CRF_VehicleGearScriptAdditionalItem "{66CA27D16811D2BA}" {
+    m_Prefab "{62B704DD79A3B5BE}Prefabs/Items/Equipment/Mortars/M252/Part_M252_Barrel.et"
+    m_iAmountOfItemSupplyTruck 0
+   }
+   CRF_VehicleGearScriptAdditionalItem "{66CA27D1630B58FB}" {
+    m_Prefab "{0D540E16A6E53433}Prefabs/Items/Equipment/Mortars/M252/Part_M252_BasePlate.et"
+    m_iAmountOfItemSupplyTruck 0
+   }
+   CRF_VehicleGearScriptAdditionalItem "{66CA27D17C397454}" {
+    m_Prefab "{80D38046CB4D4663}Prefabs/Items/Equipment/Mortars/M252/Part_M252_Bipod.et"
+    m_iAmountOfItemSupplyTruck 0
+   }
+   CRF_VehicleGearScriptAdditionalItem "{66CA27D114CE2366}" {
+    m_Prefab "{38BAE094333E31BF}Prefabs/Weapons/Ammo/Ammo_Shell_81mm_HE_M821.et"
+    m_iAmountOfItemSupplyTruck 0
+    m_iAmountOfItemRegularVehicle 40
+   }
+   CRF_VehicleGearScriptAdditionalItem "{66CA27D12F72402E}" {
+    m_Prefab "{F7807293E94D3C88}Prefabs/Weapons/Ammo/Ammo_Shell_81mm_Smoke_M819.et"
+    m_iAmountOfItemSupplyTruck 0
+    m_iAmountOfItemRegularVehicle 20
+   }
+   CRF_VehicleGearScriptAdditionalItem "{66CA27D125C4F049}" {
+    m_Prefab "{DD2065AE34D8DFA9}Prefabs/Weapons/Ammo/Ammo_Shell_81mm_Illum_M853A1.et"
+    m_iAmountOfItemSupplyTruck 0
+    m_iAmountOfItemRegularVehicle 20
+   }
+  }
+ }
+ {
+  coords 407.638 74.432 7852.248
+  angles -8.066 39.057 1.467
+  m_rVehicle "{81FDAD5EB644CC3D}Prefabs/Vehicles/Wheeled/M923A1/M923A1_transport_covered.et"
+  m_sFactionKey "BLUFOR"
+  m_bShouldRespawnOnSideRespawn 0
+  m_iRespawnTimer 600
+  m_iTicketsPerRespawn 0
+  m_aAdditionalVehicleItems {
+   CRF_VehicleGearScriptAdditionalItem "{66CA27D16811D2BA}" {
+    m_Prefab "{62B704DD79A3B5BE}Prefabs/Items/Equipment/Mortars/M252/Part_M252_Barrel.et"
+    m_iAmountOfItemSupplyTruck 0
+   }
+   CRF_VehicleGearScriptAdditionalItem "{66CA27D1630B58FB}" {
+    m_Prefab "{0D540E16A6E53433}Prefabs/Items/Equipment/Mortars/M252/Part_M252_BasePlate.et"
+    m_iAmountOfItemSupplyTruck 0
+   }
+   CRF_VehicleGearScriptAdditionalItem "{66CA27D17C397454}" {
+    m_Prefab "{80D38046CB4D4663}Prefabs/Items/Equipment/Mortars/M252/Part_M252_Bipod.et"
+    m_iAmountOfItemSupplyTruck 0
+   }
+   CRF_VehicleGearScriptAdditionalItem "{66CA27D114CE2366}" {
+    m_Prefab "{38BAE094333E31BF}Prefabs/Weapons/Ammo/Ammo_Shell_81mm_HE_M821.et"
+    m_iAmountOfItemSupplyTruck 0
+    m_iAmountOfItemRegularVehicle 40
+   }
+   CRF_VehicleGearScriptAdditionalItem "{66CA27D12F72402E}" {
+    m_Prefab "{F7807293E94D3C88}Prefabs/Weapons/Ammo/Ammo_Shell_81mm_Smoke_M819.et"
+    m_iAmountOfItemSupplyTruck 0
+    m_iAmountOfItemRegularVehicle 20
+   }
+   CRF_VehicleGearScriptAdditionalItem "{66CA27D125C4F049}" {
+    m_Prefab "{DD2065AE34D8DFA9}Prefabs/Weapons/Ammo/Ammo_Shell_81mm_Illum_M853A1.et"
+    m_iAmountOfItemSupplyTruck 0
+    m_iAmountOfItemRegularVehicle 20
+   }
+  }
+ }
+ {
+  coords 444.586 73.756 7894.626
+  angles 9.322 -2.973 8.305
+  m_rVehicle "{C76F6C6EA8CF38E1}Prefabs/Vehicles/Tracked/BFV/Mortar_HMMWV.et"
+  m_sFactionKey "BLUFOR"
+  m_bShouldRespawnOnSideRespawn 0
+  m_iRespawnTimer 600
+  m_iTicketsPerRespawn 2
+ }
+ {
+  coords 442.334 74.569 7903.095
+  angles -4.636 -5.015 8.407
+  m_rVehicle "{C76F6C6EA8CF38E1}Prefabs/Vehicles/Tracked/BFV/Mortar_HMMWV.et"
+  m_sFactionKey "BLUFOR"
+  m_bShouldRespawnOnSideRespawn 0
+  m_iRespawnTimer 600
+  m_iTicketsPerRespawn 2
  }
 }

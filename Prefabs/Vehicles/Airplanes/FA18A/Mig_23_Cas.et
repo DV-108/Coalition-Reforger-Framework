@@ -1,0 +1,30 @@
+GenericEntity : "{EDD3E14E481BDA62}Prefabs/Vehicles/Airplanes/FA18A/FA18A_GBU_CAS.et" {
+ ID "5EF4E66040B1F16E"
+ components {
+  MeshObject "{5EF4E663B57AB12A}" {
+   Object "{71621A7B19CC4D69}Assets/Mig23/mig23Cas.xob"
+  }
+  RHS_CAS_EditableEntityComponent "{5EF4FCF23F9195B3}" {
+   m_UIInfo SCR_EditableEntityUIInfo "{5EF4FCF2C5795229}" {
+    Name "Mig23 CAS Strike"
+    m_sFaction "OPFOR"
+    m_aAuthoredLabels {
+     ENTITYTYPE_SYSTEM FACTION_CRF_OPFOR CONTENT_MODDED
+    }
+   }
+  }
+  SlotManagerComponent "{5EF4E6606BC5BC71}" {
+   Slots {
+    EntitySlotInfo Platform {
+     PivotID "v_F18"
+     Offset -0.6092 0 0.4325
+     Prefab "{6E7256967D6690A5}Prefabs/Vehicles/Airplanes/SU57/MIG23_CAS_Mesh.et"
+    }
+    EntitySlotInfo Payload {
+     Offset -0.5726 0 0.7498
+    }
+   }
+  }
+ }
+ coords 773.243 77.207 7536.811
+}

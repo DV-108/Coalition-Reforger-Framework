@@ -1,0 +1,17 @@
+MatPBRBasic {
+ Cull none
+ AlphaTest 1
+ BCRMap "{38570D7321D71C4C}Images/EastGermanFlag_BCR.edds"
+ OpacityMap "{8A9851949BF85522}Assets/Props/Fabric/Flags/Data/Flag_2_3_A.edds"
+ NormalPower 1.2
+ NMOMap "{C39D234EF0D4B94D}Assets/Props/Fabric/Flags/Data/Flag_1_2_N.edds"
+ GlobalMapsUVTransform MatUVTransform "{589EB2EAFFDAF8D2}" {
+  OffsetU 0.111
+ }
+ DetailNormalPower 0.35
+ DetailNormalMap "{61DE3875B9DBD343}Assets/_SharedData/Fabric/ST_FabricWrinkles_1m_01_NMO.edds"
+ DetailNormalMapUVTransform MatUVTransform "{589EB2EAEC3104CF}" {
+  TilingU 2
+  TilingV 2
+ }
+}

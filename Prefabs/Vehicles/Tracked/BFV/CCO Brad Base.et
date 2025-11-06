@@ -69,5 +69,14 @@ Tank : "{ABCC1FF0D6096E47}Prefabs/Vehicles/Tracked/BFV/M2A2_BODY_BASE.et" {
    m_iAmountOfItemSupplyTruck 0
    m_iAmountOfItemRegularVehicle 2
   }
+  CRF_VehicleGearScriptAdditionalItem "{66CB026E5BEDAD23}" {
+   m_Prefab "{33CBDE73AB48172A}Prefabs/Weapons/Explosives/DemoBlock_M112/DemoBlock_M112.et"
+   m_iAmountOfItemSupplyTruck 0
+   m_iAmountOfItemRegularVehicle 2
+  }
+  CRF_VehicleGearScriptAdditionalItem "{66CB026E6D2E5931}" {
+   m_Prefab "{CE0AF733722B3978}Prefabs/Items/Equipment/Detonators/BlastingMachine_M34/BlastingMachine_M34.et"
+   m_iAmountOfItemSupplyTruck 0
+  }
  }
 }

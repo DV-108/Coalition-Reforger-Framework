@@ -1,0 +1,14 @@
+GenericEntity : "{0B6DDCCD4CF39BA3}Prefabs/Props/Fabric/Flags/Flag_2_3_Red_01.et" {
+ ID "50E2C85E7DD38DD0"
+ components {
+  MeshObject "{52AE82368499B365}" {
+   Materials {
+    MaterialAssignClass "{589EBB80AC586CA9}" {
+     SourceMaterial "Flag_1_2"
+     AssignedMaterial "{8500F7B029C80F5D}Assets/Props/Fabric/Flags/Data/Flag_EastGermany.emat"
+    }
+   }
+  }
+ }
+ coords 414.489 76.732 7878.913
+}

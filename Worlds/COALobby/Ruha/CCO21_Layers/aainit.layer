@@ -1,6 +1,3 @@
-SCR_AIWorld : "{65DEC16960498027}Prefabs/AI/SCR_AIWorld_Ruha.et" {
- coords 513.572 64.682 5251.33
-}
 CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et" {
  coords 439.388 64.278 5227.793
  m_iTimeLimitMinutes 240
@@ -16,6 +13,8 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
    "{38BAE094333E31BF}Prefabs/Weapons/Ammo/Ammo_Shell_81mm_HE_M821.et"
    "{F7807293E94D3C88}Prefabs/Weapons/Ammo/Ammo_Shell_81mm_Smoke_M819.et"
    "{DD2065AE34D8DFA9}Prefabs/Weapons/Ammo/Ammo_Shell_81mm_Illum_M853A1.et"
+   "{33CBDE73AB48172A}Prefabs/Weapons/Explosives/DemoBlock_M112/DemoBlock_M112.et"
+   "{CE0AF733722B3978}Prefabs/Items/Equipment/Detonators/BlastingMachine_M34/BlastingMachine_M34.et"
   }
  }
  m_OPFORGearScriptSettings CRF_GearScriptContainer "{64570ACB9B11EAAD}" {
@@ -24,8 +23,12 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
  m_INDFORGearScriptSettings CRF_GearScriptContainer "{64570ACB9AE1C9ED}" {
   m_rGearScript "{A04D2390B29F6E22}Configs/Gearscripts/Standard/CCO21/CCONortherFlight_INDFOR.conf"
  }
+ m_bRespawnEnabled 1
+ m_bWaveRespawn 1
+ m_iTimeToRespawn 600
+ m_iBLUFORTickets 250
  {
-  SCR_FactionManager {
+  SCR_FactionManager "66CB0269829D624E" {
    ID "632A77473B3CC3A8"
    Factions {
     SCR_Faction "{628B22E9B4056C88}" {
@@ -124,119 +127,6 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
       }
      }
     }
-   }
-  }
- }
-}
-$grp CRF_VehicleSpawner {
- {
-  coords 441.517 74.036 7910.074
-  angles 0.853 -4.205 11.451
-  m_rVehicle "{B55C6990A6A9411B}Prefabs/Vehicles/Wheeled/M998/M998_covered.et"
-  m_sFactionKey "BLUFOR"
-  m_bShouldRespawnOnSideRespawn 0
-  m_iTicketsPerRespawn 2
-  m_aAdditionalVehicleItems {
-   CRF_VehicleGearScriptAdditionalItem "{66CA27D16811D2BA}" {
-    m_Prefab "{62B704DD79A3B5BE}Prefabs/Items/Equipment/Mortars/M252/Part_M252_Barrel.et"
-    m_iAmountOfItemSupplyTruck 0
-   }
-   CRF_VehicleGearScriptAdditionalItem "{66CA27D1630B58FB}" {
-    m_Prefab "{0D540E16A6E53433}Prefabs/Items/Equipment/Mortars/M252/Part_M252_BasePlate.et"
-    m_iAmountOfItemSupplyTruck 0
-   }
-   CRF_VehicleGearScriptAdditionalItem "{66CA27D17C397454}" {
-    m_Prefab "{80D38046CB4D4663}Prefabs/Items/Equipment/Mortars/M252/Part_M252_Bipod.et"
-    m_iAmountOfItemSupplyTruck 0
-   }
-   CRF_VehicleGearScriptAdditionalItem "{66CA27D114CE2366}" {
-    m_Prefab "{38BAE094333E31BF}Prefabs/Weapons/Ammo/Ammo_Shell_81mm_HE_M821.et"
-    m_iAmountOfItemSupplyTruck 0
-    m_iAmountOfItemRegularVehicle 40
-   }
-   CRF_VehicleGearScriptAdditionalItem "{66CA27D12F72402E}" {
-    m_Prefab "{F7807293E94D3C88}Prefabs/Weapons/Ammo/Ammo_Shell_81mm_Smoke_M819.et"
-    m_iAmountOfItemSupplyTruck 0
-    m_iAmountOfItemRegularVehicle 20
-   }
-   CRF_VehicleGearScriptAdditionalItem "{66CA27D125C4F049}" {
-    m_Prefab "{DD2065AE34D8DFA9}Prefabs/Weapons/Ammo/Ammo_Shell_81mm_Illum_M853A1.et"
-    m_iAmountOfItemSupplyTruck 0
-    m_iAmountOfItemRegularVehicle 20
-   }
-  }
- }
- {
-  coords 441.964 74.581 7903.514
-  angles -4.724 -4.941 7.529
-  m_rVehicle "{B55C6990A6A9411B}Prefabs/Vehicles/Wheeled/M998/M998_covered.et"
-  m_sFactionKey "BLUFOR"
-  m_bShouldRespawnOnSideRespawn 0
-  m_iTicketsPerRespawn 2
-  m_aAdditionalVehicleItems {
-   CRF_VehicleGearScriptAdditionalItem "{66CA27D16811D2BA}" {
-    m_Prefab "{62B704DD79A3B5BE}Prefabs/Items/Equipment/Mortars/M252/Part_M252_Barrel.et"
-    m_iAmountOfItemSupplyTruck 0
-   }
-   CRF_VehicleGearScriptAdditionalItem "{66CA27D1630B58FB}" {
-    m_Prefab "{0D540E16A6E53433}Prefabs/Items/Equipment/Mortars/M252/Part_M252_BasePlate.et"
-    m_iAmountOfItemSupplyTruck 0
-   }
-   CRF_VehicleGearScriptAdditionalItem "{66CA27D17C397454}" {
-    m_Prefab "{80D38046CB4D4663}Prefabs/Items/Equipment/Mortars/M252/Part_M252_Bipod.et"
-    m_iAmountOfItemSupplyTruck 0
-   }
-   CRF_VehicleGearScriptAdditionalItem "{66CA27D114CE2366}" {
-    m_Prefab "{38BAE094333E31BF}Prefabs/Weapons/Ammo/Ammo_Shell_81mm_HE_M821.et"
-    m_iAmountOfItemSupplyTruck 0
-    m_iAmountOfItemRegularVehicle 40
-   }
-   CRF_VehicleGearScriptAdditionalItem "{66CA27D12F72402E}" {
-    m_Prefab "{F7807293E94D3C88}Prefabs/Weapons/Ammo/Ammo_Shell_81mm_Smoke_M819.et"
-    m_iAmountOfItemSupplyTruck 0
-    m_iAmountOfItemRegularVehicle 20
-   }
-   CRF_VehicleGearScriptAdditionalItem "{66CA27D125C4F049}" {
-    m_Prefab "{DD2065AE34D8DFA9}Prefabs/Weapons/Ammo/Ammo_Shell_81mm_Illum_M853A1.et"
-    m_iAmountOfItemSupplyTruck 0
-    m_iAmountOfItemRegularVehicle 20
-   }
-  }
- }
- {
-  coords 442.83 74.233 7896.043
-  angles 8.435 -3.214 7.468
-  m_rVehicle "{B55C6990A6A9411B}Prefabs/Vehicles/Wheeled/M998/M998_covered.et"
-  m_sFactionKey "BLUFOR"
-  m_bShouldRespawnOnSideRespawn 0
-  m_iTicketsPerRespawn 2
-  m_aAdditionalVehicleItems {
-   CRF_VehicleGearScriptAdditionalItem "{66CA27D16811D2BA}" {
-    m_Prefab "{62B704DD79A3B5BE}Prefabs/Items/Equipment/Mortars/M252/Part_M252_Barrel.et"
-    m_iAmountOfItemSupplyTruck 0
-   }
-   CRF_VehicleGearScriptAdditionalItem "{66CA27D1630B58FB}" {
-    m_Prefab "{0D540E16A6E53433}Prefabs/Items/Equipment/Mortars/M252/Part_M252_BasePlate.et"
-    m_iAmountOfItemSupplyTruck 0
-   }
-   CRF_VehicleGearScriptAdditionalItem "{66CA27D17C397454}" {
-    m_Prefab "{80D38046CB4D4663}Prefabs/Items/Equipment/Mortars/M252/Part_M252_Bipod.et"
-    m_iAmountOfItemSupplyTruck 0
-   }
-   CRF_VehicleGearScriptAdditionalItem "{66CA27D114CE2366}" {
-    m_Prefab "{38BAE094333E31BF}Prefabs/Weapons/Ammo/Ammo_Shell_81mm_HE_M821.et"
-    m_iAmountOfItemSupplyTruck 0
-    m_iAmountOfItemRegularVehicle 40
-   }
-   CRF_VehicleGearScriptAdditionalItem "{66CA27D12F72402E}" {
-    m_Prefab "{F7807293E94D3C88}Prefabs/Weapons/Ammo/Ammo_Shell_81mm_Smoke_M819.et"
-    m_iAmountOfItemSupplyTruck 0
-    m_iAmountOfItemRegularVehicle 20
-   }
-   CRF_VehicleGearScriptAdditionalItem "{66CA27D125C4F049}" {
-    m_Prefab "{DD2065AE34D8DFA9}Prefabs/Weapons/Ammo/Ammo_Shell_81mm_Illum_M853A1.et"
-    m_iAmountOfItemSupplyTruck 0
-    m_iAmountOfItemRegularVehicle 20
    }
   }
  }

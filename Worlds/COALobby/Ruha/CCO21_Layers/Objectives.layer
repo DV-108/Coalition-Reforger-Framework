@@ -1,0 +1,266 @@
+$grp BaseGameTriggerEntity {
+ SouthAirfieldZone {
+  coords 6637.6 96.719 1179.115
+  userScript "	string m_sAttackKey = \"BLUFOR\";"\
+  "	string m_sDefenderKey = \"OPFOR\";"\
+  "	string m_sSecondDefenderKey = \"INDFOR\";"\
+  "	float percentToWin = 0.35;"\
+  "	"\
+  "	void PhaseWin()"\
+  "	{"\
+  "		CRF_RplBroadcastManager.GetInstance().PopUpNotification(10, \"The Southern Half of the Airfield has been captured!\", \"\", \"{E3E34E1B0BC94432}Sounds/UI/Samples/Menu/UI_Task_Succeded.wav\");"\
+  "		delete this;"\
+  "	}"
+  TriggerShapeType Sphere
+  SphereRadius 137.4
+  PeriodicQueries 1
+  UpdatePeriod 10
+  OnQueryFinished ""\
+  "		#ifdef WORKBENCH"\
+  "		#else"\
+  "		if (!System.IsConsoleApp())"\
+  "			return;"\
+  "		#endif"\
+  "		QueryEntitiesInside();"\
+  "		array<IEntity> entities = {};"\
+  "		GetEntitiesInside(entities);"\
+  "		int attackerCount = 0;"\
+  "		int defenderCount = 0;"\
+  "		foreach (IEntity entity: entities)"\
+  "		{"\
+  "			if (!ChimeraCharacter.Cast(entity))"\
+  "				continue;"\
+  "			"\
+  "			if (!entity.FindComponent(FactionAffiliationComponent))"\
+  "				continue;"\
+  "			"\
+  "			switch (FactionAffiliationComponent.Cast(entity.FindComponent(FactionAffiliationComponent)).GetAffiliatedFactionKey())"\
+  "			{"\
+  "				case m_sAttackKey:"\
+  "				attackerCount++;"\
+  "				break;"\
+  "				case m_sDefenderKey:"\
+  "				defenderCount++;"\
+  "				break;"\
+  "				case m_sSecondDefenderKey:"\
+  "				defenderCount++;"\
+  "				break;"\
+  "			}"\
+  "		}"\
+  "		"\
+  "		if (attackerCount == 0)"\
+  "			return;"\
+  "		"\
+  "		if (attackerCount > 0 && defenderCount == 0)"\
+  "		{"\
+  "			PhaseWin();"\
+  "			return;"\
+  "		}"\
+  "		"\
+  "		if (attackerCount == 0 && defenderCount == 0)"\
+  "			return;"\
+  "		"\
+  "		if ((defenderCount / attackerCount) <= percentToWin)"\
+  "			PhaseWin();"\
+  "	"
+ }
+ RuhaCaptureZone {
+  coords 4345.58 54.516 4518.38
+  userScript "	string m_sAttackKey = \"BLUFOR\";"\
+  "	string m_sDefenderKey = \"OPFOR\";"\
+  "	string m_sSecondDefenderKey = \"INDFOR\";"\
+  "	float percentToWin = 0.35;"\
+  "	"\
+  "	void PhaseWin()"\
+  "	{"\
+  "		CRF_RplBroadcastManager.GetInstance().PopUpNotification(10, \"The Ruha Bridge is under our control!\", \"Continue mission to the next objective!\", \"{E3E34E1B0BC94432}Sounds/UI/Samples/Menu/UI_Task_Succeded.wav\");"\
+  "		delete this;"\
+  "	}"
+  TriggerShapeType Sphere
+  SphereRadius 230.3
+  PeriodicQueries 1
+  UpdatePeriod 10
+  OnQueryFinished ""\
+  "		#ifdef WORKBENCH"\
+  "		#else"\
+  "		if (!System.IsConsoleApp())"\
+  "			return;"\
+  "		#endif"\
+  "		QueryEntitiesInside();"\
+  "		array<IEntity> entities = {};"\
+  "		GetEntitiesInside(entities);"\
+  "		int attackerCount = 0;"\
+  "		int defenderCount = 0;"\
+  "		foreach (IEntity entity: entities)"\
+  "		{"\
+  "			if (!ChimeraCharacter.Cast(entity))"\
+  "				continue;"\
+  "			"\
+  "			if (!entity.FindComponent(FactionAffiliationComponent))"\
+  "				continue;"\
+  "			"\
+  "			switch (FactionAffiliationComponent.Cast(entity.FindComponent(FactionAffiliationComponent)).GetAffiliatedFactionKey())"\
+  "			{"\
+  "				case m_sAttackKey:"\
+  "				attackerCount++;"\
+  "				break;"\
+  "				case m_sDefenderKey:"\
+  "				defenderCount++;"\
+  "				break;"\
+  "				case m_sSecondDefenderKey:"\
+  "				defenderCount++;"\
+  "				break;"\
+  "			}"\
+  "		}"\
+  "		"\
+  "		if (attackerCount == 0)"\
+  "			return;"\
+  "		"\
+  "		if (attackerCount > 0 && defenderCount == 0)"\
+  "		{"\
+  "			PhaseWin();"\
+  "			return;"\
+  "		}"\
+  "		"\
+  "		if (attackerCount == 0 && defenderCount == 0)"\
+  "			return;"\
+  "		"\
+  "		if ((defenderCount / attackerCount) <= percentToWin)"\
+  "			PhaseWin();"\
+  "	"
+ }
+ NorthAirfieldZone {
+  coords 6685.083 96.249 1607.943
+  userScript "	string m_sAttackKey = \"BLUFOR\";"\
+  "	string m_sDefenderKey = \"OPFOR\";"\
+  "	string m_sSecondDefenderKey = \"INDFOR\";"\
+  "	float percentToWin = 0.35;"\
+  "	"\
+  "	void PhaseWin()"\
+  "	{"\
+  "		CRF_RplBroadcastManager.GetInstance().PopUpNotification(10, \"The Northern Half of the Airfield has been captured!\", \"\", \"{E3E34E1B0BC94432}Sounds/UI/Samples/Menu/UI_Task_Succeded.wav\");"\
+  "		delete this;"\
+  "	}"
+  TriggerShapeType Sphere
+  SphereRadius 137.4
+  PeriodicQueries 1
+  UpdatePeriod 10
+  OnQueryFinished ""\
+  "		#ifdef WORKBENCH"\
+  "		#else"\
+  "		if (!System.IsConsoleApp())"\
+  "			return;"\
+  "		#endif"\
+  "		QueryEntitiesInside();"\
+  "		array<IEntity> entities = {};"\
+  "		GetEntitiesInside(entities);"\
+  "		int attackerCount = 0;"\
+  "		int defenderCount = 0;"\
+  "		foreach (IEntity entity: entities)"\
+  "		{"\
+  "			if (!ChimeraCharacter.Cast(entity))"\
+  "				continue;"\
+  "			"\
+  "			if (!entity.FindComponent(FactionAffiliationComponent))"\
+  "				continue;"\
+  "			"\
+  "			switch (FactionAffiliationComponent.Cast(entity.FindComponent(FactionAffiliationComponent)).GetAffiliatedFactionKey())"\
+  "			{"\
+  "				case m_sAttackKey:"\
+  "				attackerCount++;"\
+  "				break;"\
+  "				case m_sDefenderKey:"\
+  "				defenderCount++;"\
+  "				break;"\
+  "				case m_sSecondDefenderKey:"\
+  "				defenderCount++;"\
+  "				break;"\
+  "			}"\
+  "		}"\
+  "		"\
+  "		if (attackerCount == 0)"\
+  "			return;"\
+  "		"\
+  "		if (attackerCount > 0 && defenderCount == 0)"\
+  "		{"\
+  "			PhaseWin();"\
+  "			return;"\
+  "		}"\
+  "		"\
+  "		if (attackerCount == 0 && defenderCount == 0)"\
+  "			return;"\
+  "		"\
+  "		if ((defenderCount / attackerCount) <= percentToWin)"\
+  "			PhaseWin();"\
+  "	"
+ }
+ BTR {
+  coords 4765.199 74.794 6094.954
+  userScript "	IEntity m_BTR;"\
+  "	bool m_bBTRHasBeenSet = false;"\
+  "	ResourceName m_sPrefabeToLookFor = \"{C012BB3488BEA0C2}Prefabs/Vehicles/Wheeled/BTR70/BTR70.et\";"\
+  "	"\
+  "	void PhaseWin()"\
+  "	{"\
+  "		CRF_RplBroadcastManager.GetInstance().PopUpNotification(10, \"The East German Screen has been routed!\", \"Continue mission and capture The Ruha Bridge!\", \"{E3E34E1B0BC94432}Sounds/UI/Samples/Menu/UI_Task_Succeded.wav\");"\
+  "	}"
+  TriggerShapeType Sphere
+  PeriodicQueries 1
+  UpdatePeriod 10
+  OnQueryFinished ""\
+  "		#ifdef WORKBENCH"\
+  "		#else"\
+  "		if (!System.IsConsoleApp())"\
+  "			return;"\
+  "		#endif"\
+  "		"\
+  "		if (!m_BTR)"\
+  "		{"\
+  "			QueryEntitiesInside();"\
+  "			array<IEntity> entities = {};"\
+  "			GetEntitiesInside(entities);"\
+  "			"\
+  "			foreach (IEntity entity: entities)"\
+  "			{"\
+  "				if (!Vehicle.Cast(entity))"\
+  "					continue;"\
+  "				"\
+  "				if (entity.GetPrefabData().GetPrefabName() == m_sPrefabeToLookFor)"\
+  "				{"\
+  "					m_BTR = entity;"\
+  "					m_bBTRHasBeenSet = true;"\
+  "				}"\
+  "					"\
+  "			}"\
+  "		}"\
+  "		"\
+  "		if (!m_bBTRHasBeenSet)"\
+  "			return;"\
+  "		"\
+  "		if (!m_BTR)"\
+  "			PhaseWin();"\
+  "		"\
+  "		SCR_WheeledDamageManagerComponent damageMan = SCR_WheeledDamageManagerComponent.Cast(m_BTR.FindComponent(SCR_WheeledDamageManagerComponent));"\
+  "		if (damageMan.GetDefaultHitZone().GetDamageState() == EDamageState.DESTROYED)"\
+  "			PhaseWin();"\
+  "	"
+ }
+}
+CRF_VehicleSpawner {
+ coords 4763.315 74.836 6094.494
+ angles -4.467 0.549 -0.043
+ m_rVehicle "{E97CDE3AED048BF6}Prefabs/Vehicles/CCO21/EG_BTR.et"
+ m_sFactionKey "OPFOR"
+ m_iRespawnTimer 600
+ m_iTicketsPerRespawn 2
+}
+GenericEntity : "{68ED84218EA1BDC3}Prefabs/Compositions/Slotted/SlotFlatSmall/Antenna_S_USSR_01.et" {
+ coords 4763.978 74.428 6092.5
+ {
+  GenericEntity {
+   ID "5D371AC8408F65B6"
+   coords 1.682 0.04 -8.355
+   angles 0 -178.577 0
+  }
+ }
+}

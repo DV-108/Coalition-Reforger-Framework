@@ -12,6 +12,9 @@ GenericEntity : "{22D2EFA80AC9DBD1}Prefabs/Compositions/Slotted/SlotFlatSmall/Su
         SCR_ResourceContainer "{5D3CDAE74F1A6127}" {
          m_fResourceValueCurrent 10000
          m_fResourceValueMax 10000
+         m_bEnableResourceGain 1
+         m_fResourceGain 1000
+         m_fResourceGainTickrate 60
         }
        }
       }
@@ -25,6 +28,12 @@ GenericEntity : "{22D2EFA80AC9DBD1}Prefabs/Compositions/Slotted/SlotFlatSmall/Su
         SCR_ResourceContainer "{5D3CDAE74F1A6127}" {
          m_fResourceValueCurrent 10000
          m_fResourceValueMax 10000
+         m_bEnableResourceGain 1
+         m_fResourceGain 1000
+         m_fResourceGainTickrate 60
+         m_fResourceDecay 0
+         m_fResourceDecayTickrate 0
+         m_fResourceDecayTimeout 0
         }
        }
       }
@@ -38,6 +47,12 @@ GenericEntity : "{22D2EFA80AC9DBD1}Prefabs/Compositions/Slotted/SlotFlatSmall/Su
         SCR_ResourceContainer "{5D3CDAE74F1A6127}" {
          m_fResourceValueCurrent 10000
          m_fResourceValueMax 10000
+         m_bEnableResourceGain 1
+         m_fResourceGain 1000
+         m_fResourceGainTickrate 60
+         m_fResourceDecay 0
+         m_fResourceDecayTickrate 0
+         m_fResourceDecayTimeout 0
         }
        }
       }
@@ -62,6 +77,12 @@ GenericEntity : "{869A4C4CA7F43C21}Prefabs/MP/Campaign/SupplyDepots/SupplyCache_
         SCR_ResourceContainer "{5D3CDAE74F1A6127}" {
          m_fResourceValueCurrent 10000
          m_fResourceValueMax 10000
+         m_bEnableResourceGain 1
+         m_fResourceGain 1000
+         m_fResourceGainTickrate 60
+         m_fResourceDecay 0
+         m_fResourceDecayTickrate 0
+         m_fResourceDecayTimeout 0
         }
        }
       }
@@ -75,6 +96,12 @@ GenericEntity : "{869A4C4CA7F43C21}Prefabs/MP/Campaign/SupplyDepots/SupplyCache_
         SCR_ResourceContainer "{5D3CDAE74F1A6127}" {
          m_fResourceValueCurrent 10000
          m_fResourceValueMax 10000
+         m_bEnableResourceGain 1
+         m_fResourceGain 1000
+         m_fResourceGainTickrate 60
+         m_fResourceDecay 0
+         m_fResourceDecayTickrate 0
+         m_fResourceDecayTimeout 0
         }
        }
       }

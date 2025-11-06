@@ -1,0 +1,18 @@
+Vehicle : "{81A2910690EDA9E5}Prefabs/Vehicles/MSPs/BLUFOR_MSP.et" {
+ ID "66B4D32793E9820A"
+ components {
+  SCR_EditableVehicleComponent "{66B4D32790D819ED}" {
+   m_UIInfo SCR_EditableVehicleUIInfo "{66B4D32790D8187C}" {
+    Name "US MSP"
+   }
+  }
+  SlotManagerComponent "{66B4D32790D8F370}" {
+   Slots {
+    EntitySlotInfo Flag {
+     Prefab "{971F705971EF6F4B}Prefabs/Props/Fabric/Flags/Flag_1_2_US_01.et"
+    }
+   }
+  }
+ }
+ coords 405.434 74.675 7909.41
+}

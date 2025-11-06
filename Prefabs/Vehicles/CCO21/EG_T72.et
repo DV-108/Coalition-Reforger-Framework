@@ -1,0 +1,15 @@
+Tank : "{BC07885176C7FF8A}Prefabs/Vehicles/Tracked/T-72A/T72A_base.et" {
+ ID "BBCBA43A9778AE21"
+ components {
+  SlotManagerComponent "{55BCE45E438E4CFF}" {
+   Slots {
+    EntitySlotInfo Flag {
+     PivotID "v_turret_01"
+     Offset -0.4206 1.1455 -2.7334
+     Prefab "{D8AC6339178BE2C4}Prefabs/Props/Fabric/Flags/EastGerman_FLAG.et"
+    }
+   }
+  }
+ }
+ coords 417.879 75.715 7875.577
+}

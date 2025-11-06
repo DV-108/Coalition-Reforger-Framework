@@ -1,0 +1,210 @@
+MetaFileClass {
+ Name "{71621A7B19CC4D69}Assets/Mig23/mig23Cas.xob"
+ Configurations {
+  FBXResourceClass PC {
+   ExportSkinning 1
+   Scale 3 3 3
+   Rotate 0 90 0
+   MaterialAssigns {
+    MaterialAssignClass "{66CB54776CD9AC9D}" {
+     SourceMaterial "r24"
+     AssignedMaterial "{E9921403F9F687A7}Assets/Mig23/Data/r24.emat"
+    }
+    MaterialAssignClass "{66CB54776CD9ACCC}" {
+     SourceMaterial "00Bnosser"
+     AssignedMaterial "{505FC1D4F1BC0A63}Assets/Mig23/Data/00Bnosser.emat"
+    }
+    MaterialAssignClass "{66CB54776CD9ACD6}" {
+     SourceMaterial "glass"
+     AssignedMaterial "{F40EA7FAFD3DC26B}Assets/Mig23/Data/glass.emat"
+    }
+    MaterialAssignClass "{66CB54776CD9ACDE}" {
+     SourceMaterial "fuzcamo"
+     AssignedMaterial "{805FEBC9D6867980}Assets/Mig23/Data/fuzcamo.emat"
+    }
+    MaterialAssignClass "{66CB54776CD9ACE2}" {
+     SourceMaterial "003fuzcamo1"
+     AssignedMaterial "{BCF34AE178106111}Assets/Mig23/Data/003fuzcamo1.emat"
+    }
+    MaterialAssignClass "{66CB54776CD9ACEE}" {
+     SourceMaterial "018upl"
+     AssignedMaterial "{21C3B560BC6D89CE}Assets/Mig23/Data/018upl.emat"
+    }
+    MaterialAssignClass "{66CB54776CD9ACF2}" {
+     SourceMaterial "002bl_co"
+     AssignedMaterial "{79CFE5D0D0037549}Assets/Mig23/Data/002bl_co.emat"
+    }
+    MaterialAssignClass "{66CB54776CD9ACF5}" {
+     SourceMaterial "nab"
+     AssignedMaterial "{5D2EE24D185B4BAC}Assets/Mig23/Data/nab.emat"
+    }
+    MaterialAssignClass "{66CB54776CD9ACFB}" {
+     SourceMaterial "sini"
+     AssignedMaterial "{3D61D5FFCFCAA67A}Assets/Mig23/Data/sini.emat"
+    }
+    MaterialAssignClass "{66CB54776CD9ACF8}" {
+     SourceMaterial "00Cnosser1"
+     AssignedMaterial "{ED9759011DCB1597}Assets/Mig23/Data/00Cnosser1.emat"
+    }
+    MaterialAssignClass "{66CB54776CD9AF08}" {
+     SourceMaterial "016rub_co"
+     AssignedMaterial "{BFDC347D6BF60158}Assets/Mig23/Data/016rub_co.emat"
+    }
+    MaterialAssignClass "{66CB54776CD9AF11}" {
+     SourceMaterial "008km1"
+     AssignedMaterial "{36CB479817BAB6B8}Assets/Mig23/Data/008km1.emat"
+    }
+    MaterialAssignClass "{66CB54776CD9AF16}" {
+     SourceMaterial "014roz"
+     AssignedMaterial "{3615EFBB0BBAC43D}Assets/Mig23/Data/014roz.emat"
+    }
+    MaterialAssignClass "{66CB54776CD9AF14}" {
+     SourceMaterial "011panel_co"
+     AssignedMaterial "{F6AB5EDC1C96406D}Assets/Mig23/Data/011panel_co.emat"
+    }
+    MaterialAssignClass "{66CB54776CD9AF1C}" {
+     SourceMaterial "003bl_co"
+     AssignedMaterial "{A183A7E8E500BADD}Assets/Mig23/Data/003bl_co.emat"
+    }
+    MaterialAssignClass "{66CB54776CD9AF1D}" {
+     SourceMaterial "014pribor_co"
+     AssignedMaterial "{8830DD3CB511B539}Assets/Mig23/Data/014pribor_co.emat"
+    }
+    MaterialAssignClass "{66CB54776CD9AF20}" {
+     SourceMaterial "01Cstrelka_co"
+     AssignedMaterial "{49D2128FF82AB814}Assets/Mig23/Data/01Cstrelka_co.emat"
+    }
+    MaterialAssignClass "{66CB54776CD9AF24}" {
+     SourceMaterial "013pribor1"
+     AssignedMaterial "{D39FDF5F17F0B9B0}Assets/Mig23/Data/013pribor1.emat"
+    }
+    MaterialAssignClass "{66CB54776CD9AF2D}" {
+     SourceMaterial "017rub_co"
+     AssignedMaterial "{2B3A5FE873039CEB}Assets/Mig23/Data/017rub_co.emat"
+    }
+    MaterialAssignClass "{66CB54776CD9AF36}" {
+     SourceMaterial "01Ashkala_co"
+     AssignedMaterial "{8E98AC240D61444A}Assets/Mig23/Data/01Ashkala_co.emat"
+    }
+    MaterialAssignClass "{66CB54776CD9AF41}" {
+     SourceMaterial "01Bsini"
+     AssignedMaterial "{148F0390B849D622}Assets/Mig23/Data/01Bsini.emat"
+    }
+    MaterialAssignClass "{66CB54776CD9AF44}" {
+     SourceMaterial "009nab"
+     AssignedMaterial "{0678FD4EF00FC459}Assets/Mig23/Data/009nab.emat"
+    }
+    MaterialAssignClass "{66CB54776CD9AF4B}" {
+     SourceMaterial "007km1"
+     AssignedMaterial "{00AC12F0DD91860A}Assets/Mig23/Data/007km1.emat"
+    }
+    MaterialAssignClass "{66CB54776CD9AF49}" {
+     SourceMaterial "010panel2_co"
+     AssignedMaterial "{16D4D922F3E004F6}Assets/Mig23/Data/010panel2_co.emat"
+    }
+    MaterialAssignClass "{66CB54776CD9AF4C}" {
+     SourceMaterial "00Anad"
+     AssignedMaterial "{4A62E56477A76B44}Assets/Mig23/Data/00Anad.emat"
+    }
+    MaterialAssignClass "{66CB54776CD9AF52}" {
+     SourceMaterial "012pravpan"
+     AssignedMaterial "{10F2A7D305C6A6A1}Assets/Mig23/Data/012pravpan.emat"
+    }
+    MaterialAssignClass "{66CB54776CD9AF53}" {
+     SourceMaterial "002asp17"
+     AssignedMaterial "{2A12E3E4BC4651EE}Assets/Mig23/Data/002asp17.emat"
+    }
+    MaterialAssignClass "{66CB54776CD9AF51}" {
+     SourceMaterial "008levpan"
+     AssignedMaterial "{E55F1A17768CD0C5}Assets/Mig23/Data/008levpan.emat"
+    }
+    MaterialAssignClass "{66CB54776CD9AF56}" {
+     SourceMaterial "00Enosser2"
+     AssignedMaterial "{323C150ED66D7D96}Assets/Mig23/Data/00Enosser2.emat"
+    }
+    MaterialAssignClass "{66CB54776CD9AF54}" {
+     SourceMaterial "004cink"
+     AssignedMaterial "{C8BD35D684C66B69}Assets/Mig23/Data/004cink.emat"
+    }
+    MaterialAssignClass "{66CB54776CD9AF55}" {
+     SourceMaterial "01Dsu25_glass_"
+     AssignedMaterial "{45A98D2507DF7C56}Assets/Mig23/Data/01Dsu25_glass_.emat"
+    }
+    MaterialAssignClass "{66CB54776CD9AF5B}" {
+     SourceMaterial "018set"
+     AssignedMaterial "{CC4E0B5198E9D41B}Assets/Mig23/Data/018set.emat"
+    }
+    MaterialAssignClass "{66CB54776CD9AF5E}" {
+     SourceMaterial "upl"
+     AssignedMaterial "{816029E14A3990C1}Assets/Mig23/Data/upl.emat"
+    }
+    MaterialAssignClass "{66CB54776CD9AF5D}" {
+     SourceMaterial "005bl_co"
+     AssignedMaterial "{F5CBE8AF08DC7683}Assets/Mig23/Data/005bl_co.emat"
+    }
+    MaterialAssignClass "{66CB54776CD9AF65}" {
+     SourceMaterial "009nosser"
+     AssignedMaterial "{5E4768C1E41A4C84}Assets/Mig23/Data/009nosser.emat"
+    }
+    MaterialAssignClass "{66CB54776CD9AF6C}" {
+     SourceMaterial "017sini"
+     AssignedMaterial "{A5BD046E00A66BA1}Assets/Mig23/Data/017sini.emat"
+    }
+    MaterialAssignClass "{66CB54776CD9AF6D}" {
+     SourceMaterial "010panel_co"
+     AssignedMaterial "{DFC63D3949E35D88}Assets/Mig23/Data/010panel_co.emat"
+    }
+    MaterialAssignClass "{66CB54776CD9AF76}" {
+     SourceMaterial "Material_#1229_Slot_#11"
+     AssignedMaterial "{CA6922D1CFEED44F}Assets/Mig23/Data/Material_#1229_Slot_#11.emat"
+    }
+    MaterialAssignClass "{66CB54776CD9AF75}" {
+     SourceMaterial "013rub_co"
+     AssignedMaterial "{FD42326B43018701}Assets/Mig23/Data/013rub_co.emat"
+    }
+    MaterialAssignClass "{66CB54776CD9AF7B}" {
+     SourceMaterial "chrom"
+     AssignedMaterial "{0466B04F6468522A}Assets/Mig23/Data/chrom.emat"
+    }
+    MaterialAssignClass "{66CB54776CD9AF93}" {
+     SourceMaterial "006nad"
+     AssignedMaterial "{8DCFFAA1453FE8F5}Assets/Mig23/Data/006nad.emat"
+    }
+    MaterialAssignClass "{66CB54776CD9AF96}" {
+     SourceMaterial "00Anos1_co"
+     AssignedMaterial "{7ECBA8E1B55AEF48}Assets/Mig23/Data/00Anos1_co.emat"
+    }
+   }
+   MeshParams {
+    MeshParam r025 {
+    }
+   }
+   Common TXOCommonClass "{66CB54776C3E8F3D}" : "{0877E7C4BB2B2C9A}Configs/System/ResourceTypes/PC/MeshObjectCommon.conf" {
+   }
+  }
+  FBXResourceClass XBOX_ONE : PC {
+   Common TXOCommonClass "{66CB54776C3E8FC4}" : "{9D5B6207F7628CE2}Configs/System/ResourceTypes/XBOX_ONE/MeshObjectCommon.conf" {
+   }
+  }
+  FBXResourceClass XBOX_SERIES : PC {
+   Common TXOCommonClass "{66CB54776C3E8FE8}" : "{DD9F02115C764647}Configs/System/ResourceTypes/XBOX_SERIES/MeshObjectCommon.conf" {
+   }
+  }
+  FBXResourceClass PS4 : PC {
+   Common TXOCommonClass "{66CB54776C3E8E13}" : "{53EC476BC921D99A}Configs/System/ResourceTypes/PS4/MeshObjectCommon.conf" {
+   }
+  }
+  FBXResourceClass PS5 : PC {
+   Common TXOCommonClass "{66CB54776C3E8E2F}" : "{F62AA8E7B8EA9D26}Configs/System/ResourceTypes/PS5/MeshObjectCommon.conf" {
+   }
+  }
+  FBXResourceClass HEADLESS : PC {
+   Common TXOCommonClass "{66CB54776C3E8E49}" : "{3A5B3356978039E8}Configs/System/ResourceTypes/HEADLESS/MeshObjectCommon.conf" {
+   }
+  }
+  FBXResourceClass Xbox : PC {
+   Common TXOCommonClass "{66CB54776C3E8E6E}" {
+   }
+  }
+ }
+}
