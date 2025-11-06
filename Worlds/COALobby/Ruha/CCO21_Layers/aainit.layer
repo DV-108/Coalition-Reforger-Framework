@@ -132,6 +132,116 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
         m_sCallsign "Zeus"
        }
       }
+      m_aGroupFrequencyOverrides {
+       CVON_GroupFrequencyContainer "{66CC4676A5735D5A}" {
+        m_aGroupNames {
+         "1-1 IFV"
+        }
+        m_aLRFrequencies {
+         "1PLT Armor"
+         "1PLT"
+        }
+       }
+       CVON_GroupFrequencyContainer "{66CC4676B63BF898}" {
+        m_aGroupNames {
+         "1-2 IFV"
+        }
+        m_aLRFrequencies {
+         "1PLT Armor"
+         "1PLT"
+        }
+       }
+       CVON_GroupFrequencyContainer "{66CC4676B73BB3A6}" {
+        m_aGroupNames {
+         "1-3 IFV"
+        }
+        m_aLRFrequencies {
+         "1PLT Armor"
+         "1PLT"
+        }
+       }
+       CVON_GroupFrequencyContainer "{66CC4676B0207CCD}" {
+        m_aGroupNames {
+         "1-7 IFV"
+        }
+        m_aLRFrequencies {
+         "1PLT Armor"
+         "1PLT"
+        }
+       }
+       CVON_GroupFrequencyContainer "{66CC467642EA320F}" {
+        m_aGroupNames {
+         "2-1 IFV"
+        }
+        m_aLRFrequencies {
+         "2PLT Armor"
+         "2PLT"
+        }
+       }
+       CVON_GroupFrequencyContainer "{66CC4676589EF8C0}" {
+        m_aGroupNames {
+         "2-2 IFV"
+        }
+        m_aLRFrequencies {
+         "2PLT Armor"
+         "2PLT"
+        }
+       }
+       CVON_GroupFrequencyContainer "{66CC467659A4D4D0}" {
+        m_aGroupNames {
+         "2-3 IFV"
+        }
+        m_aLRFrequencies {
+         "2PLT Armor"
+         "2PLT"
+        }
+       }
+       CVON_GroupFrequencyContainer "{66CC46765AEB7F09}" {
+        m_aGroupNames {
+         "2-7 IFV"
+        }
+        m_aLRFrequencies {
+         "2PLT Armor"
+         "2PLT"
+        }
+       }
+       CVON_GroupFrequencyContainer "{66CC46766D539D5E}" {
+        m_aGroupNames {
+         "3-1 IFV"
+        }
+        m_aLRFrequencies {
+         "3PLT Armor"
+         "3PLT"
+        }
+       }
+       CVON_GroupFrequencyContainer "{66CC4676645E842C}" {
+        m_aGroupNames {
+         "3-2 IFV"
+        }
+        m_aLRFrequencies {
+         "3PLT Armor"
+         "3PLT"
+        }
+       }
+       CVON_GroupFrequencyContainer "{66CC467667FCFDF0}" {
+        m_aGroupNames {
+         "3-3 IFV"
+        }
+        m_aLRFrequencies {
+         "3PLT Armor"
+         "3PLT"
+        }
+       }
+       CVON_GroupFrequencyContainer "{66CC467660C0DE6C}" {
+        m_aGroupNames {
+         "3-4 IFV"
+        }
+        m_aLRFrequencies {
+         "3PLT Armor"
+         "3PLT"
+        }
+       }
+      }
      }
     }
     SCR_Faction "{628C2D2BFC8C6447}" {
