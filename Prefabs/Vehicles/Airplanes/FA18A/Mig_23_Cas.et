@@ -18,7 +18,7 @@ GenericEntity : "{EDD3E14E481BDA62}Prefabs/Vehicles/Airplanes/FA18A/FA18A_GBU_CA
     EntitySlotInfo Platform {
      PivotID "v_F18"
      Offset -0.6092 0 0.4325
-     Prefab "{6E7256967D6690A5}Prefabs/Vehicles/Airplanes/SU57/MIG23_CAS_Mesh.et"
+     Prefab "{8040136FE62838CE}Prefabs/Vehicles/Airplanes/SU57/Mig23_CAS_Spawnin.et"
     }
     EntitySlotInfo Payload {
      Offset -0.5726 0 0.7498

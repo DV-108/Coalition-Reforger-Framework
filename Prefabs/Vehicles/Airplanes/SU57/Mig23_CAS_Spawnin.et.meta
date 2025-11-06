@@ -1,5 +1,5 @@
 MetaFileClass {
- Name "{6E7256967D6690A5}Prefabs/Vehicles/Airplanes/SU57/MIG23_CAS_Mesh.et"
+ Name "{8040136FE62838CE}Prefabs/Vehicles/Airplanes/SU57/Mig23_CAS_Spawnin.et"
  Configurations {
   EntityTemplateResourceClass PC {
   }

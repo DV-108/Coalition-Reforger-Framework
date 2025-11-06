@@ -394,6 +394,3 @@ $grp CRF_ManualMarker : "{E256B56F799AEB41}PrefabsEditable/Markers/BLUFORSpawnMa
   m_sDescription ""
  }
 }
-Vehicle EG_BTR1 : "{E97CDE3AED048BF6}Prefabs/Vehicles/CCO21/EG_BTR.et" {
- coords 5565.341 62.158 6792.4
-}
