@@ -6,7 +6,11 @@ Vehicle : "{254289B9C09904AB}Prefabs/Vehicles/Wheeled/BRDM2/BRDM2.et" {
   }
   SCR_EditableVehicleComponent "{50DEB7C26B5EB312}" {
    m_UIInfo SCR_EditableVehicleUIInfo "{5298E609432D192D}" {
-    Name "BRDM2 - Konkurs"
+    Name "East German BRDM2 Konkurs"
+    m_sFaction "OPFOR"
+    m_aAutoLabels {
+     FACTION_CRF_OPFOR SIZE_M
+    }
    }
   }
   SlotManagerComponent "{55BCE45E438E4CFF}" {

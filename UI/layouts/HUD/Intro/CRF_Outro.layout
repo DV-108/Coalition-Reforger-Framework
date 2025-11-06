@@ -29,7 +29,7 @@ FrameWidgetClass {
     SizeY 300
     OffsetBottom -150
    }
-   Text "SILENT THUNDER"
+   Text "NORTHERN FLIGHT"
    "Font Size" 400
    "Horizontal Alignment" Center
    "Vertical Alignment" Center

@@ -310,14 +310,6 @@ $grp CRF_VehicleSpawner {
   }
  }
  {
-  coords 416.122 80.868 7995.631
-  angles 0.495 93.643 6.285
-  m_rVehicle "{E02D04FEFF5D772C}Prefabs/Vehicles/Tracked/BFV/US_MSP.et"
-  m_sFactionKey "BLUFOR"
-  m_bShouldRespawnOnSideRespawn 0
-  m_iRespawnTimer 600
- }
- {
   coords 403.258 74.415 7855.836
   angles -8.066 39.057 1.467
   m_rVehicle "{81FDAD5EB644CC3D}Prefabs/Vehicles/Wheeled/M923A1/M923A1_transport_covered.et"

@@ -1,10 +1,19 @@
 Tank : "{BC07885176C7FF8A}Prefabs/Vehicles/Tracked/T-72A/T72A_base.et" {
  ID "BBCBA43A9778AE21"
  components {
+  SCR_EditableVehicleComponent "{50DEB7C26B5EB312}" {
+   m_UIInfo SCR_EditableVehicleUIInfo "{5298E609432D192D}" {
+    Name "East German T-72"
+    m_sFaction "OPFOR"
+    m_aAutoLabels {
+     FACTION_CRF_OPFOR SIZE_M
+    }
+   }
+  }
   SlotManagerComponent "{55BCE45E438E4CFF}" {
    Slots {
     EntitySlotInfo Flag {
-     PivotID "v_turret_01"
+     PivotID "v_turret_02"
      Offset -0.4206 1.1455 -2.7334
      Prefab "{D8AC6339178BE2C4}Prefabs/Props/Fabric/Flags/EastGerman_FLAG.et"
     }

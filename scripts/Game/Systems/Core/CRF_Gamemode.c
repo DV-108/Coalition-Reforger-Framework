@@ -207,8 +207,7 @@ class CRF_Gamemode : SCR_BaseGameMode
 		SCR_BaseGameMode.Cast(GetGame().GetGameMode()).GMFX_SetNukeEnabled(true);
 		GetGame().GetCallqueue().CallLater(SoundAirHorns, 26000, false);
 		
-		//Figure out why nukes are flacid
-		//GetGame().GetCallqueue().CallLater(SpawnNukes, 56000, false);
+		GetGame().GetCallqueue().CallLater(SpawnNukes, 56000, false);
 		
 		array<int> playerIds = {};
 		PlayerManager pm = GetGame().GetPlayerManager();
@@ -261,40 +260,53 @@ class CRF_Gamemode : SCR_BaseGameMode
 	
 	void SpawnNukes()
 	{
+		int index = 0;
 		foreach (vector spawn: m_aNukeSpawns)
 		{
-			EntitySpawnParams params = new EntitySpawnParams();
-			params.Transform[3] = spawn;
-			
-			IEntity nuke = GetGame().SpawnEntityPrefab(Resource.Load("{3399B41124F52F47}Prefabs/Systems/Artillery/ArtilleryWrapper_TacNuke.et"), null, params);
-			array<int> players = {};
-			GetGame().GetPlayerManager().GetPlayers(players);
-			foreach (int player: players)
-			{
-				RplComponent rplComp = RplComponent.Cast(nuke.FindComponent(RplComponent));
-           		RplIdentity rplIdentity = GetGame().GetPlayerManager().GetPlayerController(player).GetRplIdentity();
-           		rplComp.EnableStreamingConNode(rplIdentity, true);
-			}
-			Print(nuke);
+			GetGame().GetCallqueue().CallLater(SpawnNukeEntity, 2000 * index, false, spawn);
+			index++;
+		}
+	}
+	
+	void SpawnNukeEntity(vector spawn)
+	{
+		EntitySpawnParams params = new EntitySpawnParams();
+		params.Transform[3] = spawn;
+		
+		IEntity nuke = GetGame().SpawnEntityPrefab(Resource.Load("{FD560710482AA439}Prefabs/Nuke/CRF_NukeSpawner.et"), null, params);
+		array<int> players = {};
+		GetGame().GetPlayerManager().GetPlayers(players);
+		foreach (int player: players)
+		{
+			RplComponent rplComp = RplComponent.Cast(nuke.FindComponent(RplComponent));
+          		RplIdentity rplIdentity = GetGame().GetPlayerManager().GetPlayerController(player).GetRplIdentity();
+          		rplComp.EnableStreamingConNode(rplIdentity, true);
 		}
 	}
 	
 	void SoundAirHorns()
 	{
+		int index = 0;
 		foreach (vector spawn: m_aAirRaidLocations)
 		{
-			EntitySpawnParams params = new EntitySpawnParams();
-			params.Transform[3] = spawn;
-			
-			IEntity airHorn = GetGame().SpawnEntityPrefab(Resource.Load("{93FC2145F05A1EEE}Prefabs/Systems/Sound/sound_airraidsiren.et"), null, params);
-			array<int> players = {};
-			GetGame().GetPlayerManager().GetPlayers(players);
-			foreach (int player: players)
-			{
-				RplComponent rplComp = RplComponent.Cast(airHorn.FindComponent(RplComponent));
-           		RplIdentity rplIdentity = GetGame().GetPlayerManager().GetPlayerController(player).GetRplIdentity();
-           		rplComp.EnableStreamingConNode(rplIdentity, true);
-			}
+			GetGame().GetCallqueue().CallLater(SpawnAirHorns, 500 * index, false, spawn);
+			index++;
+		}
+	}
+	
+	void SpawnAirHorns(vector spawn)
+	{
+		EntitySpawnParams params = new EntitySpawnParams();
+		params.Transform[3] = spawn;
+		
+		IEntity airHorn = GetGame().SpawnEntityPrefab(Resource.Load("{93FC2145F05A1EEE}Prefabs/Systems/Sound/sound_airraidsiren.et"), null, params);
+		array<int> players = {};
+		GetGame().GetPlayerManager().GetPlayers(players);
+		foreach (int player: players)
+		{
+			RplComponent rplComp = RplComponent.Cast(airHorn.FindComponent(RplComponent));
+          		RplIdentity rplIdentity = GetGame().GetPlayerManager().GetPlayerController(player).GetRplIdentity();
+          		rplComp.EnableStreamingConNode(rplIdentity, true);
 		}
 	}
 	
