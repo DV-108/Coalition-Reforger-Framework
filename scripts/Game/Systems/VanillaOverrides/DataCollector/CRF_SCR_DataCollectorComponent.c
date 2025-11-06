@@ -118,14 +118,14 @@ modded class SCR_DataCollectorComponent
 	void OnPlayerDamageReceived(int victimId, IEntity killerEntity, int damageType)
 	{
 		// Make sure our logging manager instance is available
-		if (!LM)
-			LM = CRF_LoggingManager.GetInstance();
-			
-		if (!LM)
-			return;
-			
-		// Forward to the logging manager to track the weapon
-		LM.PlayerTookDamage(victimId, killerEntity, damageType);
+//		if (!LM)
+//			LM = CRF_LoggingManager.GetInstance();
+//			
+//		if (!LM)
+//			return;
+//			
+//		// Forward to the logging manager to track the weapon
+//		LM.PlayerTookDamage(victimId, killerEntity, damageType);
 		
 		// Notify any listeners
 		m_OnPlayerDamageReceived.Invoke(victimId, killerEntity, damageType);
@@ -139,12 +139,12 @@ modded class SCR_DataCollectorComponent
 		Instigator instigator = instigatorContextData.GetInstigator();
 		
 		// Make sure our logging manager instance is available
-		if (!LM)
-			LM = CRF_LoggingManager.GetInstance();
-		
-		// Logging player kill to file
-		if (LM)
-			LM.LogPlayerKill(instigatorContextData);
+//		if (!LM)
+//			LM = CRF_LoggingManager.GetInstance();
+//		
+//		// Logging player kill to file
+//		if (LM)
+//			LM.LogPlayerKill(instigatorContextData);
 		
 		if (instigatorContextData.GetVictimPlayerID() <= 0) {
 			OnAIKilledCRF(playerEntity,killerEntity,instigator,instigatorContextData);

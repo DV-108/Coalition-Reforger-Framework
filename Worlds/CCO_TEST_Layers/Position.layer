@@ -1,33 +1,56 @@
-GenericEntity : "{8E1DF47DD56E69E6}Prefabs/Compositions/Slotted/SlotFlatSmall/SandbagPosition_S_USSR_01.et" {
+GenericEntity : "{008F787E7BD00867}PrefabsEditable/Auto/Compositions/Misc/SubCompositions/E_Sandbag_MG_USSR_01_NSV.et" {
+ coords 70.742 1 160.567
+ angles 0 0 0
+}
+GenericEntity : "{047B9C8AAB50CE0F}PrefabsEditable/Auto/Compositions/Slotted/SlotFlatSmall/E_MachineGunNest_S_USSR_01.et" {
+ coords 51.053 1 159.403
+}
+GenericEntity : "{0EBE787562528C47}PrefabsEditable/Auto/Compositions/Misc/SubCompositions/E_Sandbag_Barricade_USSR_02.et" {
+ coords 126.452 1 162.506
+}
+StaticModelEntity : "{367F172BA690BB48}PrefabsEditable/Auto/Compositions/Misc/SubCompositions/E_Sandbag_Bunker_Cluttered_USSR_01.et" {
+ coords 109.184 1 162.226
+}
+GenericEntity : "{42887801DB9228B5}PrefabsEditable/Auto/Compositions/Misc/SubCompositions/E_Sandbag_Corner_Left_USSR_01.et" {
+ coords 77.533 1 160.167
+}
+StaticModelEntity : "{51AB40A39B944585}PrefabsEditable/Auto/Compositions/Misc/SubCompositions/E_Sandbag_Bunker_Camouflaged_USSR_01.et" {
  components {
-  SCR_EditableEntityComponent "{66CCCDA0B39D5B72}" {
-   m_UIInfo SCR_EditableEntityUIInfo "{66CCCDA0493CB3D4}" {
-    Name "Konkurs BRDM Defensive Position"
-    Icon "{11112420EEC8576C}Images/UI/Zeus GearScript Factions/OPFOR_NATO.edds"
-    m_sFaction "OPFOR"
-    m_aAuthoredLabels {
-    }
-    m_aAutoLabels {
-     FACTION_CRF_OPFOR
+  SCR_EditorLinkComponent "{5EF0B7B332CB81FC}" {
+   m_aEntries {
+    SCR_EditorLinkEntry "{66CD4A4F9B2BE23A}" {
+     m_Prefab "{A7E13866EA953B26}Prefabs/Characters/Factions/OPFOR/CRF_GS_OPFOR_MMG_P.et"
     }
    }
   }
  }
- coords 107.238 1 144.61
- {
-  SCR_AIGroup : "{23577522A52B2D81}Prefabs/Groups/OPFOR/CCO21/OPFOR_Garrison_AT.et" {
-   coords 6.322 -0 -0.925
-   angles 0 55 0
-  }
-  Vehicle Konkurs_BRDM2 : "{3F31959AB9134CA2}Prefabs/Vehicles/CCO21/Konkurs_BRDM.et" {
-   coords 0.084 -0 -1.856
-  }
-  SCR_AIGroup : "{9677EDFCEE2691CE}Prefabs/Groups/OPFOR/CCO21/OPFOR_Garrison_SL.et" {
-   coords -4.294 0.094 0.066
-  }
-  SCR_AIGroup : "{A9E8C2F9B2ED273E}Prefabs/Groups/OPFOR/CCO21/OPFOR_Garrison_MG.et" {
-   coords 4.483 -0 -0.102
-   angles 0 10 0
-  }
- }
+ coords 152.193 1 163.364
+}
+GenericEntity : "{598B1859AF3422F4}PrefabsEditable/Auto/Compositions/Misc/SubCompositions/E_Sandbag_round_Cluttered_USSR_02.et" {
+ coords 64.433 1 159.079
+}
+GenericEntity : "{62EA4C95DE960369}PrefabsEditable/Auto/Compositions/Misc/SubCompositions/E_Sandbag_Barricade_USSR_01.et" {
+ coords 119.743 1 162.65
+}
+GenericEntity : "{682FA86A17944120}PrefabsEditable/Auto/Compositions/Slotted/SlotFlatSmall/E_MachineGunNest_S_USSR_02.et" {
+ coords 37.56 1 159.793
+}
+GenericEntity : "{777E1B31B83D74E4}PrefabsEditable/Auto/Compositions/Misc/SubCompositions/Fortifications/E_Sandbag_Camo_long_high_USSR.et" {
+ coords 98.841 1 162.469
+}
+GenericEntity : "{932D432E1D7D726D}PrefabsEditable/Auto/Compositions/Misc/SubCompositions/Fortifications/E_Sandbag_MG_USSR_01_PKM.et" {
+ coords 58.542 1 160.351
+}
+GenericEntity : "{AE8C88CD3FA3853F}PrefabsEditable/Auto/Compositions/Misc/SubCompositions/E_Sandbag_Camo_wall_high_USSR.et" {
+ coords 92.635 1 161.936
+}
+GenericEntity : "{C762BA61BAD5B536}PrefabsEditable/Auto/Compositions/Misc/SubCompositions/E_Sandbag_Corner_BarbedWire_USSR_01.et" {
+ coords 84.997 1 161.514
+ angles 0 33 0
+}
+GenericEntity : "{D61611B41BDB921B}PrefabsEditable/Auto/Compositions/Misc/SubCompositions/E_Sandbag_Barricade_USSR_04.et" {
+ coords 143.766 1 163.233
+}
+GenericEntity : "{EB22348C6EB71B2C}PrefabsEditable/Auto/Compositions/Misc/SubCompositions/E_Sandbag_Barricade_USSR_03.et" {
+ coords 134.102 1 162.446
 }

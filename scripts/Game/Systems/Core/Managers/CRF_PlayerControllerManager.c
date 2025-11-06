@@ -720,19 +720,19 @@ class CRF_PlayerControllerManager : ScriptComponent
 			}
 			
 			// Set the winning faction in the logging manager
-			CRF_LoggingManager loggingManager = CRF_LoggingManager.GetInstance();
-			if (loggingManager)
-			{
-				loggingManager.SetWinningFaction(winningFaction, "manual");
-				
-				// Show confirmation message
-				if (panel)
-				{
-					SCR_ChatComponent chatComponent = SCR_ChatComponent.Cast(GetGame().GetPlayerController().FindComponent(SCR_ChatComponent));
-					if (chatComponent)
-						chatComponent.ShowMessage(string.Format("Winner set to %1. Advancing to AAR...", winningFaction));
-				}
-			}
+//			CRF_LoggingManager loggingManager = CRF_LoggingManager.GetInstance();
+//			if (loggingManager)
+//			{
+//				loggingManager.SetWinningFaction(winningFaction, "manual");
+//				
+//				// Show confirmation message
+//				if (panel)
+//				{
+//					SCR_ChatComponent chatComponent = SCR_ChatComponent.Cast(GetGame().GetPlayerController().FindComponent(SCR_ChatComponent));
+//					if (chatComponent)
+//						chatComponent.ShowMessage(string.Format("Winner set to %1. Advancing to AAR...", winningFaction));
+//				}
+//			}
 
 			// Advance to AAR state
 			m_RplToAuthorityManager.RequestAdvanceGamemodeState(true);

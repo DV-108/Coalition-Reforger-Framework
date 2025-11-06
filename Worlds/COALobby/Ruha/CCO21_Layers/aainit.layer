@@ -1,4 +1,46 @@
+SCR_AIWorld : "{65DEC16960498027}Prefabs/AI/SCR_AIWorld_Ruha.et" {
+ coords 419.506 77.403 7971.955
+}
 CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et" {
+ components {
+  CRF_GamemodeManager "{652A3313EC014E7F}" {
+   components {
+    CRF_LoggingManager "{65654A2C50A1F78D}" {
+     Enabled 0
+    }
+   }
+  }
+  RHS_AdditionalGameModeSettingsComponent "{61AE627E9607513B}" {
+   m_CallInSupportsConfig SCR_CallInSupportContainerConfig "{621B2B44550E77F5}" {
+    m_aCallIns {
+     SCR_CallInSupportContainer "{613B10C78ECB03E7}" {
+      m_iRequestCooldown 300
+      m_iRequestCost 0
+      m_fRefundPercentage 1
+      m_eRequiredRank PRIVATE
+      m_aAvialableForFactions {
+       "BLUFOR"
+      }
+      m_iMinSpawnDelay 10
+      m_iMaxSpawnDelay 20
+      m_bMustBeSquadLeader 0
+      m_iMinNumberOfSquadMembers 0
+      m_aRequiredGadgets {
+       SCR_CallInRequiredGadgetContainer "{624EB6B351DB734E}" {
+        m_sGadgetType "NONE"
+        m_sGadgetName ""
+       }
+       SCR_CallInRequiredRadioContainer "{624EB6B34E1269D8}" {
+        m_sGadgetType "NONE"
+        m_sGadgetName ""
+        m_bRequireRadioFromCorrectFaction 0
+       }
+      }
+     }
+    }
+   }
+  }
+ }
  coords 439.388 64.278 5227.793
  m_iTimeLimitMinutes 240
  EnableAIInGameState 1

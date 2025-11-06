@@ -1,3 +1,11 @@
+GenericEntity : "{62865C82AB534D91}Prefabs/Structures/FlagPoles/RespawnPoles/BLUFOR_Respawn.et" {
+ components {
+  CRF_RespawnPointComponent "{645A31042AA16609}" {
+   m_sRespawnPointName "MAIN"
+  }
+ }
+ coords 415.704 80.502 7992.669
+}
 SCR_AIGroup : "{EE91BF23FBC94408}Prefabs/Groups/BLUFOR/Standard/Command/CRF_BLUFOR_Company_p.et" {
  coords 414.169 79.788 7988.855
  {

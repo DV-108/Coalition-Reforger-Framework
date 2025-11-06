@@ -78,7 +78,7 @@ class CRF_SafestartManager : ScriptComponent
 		if (RplSession.Mode() != RplMode.Client) // Supports both workbench and dedi
 		{
 			// Initialize server components
-			m_Logging = CRF_LoggingManager.Cast(m_Gamemode.FindComponent(CRF_LoggingManager));
+			//m_Logging = CRF_LoggingManager.Cast(m_Gamemode.FindComponent(CRF_LoggingManager));
 			SetEventMask(owner, EntityEvent.FIXEDFRAME);
 		}
 	}
@@ -459,8 +459,8 @@ class CRF_SafestartManager : ScriptComponent
 			DeactivateSafeStartEHs();
 
 			// Send notification message
-			if (m_Logging)
-				m_Logging.GameStarted();
+//			if (m_Logging)
+//				m_Logging.GameStarted();
 
 			// Use CallLater to delay the call for the removal of EHs so the changes so m_bSafeStartEnabled can propagate.
 			GetGame().GetCallqueue().CallLater(DeactivateSafeStartEHs, 1500);

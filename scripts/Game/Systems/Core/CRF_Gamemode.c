@@ -197,7 +197,7 @@ class CRF_Gamemode : SCR_BaseGameMode
 		m_SlottingManager = CRF_SlottingManager.GetInstance();
 		m_GearscriptManager = CRF_GearscriptManager.GetInstance();
 		m_RplBroadcastManager = CRF_RplBroadcastManager.GetInstance();
-		m_LoggingManager = CRF_LoggingManager.GetInstance();
+		//m_LoggingManager = CRF_LoggingManager.GetInstance();
 	}
 	
 	void StartEndMission()
@@ -446,7 +446,7 @@ class CRF_Gamemode : SCR_BaseGameMode
 		dataCollector.OnGameEnd();
 		
 		// Make sure we close logging memory leak
-		m_LoggingManager.OnGameModeEnd(GetEndGameData());
+		//m_LoggingManager.OnGameModeEnd(GetEndGameData());
 	}
 	
 	void ProcessStats(SCR_DataCollectorComponent dataCollector, int player)
