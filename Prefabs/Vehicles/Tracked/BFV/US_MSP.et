@@ -9,7 +9,7 @@ Vehicle : "{81A2910690EDA9E5}Prefabs/Vehicles/MSPs/BLUFOR_MSP.et" {
   SlotManagerComponent "{66B4D32790D8F370}" {
    Slots {
     EntitySlotInfo Flag {
-     Prefab "{971F705971EF6F4B}Prefabs/Props/Fabric/Flags/Flag_1_2_US_01.et"
+     Prefab "{231DFF8D8CF56931}Prefabs/Props/Fabric/Flags/USA_Flag.et"
     }
    }
   }

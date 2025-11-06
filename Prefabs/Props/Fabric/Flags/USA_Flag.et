@@ -1,0 +1,14 @@
+GenericEntity : "{AB72A0D9CB73483B}Prefabs/Props/Fabric/Flags/BLUFOR_FLAG.et" {
+ ID "50E2C85E7DD38DD0"
+ components {
+  MeshObject "{52AE82368499B365}" {
+   Materials {
+    MaterialAssignClass "{66B4D32E6286AB1B}" {
+     SourceMaterial "Flag_1_2"
+     AssignedMaterial "{610803CC3F3D6649}Assets/Props/Fabric/Flags/Data/Flag_1_2_USA.emat"
+    }
+   }
+  }
+ }
+ coords 419.07 81.714 7989.71
+}
