@@ -1,0 +1,15 @@
+Turret : "{3474BEBB23BA5793}Prefabs/Vehicles/Tracked/T-72A/VehParts/Turret/T72_turret_base.et" {
+ ID "51ACD0965653D003"
+ components {
+  SlotManagerComponent "{64863497471CD184}" {
+   Slots {
+    EntitySlotInfo Flag {
+     PivotID "v_gunner_idle"
+     Offset 0.1955 1.5575 -0.6402
+     Prefab "{D8AC6339178BE2C4}Prefabs/Props/Fabric/Flags/EastGerman_FLAG.et"
+    }
+   }
+  }
+ }
+ coords 143.9 1 189.84
+}

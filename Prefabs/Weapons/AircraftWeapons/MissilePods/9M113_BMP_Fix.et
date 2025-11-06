@@ -1,0 +1,21 @@
+GenericEntity : "{348936311250E886}Prefabs/Weapons/Ammo/Kornet/Kornet_Fix.et" {
+ ID "629D11C8BD6AE717"
+ components {
+  MeshObject "{629D11CADAD0C383}" {
+   Object "{EAE4261C4F2C2EBD}Assets/Weapons/Launchers/9M113/9M113_Launcher.xob"
+  }
+  WCS_Armament_WeaponComponent "{629D11C992611C79}" {
+   m_sName "9M133"
+   m_DefaultProjectile "{A773631A340C9261}Prefabs/Weapons/Ammo/Kornet/9M113_BMP_Fix.et"
+   m_fLaunchOffset 1
+  }
+  SlotManagerComponent "{629D11C99AEE634A}" {
+   Slots {
+    WCS_Armament_ProjectileSlotInfo W_0 {
+     PivotID "w_chamber_01"
+    }
+   }
+  }
+ }
+ coords 4172.798 62.112 5435.56
+}

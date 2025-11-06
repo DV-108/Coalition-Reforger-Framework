@@ -1,0 +1,14 @@
+Turret : "{8D156898FAFA2CAD}Prefabs/Vehicles/Tracked/BMP1/VehParts/Turret/BMP1P_Turret.et" {
+ ID "51ACD0965653D003"
+ components {
+  WCS_Armament_LoadoutComponent "{631B65CED86F63D9}" {
+   m_ArmamentGroups {
+    WCS_ArmamentWeaponGroup "{631B65CEC82D33F6}" {
+     prefab "{EC97C808DB442701}Prefabs/Weapons/AircraftWeapons/MissilePods/9M113_BMP_Fix.et"
+     slotIndex 3
+    }
+   }
+  }
+ }
+ coords 145.112 1 186.118
+}

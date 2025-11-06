@@ -1,6 +1,9 @@
 Tank : "{3868E03D9A4AF186}Prefabs/Vehicles/Tracked/BMP1/BMP1P_base.et" {
  ID "BBCBA43A9778AE21"
  components {
+  SCR_BaseCompartmentManagerComponent "{20FB66C5DCB8DF72}" {
+   m_GroupToSpawn "{E5143827D374F6DD}Prefabs/Groups/OPFOR/Standard/Vehicle/CRF_OPFOR_3manVehicleCrew_p.et"
+  }
   SCR_EditableVehicleComponent "{50DEB7C26B5EB312}" {
    m_UIInfo SCR_EditableVehicleUIInfo "{5298E609432D192D}" {
     Name "East German BMP Kornet"
@@ -12,6 +15,9 @@ Tank : "{3868E03D9A4AF186}Prefabs/Vehicles/Tracked/BMP1/BMP1P_base.et" {
   }
   SlotManagerComponent "{55BCE45E438E4CFF}" {
    Slots {
+    RegisteringComponentSlotInfo Turret {
+     Prefab "{EC6ECAD10DC39BAB}Prefabs/Weapons/Ammo/Kornet/BMP_9M113_Turret_Fix.et"
+    }
     EntitySlotInfo DecalL {
      Offset -0.4649 1.7986 0.2573
      Angles 0 40.618 41.436

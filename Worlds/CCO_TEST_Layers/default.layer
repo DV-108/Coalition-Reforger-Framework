@@ -2,7 +2,7 @@ SCR_AIWorld : "{E0A05C76552E7F58}Prefabs/AI/SCR_AIWorld.et" {
  coords 117.411 1 167.258
 }
 Tank EG_T1 : "{00AA7A844F524584}Prefabs/Vehicles/CCO21/EG_T72.et" {
- coords 139.75 1 173.08
+ coords 146.787 1 178.959
 }
 GenericEntity : "{01E0B52B5BA2EF72}Prefabs/Compositions/Misc/SubCompositions/Sandbag_Barricade_USSR_04.et" {
  coords 105.91 1 129.994
@@ -14,14 +14,23 @@ GenericEntity : "{20D02D188D3E883F}Prefabs/Compositions/Misc/SubCompositions/San
  coords 156.371 1 114.042
  angles 0 0 0
 }
+SCR_AIGroup : "{23577522A52B2D81}Prefabs/Groups/OPFOR/CCO21/OPFOR_Garrison_AT.et" {
+ coords 121.219 1 171.379
+}
+Vehicle EG_UAZ_PKM1 : "{25209995DC8B9234}Prefabs/Vehicles/CCO21/EG_UAZ_PKM.et" {
+ coords 134.77 1 176.79
+}
 GenericEntity : "{3CD490132ECE6645}Prefabs/Compositions/Misc/SubCompositions/Sandbag_Barricade_USSR_03.et" {
  coords 123.404 1 123.986
 }
 Vehicle Konkurs_BRDM1 : "{3F31959AB9134CA2}Prefabs/Vehicles/CCO21/Konkurs_BRDM.et" {
- coords 124.589 1 142.262
+ coords 141.867 1 178.052
 }
 GenericEntity : "{4DB3DF28BAFD3B32}Prefabs/Compositions/Misc/FreeRoamBuilding/CamoNetLarge_M_USSR_01.et" {
  coords 132.634 1 103.599
+}
+SCR_AIGroup : "{5DB1D8DDEEAA86A3}Prefabs/Groups/OPFOR/CCO21/OPFOR_Garrison_Gren.et" {
+ coords 120.008 1 170.585
 }
 GenericEntity : "{7492BAA88AFCEDCE}Prefabs/Compositions/Slotted/SlotFlatSmall/Bunker_S_USSR_01.et" {
  coords 113.824 1 112.597
@@ -37,79 +46,35 @@ GenericEntity : "{78A930FB0825AAA0}Prefabs/Compositions/Misc/SubCompositions/For
 GenericEntity : "{7A40BF128BB47EFD}Prefabs/Compositions/Slotted/SlotFlatSmall/MachineGunNest_S_USSR_01.et" {
  coords 162.756 1 143.786
 }
+Vehicle EG_UralCommandTruck1 : "{87A4C8F32280131E}Prefabs/Vehicles/CCO21/EG_UralCommandTruck.et" {
+ coords 193.109 1 146.082
+}
+Vehicle Kornet_UAZ1 : "{8BFF976EA55FC1FD}Prefabs/Vehicles/CCO21/Kornet_UAZ.et" {
+ coords 137.952 1 176.736
+}
 GenericEntity : "{8E1DF47DD56E69E6}Prefabs/Compositions/Slotted/SlotFlatSmall/SandbagPosition_S_USSR_01.et" {
  coords 124.529 1 144.323
 }
-$grp SCR_AIGroup : "{92F50F60726EB86D}Prefabs/Groups/OPFOR/Standard/Infantry/CRF_OPFOR_RifleSquad_p.et" {
- {
-  components {
-   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
-    "Min Speed" 0
-    "Max Speed" 0
-   }
-  }
-  coords 127.071 1 173.351
-  m_aUnitPrefabSlots {
-   "{9CB623C7B62F4955}Prefabs/Characters/Factions/OPFOR/CRF_GS_OPFOR_SL_P.et"
-  }
- }
- {
-  components {
-   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
-    "Min Speed" 0
-    "Max Speed" 0
-   }
-  }
-  coords 123.895 1 173.307
-  m_aUnitPrefabSlots {
-   "{A7E13866EA953B26}Prefabs/Characters/Factions/OPFOR/CRF_GS_OPFOR_MMG_P.et"
-  }
- }
- {
-  components {
-   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
-    "Min Speed" 0
-    "Max Speed" 0
-   }
-  }
-  coords 121.088 1 173.286
-  m_aUnitPrefabSlots {
-   "{75876A55FD810645}Prefabs/Characters/Factions/OPFOR/CRF_GS_OPFOR_AMMG_P.et"
-  }
- }
- {
-  components {
-   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
-    "Min Speed" 0
-    "Max Speed" 0
-   }
-  }
-  coords 118.528 1 173.094
-  m_aUnitPrefabSlots {
-   "{950F36099F77E571}Prefabs/Characters/Factions/OPFOR/CRF_GS_OPFOR_Gren_P.et"
-  }
- }
- {
-  components {
-   SCR_AIGroupMovementComponent "{6126A0E02097C7FF}" {
-    "Min Speed" 0
-    "Max Speed" 0
-   }
-  }
-  coords 116.433 1 173.128
-  m_aUnitPrefabSlots {
-   "{84E3C9CD1D72E121}Prefabs/Characters/Factions/OPFOR/CRF_GS_OPFOR_AT_P.et"
-  }
- }
+SCR_AIGroup : "{9677EDFCEE2691CE}Prefabs/Groups/OPFOR/CCO21/OPFOR_Garrison_SL.et" {
+ coords 116.729 1 170.377
 }
 Tank EG_BMP1 : "{9678642648FC1C9C}Prefabs/Vehicles/CCO21/EG_BMP.et" {
- coords 159.001 1 173.225
+ coords 162.13 1 177.834
+}
+Vehicle EG_Tanker1 : "{9ECCCF9F1CB691DE}Prefabs/Vehicles/CCO21/EG_Tanker.et" {
+ coords 180.528 1 147.583
+}
+SCR_AIGroup : "{A9E8C2F9B2ED273E}Prefabs/Groups/OPFOR/CCO21/OPFOR_Garrison_MG.et" {
+ coords 118.156 1 170.482
 }
 GenericEntity : "{B24C7A63EE4F0A5D}Prefabs/Compositions/Misc/CombatOps/CP_Headquarters_S_USSR_01.et" {
  coords 98.35 1 115.939
 }
 GenericEntity : "{B51CE80A9EEF7E00}Prefabs/Compositions/Misc/SubCompositions/Sandbag_Barricade_USSR_01.et" {
  coords 150.257 1 127.34
+}
+SCR_AIGroup : "{B98B90431887A8D1}Prefabs/Groups/OPFOR/CCO21/OPFOR_Garrison_Rifleman.et" {
+ coords 122.588 1 170.656
 }
 GenericEntity : "{C56ED190635B0129}Prefabs/Compositions/Misc/SubCompositions/Fortifications/Sandbag_Camo_wall_high_USSR.et" {
  coords 165.89 1 113.317
@@ -122,11 +87,23 @@ GenericEntity : "{E249C09D69AAE6C8}Prefabs/Compositions/Slotted/SlotFlatSmall/Sa
  coords 148.701 1 143.551
  angles 0 -179 0
 }
+Vehicle EG_UralTransport1 : "{E963D5B2CEC33DFC}Prefabs/Vehicles/CCO21/EG_UralTransport.et" {
+ components {
+  SCR_BaseCompartmentManagerComponent "{20FB66C5DCB8DF72}" {
+   m_GroupToSpawn "{803383BB28D07BB9}Prefabs/Groups/OPFOR/Standard/Vehicle/CRF_OPFOR_2manVehicleCrew_p.et"
+  }
+ }
+ coords 201.531 1 144.619
+ angles 0 0 0
+}
 Vehicle EG_BTR1 : "{E97CDE3AED048BF6}Prefabs/Vehicles/CCO21/EG_BTR.et" {
- coords 145.35 1 173.397
+ coords 151.811 1 179.852
+}
+Vehicle EG_Ammo1 : "{F3DBD6F0E819C93C}Prefabs/Vehicles/CCO21/EG_Ammo.et" {
+ coords 185.524 1 145.98
 }
 Tank EG_BMP_Kornet1 : "{F668CDD0C01C1F09}Prefabs/Vehicles/CCO21/EG_BMP_Kornet.et" {
- coords 152.284 1 173.129
+ coords 157.558 1 178.797
 }
 GenericEntity : "{F68F3B7247F6E810}Prefabs/Compositions/Slotted/SlotFlatLarge/LivingArea_L_USSR_01.et" {
  coords 103.44 1 74.022

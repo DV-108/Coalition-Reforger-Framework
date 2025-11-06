@@ -1,0 +1,33 @@
+GenericEntity : "{8E1DF47DD56E69E6}Prefabs/Compositions/Slotted/SlotFlatSmall/SandbagPosition_S_USSR_01.et" {
+ components {
+  SCR_EditableEntityComponent "{66CCCDA0B39D5B72}" {
+   m_UIInfo SCR_EditableEntityUIInfo "{66CCCDA0493CB3D4}" {
+    Name "Konkurs BRDM Defensive Position"
+    Icon "{11112420EEC8576C}Images/UI/Zeus GearScript Factions/OPFOR_NATO.edds"
+    m_sFaction "OPFOR"
+    m_aAuthoredLabels {
+    }
+    m_aAutoLabels {
+     FACTION_CRF_OPFOR
+    }
+   }
+  }
+ }
+ coords 107.238 1 144.61
+ {
+  SCR_AIGroup : "{23577522A52B2D81}Prefabs/Groups/OPFOR/CCO21/OPFOR_Garrison_AT.et" {
+   coords 6.322 -0 -0.925
+   angles 0 55 0
+  }
+  Vehicle Konkurs_BRDM2 : "{3F31959AB9134CA2}Prefabs/Vehicles/CCO21/Konkurs_BRDM.et" {
+   coords 0.084 -0 -1.856
+  }
+  SCR_AIGroup : "{9677EDFCEE2691CE}Prefabs/Groups/OPFOR/CCO21/OPFOR_Garrison_SL.et" {
+   coords -4.294 0.094 0.066
+  }
+  SCR_AIGroup : "{A9E8C2F9B2ED273E}Prefabs/Groups/OPFOR/CCO21/OPFOR_Garrison_MG.et" {
+   coords 4.483 -0 -0.102
+   angles 0 10 0
+  }
+ }
+}

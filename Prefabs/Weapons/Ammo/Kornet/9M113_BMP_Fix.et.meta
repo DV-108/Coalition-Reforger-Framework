@@ -1,5 +1,5 @@
 MetaFileClass {
- Name "{0C4C04986358F2DA}Prefabs/Weapons/AircraftWeapons/MissilePods/Pod_9M113_Fix.et"
+ Name "{A773631A340C9261}Prefabs/Weapons/Ammo/Kornet/9M113_BMP_Fix.et"
  Configurations {
   EntityTemplateResourceClass PC {
   }

@@ -1,6 +1,9 @@
 Tank : "{BC07885176C7FF8A}Prefabs/Vehicles/Tracked/T-72A/T72A_base.et" {
  ID "BBCBA43A9778AE21"
  components {
+  SCR_BaseCompartmentManagerComponent "{20FB66C5DCB8DF72}" {
+   m_GroupToSpawn "{E5143827D374F6DD}Prefabs/Groups/OPFOR/Standard/Vehicle/CRF_OPFOR_3manVehicleCrew_p.et"
+  }
   SCR_EditableVehicleComponent "{50DEB7C26B5EB312}" {
    m_UIInfo SCR_EditableVehicleUIInfo "{5298E609432D192D}" {
     Name "East German T-72"
@@ -12,9 +15,13 @@ Tank : "{BC07885176C7FF8A}Prefabs/Vehicles/Tracked/T-72A/T72A_base.et" {
   }
   SlotManagerComponent "{55BCE45E438E4CFF}" {
    Slots {
+    RegisteringComponentSlotInfo Turret {
+     Prefab "{2355888CB794C754}Prefabs/Vehicles/CCO21/EG_T72_Turret.et"
+    }
     EntitySlotInfo Flag {
-     PivotID "v_turret_02"
-     Offset -0.4206 1.1455 -2.7334
+     PivotID "v_gunner_idle"
+     Offset 0 0 0
+     Enabled 0
      Prefab "{D8AC6339178BE2C4}Prefabs/Props/Fabric/Flags/EastGerman_FLAG.et"
     }
    }
