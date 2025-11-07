@@ -209,7 +209,7 @@ $grp CRF_VehicleSpawner {
  {
   coords 394.895 75.109 7946.426
   angles 8.845 -0.766 -2.77
-  m_rVehicle "{CB72987ED49EDD26}Prefabs/Vehicles/Tracked/BFV/3-3 IFV.et"
+  m_rVehicle "{A53FA627E1FF33AE}Prefabs/Vehicles/Tracked/BFV/3-2 IFV.et"
   m_sFactionKey "BLUFOR"
   m_bShouldRespawnOnSideRespawn 0
   m_iRespawnTimer 1200
