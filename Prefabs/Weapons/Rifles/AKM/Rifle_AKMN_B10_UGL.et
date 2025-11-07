@@ -1,4 +1,4 @@
-GenericEntity : "{5BFF97EFD0BF6D9F}Prefabs/Weapons/Rifles/AKM/Rifle_AKMN.et" {
+GenericEntity : "{995B334262EDDA95}Prefabs/Weapons/Rifles/AKM/BC_Rifle_AKM.et" {
  ID "CFBAA4B725411E45"
  components {
   SCR_WeaponAttachmentsStorageComponent "{51F080D5CE45A1A2}" {

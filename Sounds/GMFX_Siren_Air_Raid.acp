@@ -252,26 +252,27 @@ AudioClass {
    id 10259
    name "AmplitudeLarge"
    version 5
-   tl -1603.787 -106.577
+   tl -1607.319 -112.611
    curve Custom
    AttenuationCurve {
     CurvePoint "1" {
+     X 64
      Y 1
     }
     CurvePoint "2" {
-     X 726.80908
-     Y 0.48488
+     X 629.92639
+     Y 0.54082
     }
     CurvePoint "3" {
-     X 1860.95532
-     Y 0.25128
+     X 1569.13892
+     Y 0.22823
     }
     CurvePoint "4" {
-     X 4204.26855
-     Y 0.0661
+     X 2358.64136
+     Y 0.08353
     }
     CurvePoint "5" {
-     X 6000
+     X 3000
      Y 0.01
     }
     CurvePoint "6" {
@@ -287,22 +288,23 @@ AudioClass {
    curve Custom
    AttenuationCurve {
     CurvePoint "1" {
+     X 64
      Y 1
     }
     CurvePoint "2" {
-     X 726.80908
-     Y 0.48488
+     X 629.92639
+     Y 0.54082
     }
     CurvePoint "3" {
-     X 1860.95532
-     Y 0.25128
+     X 1569.13892
+     Y 0.22823
     }
     CurvePoint "4" {
-     X 4204.26855
-     Y 0.0661
+     X 2358.64136
+     Y 0.08353
     }
     CurvePoint "5" {
-     X 6000
+     X 3000
      Y 0.01
     }
     CurvePoint "6" {
@@ -333,8 +335,8 @@ AudioClass {
    "Loop count" 255
    "Infinite loop" 1
    Samples {
-    AudioBankSampleClass "CCOWarBG.wav" {
-     Filename "{2FBE561BC12C5A7A}Sounds/CCOWarBG.wav"
+    AudioBankSampleClass "siren_air_raid_devon.wav" {
+     Filename "{ACA4F25F72AD1F8B}Sounds/siren_air_raid_devon.wav"
      Probability 100
      Index 0
      SampleMetadata ""
@@ -350,8 +352,8 @@ AudioClass {
    "Loop count" 255
    "Infinite loop" 1
    Samples {
-    AudioBankSampleClass "CCOWarBG.wav" {
-     Filename "{2FBE561BC12C5A7A}Sounds/CCOWarBG.wav"
+    AudioBankSampleClass "siren_alarm_incoming.wav" {
+     Filename "{460EB5A0D085C9FB}Sounds/siren_alarm_incoming.wav"
      Probability 100
      Index 0
      SampleMetadata ""

@@ -29,6 +29,9 @@ GenericEntity : "{76571A125EF9ECD7}Prefabs/Vehicles/Airplanes/FA18A/FA18A_Mesh.e
     }
    }
   }
+  RplComponent "{5EF4E663052AF91B}" {
+   SpatialRelevancy 0
+  }
  }
  coords 5543.428 64.336 6797.594
 }

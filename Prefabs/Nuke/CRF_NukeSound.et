@@ -9,6 +9,11 @@ GenericEntity : "{93FC2145F05A1EEE}Prefabs/Systems/Sound/sound_airraidsiren.et" 
   Bacon_PlaySoundComponent "{5C969C4E98100BF1}" {
    m_soundEventName "SOUND_EXPLOSION"
   }
+  RplComponent "{5C969C4EA775C67E}" {
+   "Parent Node From Parent Entity" 0
+   SpatialRelevancy 0
+   Streamable Disabled
+  }
  }
  coords 1022.708 4.063 1712.425
 }

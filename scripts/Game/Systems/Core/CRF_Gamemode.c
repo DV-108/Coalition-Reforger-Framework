@@ -299,7 +299,7 @@ class CRF_Gamemode : SCR_BaseGameMode
 		EntitySpawnParams params = new EntitySpawnParams();
 		params.Transform[3] = spawn;
 		
-		IEntity airHorn = GetGame().SpawnEntityPrefab(Resource.Load("{93FC2145F05A1EEE}Prefabs/Systems/Sound/sound_airraidsiren.et"), null, params);
+		IEntity airHorn = GetGame().SpawnEntityPrefab(Resource.Load("{0BC0C89F4857E924}Prefabs/Systems/Sound/sound_airraidsirenCCO.et"), null, params);
 		array<int> players = {};
 		GetGame().GetPlayerManager().GetPlayers(players);
 		foreach (int player: players)

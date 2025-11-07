@@ -7,6 +7,10 @@ Vehicle : "{0B4DEA8078B78A9B}Prefabs/Vehicles/Wheeled/UAZ469/UAZ469_PKM.et" {
   SCR_EditableVehicleComponent "{50DEB7C26B5EB312}" {
    m_UIInfo SCR_EditableVehicleUIInfo "{5298E609432D192D}" {
     Name "East German PKM UAZ"
+    m_sFaction "OPFOR"
+    m_aAutoLabels {
+     FACTION_CRF_OPFOR SIZE_M VEHICLE_CAR FACTION_RHS_AFRF
+    }
    }
   }
   SlotManagerComponent "{55BCE45E438E4CFF}" {

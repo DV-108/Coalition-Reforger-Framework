@@ -8,6 +8,9 @@ SCR_AIGroup : "{92F50F60726EB86D}Prefabs/Groups/OPFOR/Standard/Infantry/CRF_OPFO
   SCR_EditableGroupComponent "{50D291F6C83FA532}" {
    m_UIInfo SCR_EditableGroupUIInfo "{5298E609432D192D}" {
     Name "Garrison Gren"
+    m_aAuthoredLabels {
+     ENTITYTYPE_CHARACTER FACTION_CRF_OPFOR TRAIT_SUPPRESSIVE TRAIT_ARMORPIERCING TRAIT_EXPLOSIVE
+    }
    }
   }
  }

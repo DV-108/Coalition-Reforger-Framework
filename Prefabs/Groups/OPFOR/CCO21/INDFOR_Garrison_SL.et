@@ -1,0 +1,18 @@
+SCR_AIGroup : "{ADF09DD7FCCA37C3}Prefabs/Groups/INDFOR/Standard/Infantry/CRF_INDFOR_RifleSquad_p.et" {
+ ID "0000000000000001"
+ components {
+  SCR_EditableGroupComponent "{50D291F6C83FA532}" {
+   m_UIInfo SCR_EditableGroupUIInfo "{5298E609432D192D}" {
+    Name "Garrison Squad Lead"
+    m_aAuthoredLabels {
+     ENTITYTYPE_CHARACTER FACTION_CRF_INDFOR TRAIT_SUPPRESSIVE TRAIT_ARMORPIERCING TRAIT_EXPLOSIVE
+    }
+   }
+  }
+ }
+ coords 378.563 78.628 7905.57
+ m_aUnitPrefabSlots {
+  "{8949382562216B1E}Prefabs/Characters/Factions/INDFOR/CRF_GS_INDFOR_SL_P.et"
+ }
+ m_bIsGarrisonGroup 1
+}

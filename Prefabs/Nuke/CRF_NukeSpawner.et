@@ -4,6 +4,8 @@ CRF_NukeSpawner {
   RplComponent "{66C84269ECFAC651}" {
    "Rpl State Override" Runtime
    "Parent Node From Parent Entity" 0
+   SpatialRelevancy 0
+   Streamable Disabled
   }
   Hierarchy "{66C84269EA5AA580}" {
   }
