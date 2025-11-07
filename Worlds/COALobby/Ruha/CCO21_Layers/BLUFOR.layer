@@ -42,8 +42,8 @@ SCR_AIGroup : "{EE91BF23FBC94408}Prefabs/Groups/BLUFOR/Standard/Command/CRF_BLUF
        }
        {
         SCR_AIGroup : "{93B14C52DA54543D}Prefabs/Groups/BLUFOR/Standard/Command/CRF_BLUFOR_Platoon-Large_p.et" {
-         coords -4.556 0.495 51.471
-         angles 3.562 0.223 3.583
+         coords -4.052 1.003 57.222
+         angles 2.67 0.125 6.241
          m_aUnitPrefabSlots {
           "{C62B8D48AAA03249}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_PL_P.et"
           "{6BB714F2C0835B67}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_PSG_P.et"
@@ -56,8 +56,8 @@ SCR_AIGroup : "{EE91BF23FBC94408}Prefabs/Groups/BLUFOR/Standard/Command/CRF_BLUF
              DefaultFormation "Line"
             }
            }
-           coords 6.287 -0.328 -8.465
-           angles 3.549 -0.222 -1.786
+           coords 6.334 -0.522 -8.479
+           angles -0.872 -0.552 1.773
            {
             SCR_AIGroup : "{9C45BAF40F909576}Prefabs/Groups/BLUFOR/Standard/Infantry/CRF_BLUFOR_RifleSquad_p.et" {
              components {
@@ -65,8 +65,8 @@ SCR_AIGroup : "{EE91BF23FBC94408}Prefabs/Groups/BLUFOR/Standard/Command/CRF_BLUF
                DefaultFormation "Column"
               }
              }
-             coords 1.822 0.897 -8.96
-             angles -7.094 0.449 -3.635
+             coords 1.462 2.047 -8.963
+             angles 0.926 1.051 -3.529
              m_aUnitPrefabSlots {
               "{CC8EDD051CB0C1CE}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_SL_P.et"
               "{1E08ED0385C765CC}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_TL_P.et"
@@ -85,8 +85,8 @@ SCR_AIGroup : "{EE91BF23FBC94408}Prefabs/Groups/BLUFOR/Standard/Command/CRF_BLUF
                  DefaultFormation "Line"
                 }
                }
-               coords -6.04 0.769 8.982
-               angles 7.116 -0.111 2.706
+               coords -5.967 -1.85 8.906
+               angles 2.666 -0.942 1.744
                {
                 SCR_AIGroup : "{9C45BAF40F909576}Prefabs/Groups/BLUFOR/Standard/Infantry/CRF_BLUFOR_RifleSquad_p.et" {
                  components {
@@ -94,8 +94,8 @@ SCR_AIGroup : "{EE91BF23FBC94408}Prefabs/Groups/BLUFOR/Standard/Command/CRF_BLUF
                    DefaultFormation "Column"
                   }
                  }
-                 coords 1.848 0.896 -8.961
-                 angles -4.41 0.346 -4.493
+                 coords 1.589 2.327 -8.843
+                 angles -34.299 4.038 -6.226
                  m_aUnitPrefabSlots {
                   "{CC8EDD051CB0C1CE}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_SL_P.et"
                   "{1E08ED0385C765CC}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_TL_P.et"
@@ -114,8 +114,8 @@ SCR_AIGroup : "{EE91BF23FBC94408}Prefabs/Groups/BLUFOR/Standard/Command/CRF_BLUF
                      DefaultFormation "Line"
                     }
                    }
-                   coords -5.981 0.502 8.718
-                   angles 7.062 -0.098 2.699
+                   coords -5.975 3.381 8.084
+                   angles 35.402 -1.075 2.75
                    {
                     SCR_AIGroup : "{9C45BAF40F909576}Prefabs/Groups/BLUFOR/Standard/Infantry/CRF_BLUFOR_RifleSquad_p.et" {
                      components {
@@ -123,8 +123,8 @@ SCR_AIGroup : "{EE91BF23FBC94408}Prefabs/Groups/BLUFOR/Standard/Command/CRF_BLUF
                        DefaultFormation "Column"
                       }
                      }
-                     coords 1.903 1.177 -8.836
-                     angles -5.27 -0.248 2.7
+                     coords 1.824 0.303 -8.958
+                     angles -2.675 0.271 -1.75
                      m_aUnitPrefabSlots {
                       "{CC8EDD051CB0C1CE}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_SL_P.et"
                       "{1E08ED0385C765CC}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_TL_P.et"
@@ -143,12 +143,12 @@ SCR_AIGroup : "{EE91BF23FBC94408}Prefabs/Groups/BLUFOR/Standard/Command/CRF_BLUF
                          DefaultFormation "Line"
                         }
                        }
-                       coords -6.3 -0.254 9.528
-                       angles 3.536 0.595 0.009
+                       coords -6.318 0.28 9.563
+                       angles 0.896 0.54 0
                        {
                         SCR_AIGroup : "{93B14C52DA54543D}Prefabs/Groups/BLUFOR/Standard/Command/CRF_BLUFOR_Platoon-Large_p.et" {
-                         coords -13.61 -0.272 8.23
-                         angles -8.001 -0.138 -1.79
+                         coords -13.598 -0.103 8.234
+                         angles -0.888 -0.07 -0.891
                          m_aUnitPrefabSlots {
                           "{C62B8D48AAA03249}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_PL_P.et"
                           "{6BB714F2C0835B67}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_PSG_P.et"
@@ -161,8 +161,8 @@ SCR_AIGroup : "{EE91BF23FBC94408}Prefabs/Groups/BLUFOR/Standard/Command/CRF_BLUF
                              DefaultFormation "Line"
                             }
                            }
-                           coords 7.58 -1.165 -9.146
-                           angles 8.878 -0.14 -0.906
+                           coords 7.608 -0.214 -9.177
+                           angles 1.778 -0.415 -0.013
                            {
                             SCR_AIGroup : "{9C45BAF40F909576}Prefabs/Groups/BLUFOR/Standard/Infantry/CRF_BLUFOR_RifleSquad_p.et" {
                              components {
@@ -170,8 +170,8 @@ SCR_AIGroup : "{EE91BF23FBC94408}Prefabs/Groups/BLUFOR/Standard/Command/CRF_BLUF
                                DefaultFormation "Column"
                               }
                              }
-                             coords 1.865 0.889 -9.131
-                             angles -5.309 -0.112 -1.775
+                             coords 1.767 2.194 -9.008
+                             angles -0.891 0.122 -0.887
                              m_aUnitPrefabSlots {
                               "{CC8EDD051CB0C1CE}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_SL_P.et"
                               "{1E08ED0385C765CC}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_TL_P.et"
@@ -190,8 +190,8 @@ SCR_AIGroup : "{EE91BF23FBC94408}Prefabs/Groups/BLUFOR/Standard/Command/CRF_BLUF
                                  DefaultFormation "Line"
                                 }
                                }
-                               coords -6.015 0.294 9.223
-                               angles 7.026 -0.165 -0.898
+                               coords -5.996 -1.929 9.088
+                               angles 0.902 -0.683 0.877
                                {
                                 SCR_AIGroup : "{9C45BAF40F909576}Prefabs/Groups/BLUFOR/Standard/Infantry/CRF_BLUFOR_RifleSquad_p.et" {
                                  components {
@@ -199,8 +199,8 @@ SCR_AIGroup : "{EE91BF23FBC94408}Prefabs/Groups/BLUFOR/Standard/Command/CRF_BLUF
                                    DefaultFormation "Column"
                                   }
                                  }
-                                 coords 1.821 0.807 -9.167
-                                 angles -7.919 0.127 2.661
+                                 coords 1.745 -0.126 -9.242
+                                 angles -0.89 0.809 -1.782
                                  m_aUnitPrefabSlots {
                                   "{CC8EDD051CB0C1CE}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_SL_P.et"
                                   "{1E08ED0385C765CC}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_TL_P.et"
@@ -219,8 +219,8 @@ SCR_AIGroup : "{EE91BF23FBC94408}Prefabs/Groups/BLUFOR/Standard/Command/CRF_BLUF
                                      DefaultFormation "Line"
                                     }
                                    }
-                                   coords -5.958 0.427 8.929
-                                   angles 6.153 -0.553 -3.589
+                                   coords -5.964 0.525 8.972
+                                   angles 2.693 -0.724 2.627
                                    {
                                     SCR_AIGroup : "{9C45BAF40F909576}Prefabs/Groups/BLUFOR/Standard/Infantry/CRF_BLUFOR_RifleSquad_p.et" {
                                      components {
@@ -228,8 +228,8 @@ SCR_AIGroup : "{EE91BF23FBC94408}Prefabs/Groups/BLUFOR/Standard/Command/CRF_BLUF
                                        DefaultFormation "Column"
                                       }
                                      }
-                                     coords 1.795 0.35 -9.215
-                                     angles -7.068 0.112 3.556
+                                     coords 1.753 -0.039 -9.271
+                                     angles 0.881 0.793 -1.776
                                      m_aUnitPrefabSlots {
                                       "{CC8EDD051CB0C1CE}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_SL_P.et"
                                       "{1E08ED0385C765CC}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_TL_P.et"
@@ -248,12 +248,12 @@ SCR_AIGroup : "{EE91BF23FBC94408}Prefabs/Groups/BLUFOR/Standard/Command/CRF_BLUF
                                          DefaultFormation "Line"
                                         }
                                        }
-                                       coords -6.304 0.946 9.754
-                                       angles 5.324 -0.222 -1.796
+                                       coords -6.331 -0.251 9.786
+                                       angles -4.436 -0.278 -1.761
                                        {
                                         SCR_AIGroup : "{93B14C52DA54543D}Prefabs/Groups/BLUFOR/Standard/Command/CRF_BLUFOR_Platoon-Large_p.et" {
-                                         coords -12.245 1.473 6.437
-                                         angles -7.117 0 2.684
+                                         coords -12.302 0.421 6.292
+                                         angles 2.665 0.222 0
                                          m_aUnitPrefabSlots {
                                           "{C62B8D48AAA03249}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_PL_P.et"
                                           "{6BB714F2C0835B67}Prefabs/Characters/Factions/BLUFOR/CRF_GS_BLUFOR_PSG_P.et"
@@ -265,8 +265,8 @@ SCR_AIGroup : "{EE91BF23FBC94408}Prefabs/Groups/BLUFOR/Standard/Command/CRF_BLUF
                                              DefaultFormation "Line"
                                             }
                                            }
-                                           coords 5.373 -1.757 -6.961
-                                           angles 8.875 -0.364 -0.941
+                                           coords 5.364 0.144 -6.987
+                                           angles -0.886 -0.222 0.003
                                            {
                                             SCR_AIGroup : "{2F07AC5EE3DE3921}Prefabs/Groups/BLUFOR/Standard/Support/CRF_BLUFOR_MMGTeam_p.et" {
                                              components {
@@ -274,8 +274,8 @@ SCR_AIGroup : "{EE91BF23FBC94408}Prefabs/Groups/BLUFOR/Standard/Command/CRF_BLUF
                                                DefaultFormation "Column"
                                               }
                                              }
-                                             coords 1.96 0.173 -8.729
-                                             angles -2.647 0.027 -1.769
+                                             coords 1.961 -0.314 -8.719
+                                             angles 3.519 -0.014 -0.899
                                              {
                                               SCR_AIGroup : "{679BC3454FEDD0EE}Prefabs/Groups/BLUFOR/Standard/Vehicle/CRF_BLUFOR_2manCrew_p.et" {
                                                components {
@@ -283,8 +283,8 @@ SCR_AIGroup : "{EE91BF23FBC94408}Prefabs/Groups/BLUFOR/Standard/Command/CRF_BLUF
                                                  DefaultFormation "Line"
                                                 }
                                                }
-                                               coords -6.005 0.24 8.663
-                                               angles 4.365 -0.054 -0.881
+                                               coords -6.006 -0.194 8.671
+                                               angles -3.523 -0.122 0.014
                                                {
                                                 SCR_AIGroup : "{2F07AC5EE3DE3921}Prefabs/Groups/BLUFOR/Standard/Support/CRF_BLUFOR_MMGTeam_p.et" {
                                                  components {
@@ -292,8 +292,8 @@ SCR_AIGroup : "{EE91BF23FBC94408}Prefabs/Groups/BLUFOR/Standard/Command/CRF_BLUF
                                                    DefaultFormation "Column"
                                                   }
                                                  }
-                                                 coords 1.953 0.401 -8.495
-                                                 angles -5.25 0.14 2.647
+                                                 coords 1.938 -0.374 -8.507
+                                                 angles 3.514 0.193 -1.767
                                                  {
                                                   SCR_AIGroup : "{679BC3454FEDD0EE}Prefabs/Groups/BLUFOR/Standard/Vehicle/CRF_BLUFOR_2manCrew_p.et" {
                                                    components {
@@ -301,8 +301,8 @@ SCR_AIGroup : "{EE91BF23FBC94408}Prefabs/Groups/BLUFOR/Standard/Command/CRF_BLUF
                                                      DefaultFormation "Line"
                                                     }
                                                    }
-                                                   coords -5.961 0.056 8.432
-                                                   angles 3.496 -0.329 -3.55
+                                                   coords -5.946 -0.09 8.451
+                                                   angles -2.634 -0.166 -0.004
                                                    {
                                                     SCR_AIGroup : "{3B279F5833A489CE}Prefabs/Groups/BLUFOR/Standard/Support/CRF_BLUFOR_MATTeam_p.et" {
                                                      components {
@@ -310,8 +310,8 @@ SCR_AIGroup : "{EE91BF23FBC94408}Prefabs/Groups/BLUFOR/Standard/Command/CRF_BLUF
                                                        DefaultFormation "Column"
                                                       }
                                                      }
-                                                     coords 2.101 0.265 -8.507
-                                                     angles -4.396 0.058 3.54
+                                                     coords 2.085 -0.275 -8.531
+                                                     angles 1.76 0.125 0.006
                                                      {
                                                       SCR_AIGroup : "{679BC3454FEDD0EE}Prefabs/Groups/BLUFOR/Standard/Vehicle/CRF_BLUFOR_2manCrew_p.et" {
                                                        components {
@@ -319,8 +319,8 @@ SCR_AIGroup : "{EE91BF23FBC94408}Prefabs/Groups/BLUFOR/Standard/Command/CRF_BLUF
                                                          DefaultFormation "Line"
                                                         }
                                                        }
-                                                       coords -6.401 0.066 8.508
-                                                       angles 2.647 -0.235 -1.786
+                                                       coords -6.383 -0.031 8.532
+                                                       angles 0 -0.112 0
                                                        {
                                                         SCR_AIGroup : "{3B279F5833A489CE}Prefabs/Groups/BLUFOR/Standard/Support/CRF_BLUFOR_MATTeam_p.et" {
                                                          components {
@@ -328,8 +328,8 @@ SCR_AIGroup : "{EE91BF23FBC94408}Prefabs/Groups/BLUFOR/Standard/Command/CRF_BLUF
                                                            DefaultFormation "Column"
                                                           }
                                                          }
-                                                         coords 2.84 0.239 -8.425
-                                                         angles -3.547 0.224 3.559
+                                                         coords 2.832 0.137 -8.447
+                                                         angles -2.655 0.279 3.543
                                                          {
                                                           SCR_AIGroup : "{5F4B68E250ACF256}Prefabs/Groups/BLUFOR/Zeus/CRF_BLUFOR_Zeus.et" {
                                                            coords 14.856 2.764 -35.924

@@ -117,8 +117,8 @@ $grp CRF_VehicleSpawner {
   m_iTicketsPerRespawn 2
  }
  {
-  coords 436.29 74.404 7946.426
-  angles 2.668 0.208 4.472
+  coords 438.587 74.351 7952.176
+  angles 0.004 -0.042 5.356
   m_rVehicle "{A91885ACFD13EE3D}Prefabs/Vehicles/Tracked/BFV/1-1 IFV.et"
   m_sFactionKey "BLUFOR"
   m_bShouldRespawnOnSideRespawn 0
@@ -126,8 +126,8 @@ $grp CRF_VehicleSpawner {
   m_iTicketsPerRespawn 5
  }
  {
-  coords 432.48 74.591 7946.426
-  angles 2.684 -0.013 2.68
+  coords 433.243 74.819 7952.176
+  angles 3.572 0.056 4.462
   m_rVehicle "{1BCFC747A2B1DDA5}Prefabs/Vehicles/Tracked/BFV/1-2 IFV.et"
   m_sFactionKey "BLUFOR"
   m_bShouldRespawnOnSideRespawn 0
@@ -135,8 +135,8 @@ $grp CRF_VehicleSpawner {
   m_iTicketsPerRespawn 5
  }
  {
-  coords 428.878 74.735 7946.426
-  angles 3.563 0.278 2.696
+  coords 428.949 75.165 7952.177
+  angles 6.204 0.486 4.494
   m_rVehicle "{7582F91E97D0332D}Prefabs/Vehicles/Tracked/BFV/1-3 IFV.et"
   m_sFactionKey "BLUFOR"
   m_bShouldRespawnOnSideRespawn 0
@@ -144,8 +144,8 @@ $grp CRF_VehicleSpawner {
   m_iTicketsPerRespawn 5
  }
  {
-  coords 424.287 75.125 7946.426
-  angles 3.478 1.041 5.41
+  coords 424.791 75.502 7952.176
+  angles 4.361 1.125 5.426
   m_rVehicle "{8E46E191EBBDBF9E}Prefabs/Vehicles/Tracked/BFV/1-7 IFV.et"
   m_sFactionKey "BLUFOR"
   m_bShouldRespawnOnSideRespawn 0
@@ -153,8 +153,8 @@ $grp CRF_VehicleSpawner {
   m_iTicketsPerRespawn 5
  }
  {
-  coords 405.868 75.388 7946.426
-  angles 5.355 0.027 1.785
+  coords 406.372 76.047 7952.176
+  angles 8.876 0.137 1.79
   m_rVehicle "{CEB6C0B45DA13DD9}Prefabs/Vehicles/Tracked/BFV/2-7 IFV.et"
   m_sFactionKey "BLUFOR"
   m_bShouldRespawnOnSideRespawn 0
@@ -162,8 +162,8 @@ $grp CRF_VehicleSpawner {
   m_iTicketsPerRespawn 5
  }
  {
-  coords 417.871 75.285 7946.426
-  angles 4.463 0.237 0.911
+  coords 419.608 75.724 7952.172
+  angles 6.227 0.32 2.703
   m_rVehicle "{E9E8A4894B0F6C7A}Prefabs/Vehicles/Tracked/BFV/2-1 IFV.et"
   m_sFactionKey "BLUFOR"
   m_bShouldRespawnOnSideRespawn 0
@@ -171,8 +171,8 @@ $grp CRF_VehicleSpawner {
   m_iTicketsPerRespawn 5
  }
  {
-  coords 414.061 75.244 7946.426
-  angles 7.111 -0.307 -2.701
+  coords 414.862 75.915 7952.176
+  angles 7.13 -0.307 0.85
   m_rVehicle "{5B3FE66214AD5FE2}Prefabs/Vehicles/Tracked/BFV/2-2 IFV.et"
   m_sFactionKey "BLUFOR"
   m_bShouldRespawnOnSideRespawn 0
@@ -180,8 +180,8 @@ $grp CRF_VehicleSpawner {
   m_iTicketsPerRespawn 5
  }
  {
-  coords 410.459 75.244 7946.426
-  angles 6.232 0.209 2.691
+  coords 410.416 75.987 7952.175
+  angles 8.001 0.238 0.919
   m_rVehicle "{3572D83B21CCB16A}Prefabs/Vehicles/Tracked/BFV/2-3 IFV.et"
   m_sFactionKey "BLUFOR"
   m_bShouldRespawnOnSideRespawn 0
@@ -189,8 +189,8 @@ $grp CRF_VehicleSpawner {
   m_iTicketsPerRespawn 5
  }
  {
-  coords 386.702 74.79 7946.426
-  angles 5.356 -0.222 -0.021
+  coords 387.206 75.503 7952.176
+  angles 7.104 -0.332 -3.59
   m_rVehicle "{8261C21AF751620D}Prefabs/Vehicles/Tracked/BFV/3-4 IFV.et"
   m_sFactionKey "BLUFOR"
   m_bShouldRespawnOnSideRespawn 0
@@ -198,8 +198,8 @@ $grp CRF_VehicleSpawner {
   m_iTicketsPerRespawn 5
  }
  {
-  coords 398.705 75.305 7946.426
-  angles 9.696 -0.903 -3.677
+  coords 400.092 76.213 7952.181
+  angles 8.894 -0.914 0.743
   m_rVehicle "{17E8E4CCBE5D0036}Prefabs/Vehicles/Tracked/BFV/3-1 IFV.et"
   m_sFactionKey "BLUFOR"
   m_bShouldRespawnOnSideRespawn 0
@@ -207,8 +207,8 @@ $grp CRF_VehicleSpawner {
   m_iTicketsPerRespawn 5
  }
  {
-  coords 394.895 75.109 7946.426
-  angles 8.845 -0.766 -2.77
+  coords 396.022 76.154 7952.181
+  angles 8.868 -0.766 -1.003
   m_rVehicle "{A53FA627E1FF33AE}Prefabs/Vehicles/Tracked/BFV/3-2 IFV.et"
   m_sFactionKey "BLUFOR"
   m_bShouldRespawnOnSideRespawn 0
@@ -216,8 +216,8 @@ $grp CRF_VehicleSpawner {
   m_iTicketsPerRespawn 5
  }
  {
-  coords 391.293 74.933 7946.426
-  angles 7.977 -0.586 -2.739
+  coords 391.416 75.851 7952.174
+  angles 9.683 -0.749 -5.405
   m_rVehicle "{CB72987ED49EDD26}Prefabs/Vehicles/Tracked/BFV/3-3 IFV.et"
   m_sFactionKey "BLUFOR"
   m_bShouldRespawnOnSideRespawn 0
