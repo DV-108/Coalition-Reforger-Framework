@@ -40,6 +40,7 @@ GenericEntity {
   }
   RplComponent "{66CA1B969A31802F}" {
    SpatialRelevancy 0
+   Streamable Disabled
   }
   Hierarchy "{66CA1B969A318032}" {
   }
