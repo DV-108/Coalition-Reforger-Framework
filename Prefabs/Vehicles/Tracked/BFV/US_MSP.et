@@ -13,6 +13,10 @@ Vehicle : "{81A2910690EDA9E5}Prefabs/Vehicles/MSPs/BLUFOR_MSP.et" {
     }
    }
   }
+  RplComponent "{66B4D32790D8E01B}" {
+   SpatialRelevancy 0
+   Streamable Disabled
+  }
  }
  coords 405.434 74.675 7909.41
 }
