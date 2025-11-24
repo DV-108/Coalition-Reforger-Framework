@@ -46,7 +46,7 @@ CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et
  m_iFactionTwoRatio 2
  m_sFactionTwoKey "BLU"
  m_BLUFORGearScriptSettings CRF_GearScriptContainer "{64570ACB9B419A7B}" {
-  m_rGearScript "{D8798CBDB67BC164}Configs/Gearscripts/Standard/80s/Variants/CRF_GS_UK80s_FAL_M79.conf"
+  m_rGearScript "{2D94AD67BEABCC05}Configs/Gearscripts/Custom/Salami/CRF_GS_Modern_GreenBeretCOOP.conf"
  }
  {
   SCR_FactionManager "663AFC0773136BFA" {

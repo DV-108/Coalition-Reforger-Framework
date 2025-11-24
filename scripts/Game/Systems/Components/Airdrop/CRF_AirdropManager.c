@@ -79,7 +79,8 @@ class CRF_AirdropManager: SCR_BaseGameModeComponent
 		IEntity plane = GetGame().SpawnEntityPrefab(Resource.Load(planeObject.m_sPlane), null, params);
 		ref CRF_AirdropFlight flight = new CRF_AirdropFlight(plane, planeObject.m_vFlightCoordinates, 65);
 		//Delay so the flight has a chance to actual load the entity
-		GetGame().GetCallqueue().CallLater(TeleportPlayers, 500, false, players, SlotManagerComponent.Cast(plane.FindComponent(SlotManagerComponent)), plane);
+		//Ensure the entity has also been streamed in for all players as well
+		GetGame().GetCallqueue().CallLater(TeleportPlayers, 2000, false, players, SlotManagerComponent.Cast(plane.FindComponent(SlotManagerComponent)), plane, flight);
 	}
 	
 	[RplRpc(RplChannel.Reliable, RplRcver.Broadcast)]
@@ -96,14 +97,17 @@ class CRF_AirdropManager: SCR_BaseGameModeComponent
 			SCR_BaseInteractiveLightComponent.Cast(plane.FindComponent(SCR_BaseInteractiveLightComponent)).ToggleLight(true);
 	}
 	
-	void TeleportPlayers(string players, SlotManagerComponent slotMan, IEntity plane)
+	void TeleportPlayers(string players, SlotManagerComponent slotMan, IEntity plane, CRF_AirdropFlight flight)
 	{
 		array<string> playerIds = {};
 		players.Split("|", playerIds, true);
 		int slotId = 0;
 		RplId planeRplId = RplComponent.Cast(plane.FindComponent(RplComponent)).Id();
+		PlayerManager pm = GetGame().GetPlayerManager();
 		foreach (int i, string playerId: playerIds)
 		{
+			//Let's delay adding them until the player has had time to teleport into the plane
+			GetGame().GetCallqueue().CallLater(flight.m_PlayersInPlane.Insert, 2000, false, pm.GetPlayerControlledEntity(playerId.ToInt()));
 			EntitySlotInfo slot = slotMan.GetSlotByName("Slot" + slotId.ToString());
 			vector transform[4];
 			slot.GetLocalTransform(transform);
@@ -154,6 +158,7 @@ class CRF_AirdropManager: SCR_BaseGameModeComponent
 		SCR_Global.TeleportPlayer(playerId, transform[3], SCR_EPlayerTeleportedReason.NONE);
 	}
 	
+	float m_fParachuteCheck = 0;
 	override void EOnFixedFrame(IEntity owner, float timeSlice)
 	{
 		if (!m_aFlights)
@@ -168,8 +173,35 @@ class CRF_AirdropManager: SCR_BaseGameModeComponent
 			return;
 		}
 		
+		bool checkDeployParachutes = false;
+		if (m_fParachuteCheck >= 0.1)
+		{
+			checkDeployParachutes = true;
+			m_fParachuteCheck = 0;
+		}
+		else
+			m_fParachuteCheck += timeSlice;
 		foreach (CRF_AirdropFlight flight: m_aFlights)
 		{
+			
+			if (checkDeployParachutes)
+			{
+				PlayerManager pm = GetGame().GetPlayerManager();
+				foreach (int i, IEntity player: flight.m_PlayersInPlane)
+				{
+					//Opens shoot for players more than 200m away
+					if (vector.Distance(player.GetOrigin(), flight.m_Plane.GetOrigin()) > 50)
+					{
+						int playerId = pm.GetPlayerIdFromControlledEntity(player);
+						if (playerId <= 0)
+							continue;
+						
+						ParachuteComponent.Cast(pm.GetPlayerController(playerId).FindComponent(ParachuteComponent)).RpcAskDeployParachute();
+						flight.m_PlayersInPlane.Remove(i);
+					}
+				}
+			}		
+			
 			if (flight.m_fProgress >= 2.0)
             	m_aFlights.RemoveItem(flight);
 
@@ -311,6 +343,7 @@ class CRF_AirdropFlight
 	}
 	
 	IEntity m_Plane;
+	ref array<IEntity> m_PlayersInPlane = {};
 	RplId m_RplId;
 	vector m_vFlightCoordinates[4];
 	bool m_bGreenLight = false;

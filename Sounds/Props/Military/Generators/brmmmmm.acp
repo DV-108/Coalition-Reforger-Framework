@@ -419,6 +419,7 @@ AudioClass {
    name "FloodLight"
    version 7
    tl -308.738 -32.515
+   Volume -15
    Pitch 0.5
    "Loop count" 255
    "Infinite loop" 1
