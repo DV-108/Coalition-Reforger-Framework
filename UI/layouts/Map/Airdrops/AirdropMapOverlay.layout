@@ -1,0 +1,905 @@
+FrameWidgetClass {
+ Name "rootFrame"
+ Slot FrameWidgetSlot "{66F85A1CAEDC6B94}" {
+  OffsetLeft 0
+  OffsetTop 0
+  SizeX 1920
+  OffsetRight -1920
+  SizeY 1080
+  OffsetBottom -1080
+ }
+ {
+  FrameWidgetClass "{66F85A1AE46CE758}" {
+   Name "FlightPanel"
+   Slot FrameWidgetSlot "{66F85A1AE46CE77E}" {
+    Anchor 0.5 0.5 0.5 0.5
+    PositionX -960
+    OffsetLeft -960
+    PositionY -540
+    OffsetTop -540
+    SizeX 1920
+    OffsetRight -960
+    SizeY 1080
+    OffsetBottom -540
+   }
+   {
+    ImageWidgetClass "{66F80A345BD15677}" {
+     Name "Image1"
+     Slot FrameWidgetSlot "{66F80A34B33B461B}" {
+      Anchor 0 0.5 0 0.5
+      PositionX 728.23
+      OffsetLeft 728.23
+      PositionY -300
+      OffsetTop -300
+      SizeX 900
+      OffsetRight -1628.23
+      SizeY 600
+      OffsetBottom -300
+     }
+     Color 0.0152 0.0152 0.0152 1
+     Mask "{3E0BA033795A755A}UI/data/beveledIcon.edds"
+     "Transition width" 1
+     Progress 0.5
+     "Mask Mode" "Include Below"
+    }
+    TextWidgetClass "{66F85A18A7D63D0A}" {
+     Name "SelectedFlightPath"
+     Slot FrameWidgetSlot "{66F85A1ED793E92A}" {
+      PositionX 1184.66
+      OffsetLeft 1184.66
+      PositionY 553.537
+      OffsetTop 553.537
+      SizeX 81.95
+      OffsetRight -1266.61
+      SizeY 40.994
+      OffsetBottom -594.531
+     }
+     Color 0.5583 0.5029 0.3324 1
+     Text "#1"
+     "Vertical Alignment" Center
+    }
+    TextWidgetClass "{66F85A18A7D63EF8}" {
+     Name "SelectedFlightPathText"
+     Slot FrameWidgetSlot "{66F85A1ED793E92A}" {
+      PositionX 1184.06
+      OffsetLeft 1184.06
+      PositionY 507.314
+      OffsetTop 507.314
+      SizeX 80.81
+      OffsetRight -1264.87
+      SizeY 40.994
+      OffsetBottom -548.308
+     }
+     Color 0.5583 0.5029 0.3324 1
+     Text "Flightpath"
+     "Font Size" 19
+     "Min Font Size" 18
+     "Vertical Alignment" Center
+    }
+    TextWidgetClass "{66F85A1F4D88C66B}" {
+     Name "FlightPathListText"
+     Slot FrameWidgetSlot "{66F85A1ED793E92A}" {
+      PositionX 1276.42
+      OffsetLeft 1276.42
+      PositionY 330.342
+      OffsetTop 330.342
+      SizeX 200.76
+      OffsetRight -1477.18
+      SizeY 40.993
+      OffsetBottom -371.335
+     }
+     Color 0.5583 0.5029 0.3324 1
+     Text "Flight Paths"
+     "Vertical Alignment" Center
+    }
+    TextWidgetClass "{66F85A1F02980F26}" {
+     Name "GreenLight"
+     Slot FrameWidgetSlot "{66F85A1ED793E92A}" {
+      PositionX 1216.56
+      OffsetLeft 1216.56
+      PositionY 682.842
+      OffsetTop 682.842
+      SizeX 103.22
+      OffsetRight -1319.78
+      SizeY 40.993
+      OffsetBottom -723.835
+     }
+     Color 0.5583 0.5029 0.3324 1
+     Text "4000m"
+     "Vertical Alignment" Center
+    }
+    TextWidgetClass "{66F85A1F029810CE}" {
+     Name "GreenLightText"
+     Slot FrameWidgetSlot "{66F85A1ED793E92A}" {
+      PositionX 977.898
+      OffsetLeft 977.898
+      PositionY 682.842
+      OffsetTop 682.842
+      SizeX 243.612
+      OffsetRight -1221.51
+      SizeY 40.993
+      OffsetBottom -723.835
+     }
+     Color 0.5583 0.5029 0.3324 1
+     Text "Distance to Green Light"
+     "Vertical Alignment" Center
+    }
+    TextWidgetClass "{66F85A1F11DB5E6A}" {
+     Name "Distance"
+     Slot FrameWidgetSlot "{66F85A1ED793E92A}" {
+      PositionX 1457.15
+      OffsetLeft 1457.15
+      PositionY 682.842
+      OffsetTop 682.842
+      SizeX 103.22
+      OffsetRight -1560.37
+      SizeY 40.993
+      OffsetBottom -723.835
+     }
+     Color 0.5583 0.5029 0.3324 1
+     Text "8000m"
+     "Vertical Alignment" Center
+    }
+    TextWidgetClass "{66F85A1F1E899E11}" {
+     Name "DistanceText"
+     Slot FrameWidgetSlot "{66F85A1ED793E92A}" {
+      PositionX 1361.14
+      OffsetLeft 1361.14
+      PositionY 682.842
+      OffsetTop 682.842
+      SizeX 103.22
+      OffsetRight -1464.36
+      SizeY 40.993
+      OffsetBottom -723.835
+     }
+     Color 0.5583 0.5029 0.3324 1
+     Text "Distance"
+     "Vertical Alignment" Center
+    }
+    FrameWidgetClass "{66F85A1FAAF2610E}" : "{8C3DFB5FE48D9901}UI/layouts/Map/Airdrops/AirdropMapFlightPath.layout" {
+     Name "FlightPath"
+     Slot FrameWidgetSlot "{66F80A3114F23509}" {
+      PositionX 778.199
+      OffsetLeft 778.199
+      PositionY 730.9
+      OffsetTop 730.9
+      SizeX 800.001
+      OffsetRight -1578.2
+      SizeY 70
+      OffsetBottom -800.9
+     }
+     {
+      ImageWidgetClass "{66F80A334D2A3845}" {
+       Prefab "{66F80A334D2A3845}"
+       Slot FrameWidgetSlot "{66F80A334D2A38AF}" {
+        PositionX 3.512
+        OffsetLeft 3.512
+        PositionY 20
+        OffsetTop 20
+        SizeX 30
+        OffsetRight -33.512
+        SizeY 30
+        OffsetBottom -50
+       }
+      }
+      ImageWidgetClass "{66F80A31AA81A827}" {
+       Prefab "{66F80A31AA81A827}"
+       Slot FrameWidgetSlot "{66F80A31AA81A85D}" {
+        OffsetLeft 50
+        OffsetTop 20
+        SizeX 750
+        OffsetRight -800
+        OffsetBottom -50
+       }
+      }
+      ImageWidgetClass "{66F80A31F2D7BA50}" {
+       Prefab "{66F80A31F2D7BA50}"
+       Slot FrameWidgetSlot "{66F80A31AA81A85D}" {
+        PositionX 400
+        OffsetLeft 400
+        OffsetTop 20
+        SizeX 750
+        OffsetRight -1150
+        OffsetBottom -50
+       }
+      }
+     }
+    }
+    TextWidgetClass "{66F85A1E5C9130EF}" {
+     Name "UnassignedSquadsText0"
+     Slot FrameWidgetSlot "{66F85A1ED793E92A}" {
+      PositionX 980.902
+      OffsetLeft 980.902
+      PositionY 330.342
+      OffsetTop 330.342
+      SizeX 204.448
+      OffsetRight -1185.35
+      SizeY 40.993
+      OffsetBottom -371.335
+     }
+     Color 0.5583 0.5029 0.3324 1
+     Text "Assigned Squads"
+     "Vertical Alignment" Center
+    }
+    EditBoxWidgetClass "{66F85A1E73A6E942}" {
+     Name "Altitude"
+     Slot FrameWidgetSlot "{66F85A1ED793E92A}" {
+      PositionX 1184.66
+      OffsetLeft 1184.66
+      PositionY 462.697
+      OffsetTop 462.697
+      SizeX 80.4
+      OffsetRight -1265.06
+      SizeY 40.993
+      OffsetBottom -503.69
+     }
+     Color 0.5583 0.5029 0.3324 1
+     text "1000"
+    }
+    TextWidgetClass "{66F85A1E7FFA5343}" {
+     Name "AltitudeText"
+     Slot FrameWidgetSlot "{66F85A1ED793E92A}" {
+      PositionX 1185.33
+      OffsetLeft 1185.33
+      PositionY 420.05
+      OffsetTop 420.05
+      SizeX 79.7
+      OffsetRight -1265.03
+      SizeY 40.993
+      OffsetBottom -461.043
+     }
+     Color 0.5583 0.5029 0.3324 1
+     Text "Altitude"
+     "Vertical Alignment" Center
+    }
+    TextWidgetClass "{66F85A1E1B5F7222}" {
+     Name "PlayersCount"
+     Slot FrameWidgetSlot "{66F85A1ED793E92A}" {
+      PositionX 1185.41
+      OffsetLeft 1185.41
+      PositionY 375.134
+      OffsetTop 375.134
+      SizeX 75.94
+      OffsetRight -1261.35
+      SizeY 40.993
+      OffsetBottom -416.127
+     }
+     Color 0.5583 0.5029 0.3324 1
+     Text "40/40"
+     "Vertical Alignment" Center
+    }
+    TextWidgetClass "{66F85A1E268840F3}" {
+     Name "PlayersCountText"
+     Slot FrameWidgetSlot "{66F85A1ED793E92A}" {
+      PositionX 1185.41
+      OffsetLeft 1185.41
+      PositionY 330.266
+      OffsetTop 330.266
+      SizeX 75.94
+      OffsetRight -1261.35
+      SizeY 40.993
+      OffsetBottom -371.259
+     }
+     Color 0.5583 0.5029 0.3324 1
+     Text "Players"
+     "Vertical Alignment" Center
+    }
+    TextWidgetClass "{66F85A1EC729151C}" {
+     Name "UnassignedSquadsText"
+     Slot FrameWidgetSlot "{66F85A1ED793E92A}" {
+      PositionX 775.546
+      OffsetLeft 775.546
+      PositionY 330.342
+      OffsetTop 330.342
+      SizeX 180.709
+      OffsetRight -956.255
+      SizeY 40.993
+      OffsetBottom -371.335
+     }
+     Color 0.5583 0.5029 0.3324 1
+     Text "Unassigned Squads"
+     "Font Size" 20
+     "Min Font Size" 20
+     "Vertical Alignment" Center
+    }
+    TextWidgetClass "{66F85A1ED793E904}" {
+     Name "FlightNumber"
+     Slot FrameWidgetSlot "{66F85A1ED793E92A}" {
+      PositionX 775.546
+      OffsetLeft 775.546
+      PositionY 276.203
+      OffsetTop 276.203
+      SizeX 89.672
+      OffsetRight -865.218
+      SizeY 40.993
+      OffsetBottom -317.196
+     }
+     Color 0.5583 0.5029 0.3324 1
+     Text "Flight #1"
+     "Vertical Alignment" Center
+    }
+    PanelWidgetClass "{66F85A18275B3C67}" {
+     Name "UnassignedSquadPanel"
+     Slot FrameWidgetSlot "{66F85A18275B3C8F}" {
+      PositionX 769.388
+      OffsetLeft 769.388
+      PositionY 329.752
+      OffsetTop 329.752
+      SizeX 186.694
+      OffsetRight -956.082
+      SizeY 41.987
+      OffsetBottom -371.739
+     }
+     Color 0.0887 0.0887 0.0561 1
+    }
+    PanelWidgetClass "{66F85A1818F92707}" {
+     Name "AssignedSquadPanel"
+     Slot FrameWidgetSlot "{66F85A18275B3C8F}" {
+      PositionX 976.407
+      OffsetLeft 976.407
+      PositionY 329.752
+      OffsetTop 329.752
+      SizeX 186.683
+      OffsetRight -1163.09
+      SizeY 41.987
+      OffsetBottom -371.739
+     }
+     Color 0.0887 0.0887 0.0561 1
+    }
+    PanelWidgetClass "{66F85A18169707E5}" {
+     Name "PlayersTextPanel"
+     Slot FrameWidgetSlot "{66F85A18275B3C8F}" {
+      PositionX 1180.61
+      OffsetLeft 1180.61
+      PositionY 329.752
+      OffsetTop 329.752
+      SizeX 82.87
+      OffsetRight -1263.48
+      SizeY 41.987
+      OffsetBottom -371.739
+     }
+     Color 0.0887 0.0887 0.0561 1
+    }
+    PanelWidgetClass "{66F85A180F633C87}" {
+     Name "PlayersCountPanel"
+     Slot FrameWidgetSlot "{66F85A18275B3C8F}" {
+      PositionX 1180.61
+      OffsetLeft 1180.61
+      PositionY 374.656
+      OffsetTop 374.656
+      SizeX 82.87
+      OffsetRight -1263.48
+      SizeY 41.987
+      OffsetBottom -416.643
+     }
+     Color 0.0887 0.0887 0.0561 1
+    }
+    PanelWidgetClass "{66F85A180856CE60}" {
+     Name "AltitudeTextPanel"
+     Slot FrameWidgetSlot "{66F85A18275B3C8F}" {
+      PositionX 1180.61
+      OffsetLeft 1180.61
+      PositionY 419.206
+      OffsetTop 419.206
+      SizeX 82.87
+      OffsetRight -1263.48
+      SizeY 41.987
+      OffsetBottom -461.193
+     }
+     Color 0.0887 0.0887 0.0561 1
+    }
+    PanelWidgetClass "{66F85A184919D823}" {
+     Name "AltittudePanel"
+     Slot FrameWidgetSlot "{66F85A18275B3C8F}" {
+      PositionX 1180.61
+      OffsetLeft 1180.61
+      PositionY 463.061
+      OffsetTop 463.061
+      SizeX 82.87
+      OffsetRight -1263.48
+      SizeY 41.987
+      OffsetBottom -505.048
+     }
+     Color 0.0887 0.0887 0.0561 1
+    }
+    PanelWidgetClass "{66F85A184919D84A}" {
+     Name "FlightpathTextPanel"
+     Slot FrameWidgetSlot "{66F85A18275B3C8F}" {
+      PositionX 1180.61
+      OffsetLeft 1180.61
+      PositionY 507.965
+      OffsetTop 507.965
+      SizeX 82.87
+      OffsetRight -1263.48
+      SizeY 41.987
+      OffsetBottom -549.952
+     }
+     Color 0.0887 0.0887 0.0561 1
+    }
+    PanelWidgetClass "{66F85A184919D861}" {
+     Name "FlightpathPanel"
+     Slot FrameWidgetSlot "{66F85A18275B3C8F}" {
+      PositionX 1180.61
+      OffsetLeft 1180.61
+      PositionY 552.515
+      OffsetTop 552.515
+      SizeX 82.87
+      OffsetRight -1263.48
+      SizeY 41.987
+      OffsetBottom -594.502
+     }
+     Color 0.0887 0.0887 0.0561 1
+    }
+    PanelWidgetClass "{66F85A198F32DA09}" {
+     Name "FlightPathListPanel"
+     Slot FrameWidgetSlot "{66F85A18275B3C8F}" {
+      PositionX 1273.3
+      OffsetLeft 1273.3
+      PositionY 329.752
+      OffsetTop 329.752
+      SizeX 157.56
+      OffsetRight -1430.86
+      SizeY 41.987
+      OffsetBottom -371.739
+     }
+     Color 0.0887 0.0887 0.0561 1
+    }
+    PanelWidgetClass "{66F85A1987B3F141}" {
+     Name "GreenLightDistanceTextPanel"
+     Slot FrameWidgetSlot "{66F85A18275B3C8F}" {
+      PositionX 975.011
+      OffsetLeft 975.011
+      PositionY 681.474
+      OffsetTop 681.474
+      SizeX 229.994
+      OffsetRight -1205
+      SizeY 41.987
+      OffsetBottom -723.461
+     }
+     Color 0.0887 0.0887 0.0561 1
+    }
+    PanelWidgetClass "{66F85A19821DF9DE}" {
+     Name "GreenLightDistancePanel"
+     Slot FrameWidgetSlot "{66F85A18275B3C8F}" {
+      PositionX 1207.08
+      OffsetLeft 1207.08
+      PositionY 681.474
+      OffsetTop 681.474
+      SizeX 92.674
+      OffsetRight -1299.75
+      SizeY 41.987
+      OffsetBottom -723.461
+     }
+     Color 0.0887 0.0887 0.0561 1
+    }
+    PanelWidgetClass "{66F85A19F5B8B739}" {
+     Name "FlightpathDistanceTextPanek"
+     Slot FrameWidgetSlot "{66F85A18275B3C8F}" {
+      PositionX 1358.82
+      OffsetLeft 1358.82
+      PositionY 681.474
+      OffsetTop 681.474
+      SizeX 90.109
+      OffsetRight -1448.93
+      SizeY 41.987
+      OffsetBottom -723.461
+     }
+     Color 0.0887 0.0887 0.0561 1
+    }
+    PanelWidgetClass "{66F85A19EACEC950}" {
+     Name "FlightpathDistancePanel"
+     Slot FrameWidgetSlot "{66F85A18275B3C8F}" {
+      PositionX 1451.09
+      OffsetLeft 1451.09
+      PositionY 681.474
+      OffsetTop 681.474
+      SizeX 90.11
+      OffsetRight -1541.2
+      SizeY 41.987
+      OffsetBottom -723.461
+     }
+     Color 0.0887 0.0887 0.0561 1
+    }
+    PanelWidgetClass "{66F85A19D95F07BD}" {
+     Name "FlightNumberPanel"
+     Slot FrameWidgetSlot "{66F85A18275B3C8F}" {
+      PositionX 769.388
+      OffsetLeft 769.388
+      PositionY 274.797
+      OffsetTop 274.797
+      SizeX 98.942
+      OffsetRight -868.33
+      SizeY 41.987
+      OffsetBottom -316.784
+     }
+     Color 0.0887 0.0887 0.0561 1
+    }
+    ScrollLayoutWidgetClass "{66F85A1BF58EE280}" {
+     Name "ScrollLayout0"
+     Slot FrameWidgetSlot "{66F80A3B31B75DD5}" {
+      PositionX 770.294
+      OffsetLeft 770.294
+      PositionY 377.298
+      OffsetTop 377.298
+      SizeX 203.25
+      OffsetRight -973.544
+      SizeY 230.427
+      OffsetBottom -607.725
+     }
+     {
+      VerticalLayoutWidgetClass "{66F85A1BF58EE287}" {
+       Name "UnassignedList"
+       Slot AlignableSlot "{66F85A1AF2675C87}" {
+        HorizontalAlign 0
+        VerticalAlign 3
+       }
+      }
+     }
+    }
+    ScrollLayoutWidgetClass "{66F85A1BE96ECD29}" {
+     Name "ScrollLayout1"
+     Slot FrameWidgetSlot "{66F80A3B31B75DD5}" {
+      PositionX 977.127
+      OffsetLeft 977.127
+      PositionY 377.298
+      OffsetTop 377.298
+      SizeX 203.255
+      OffsetRight -1180.38
+      SizeY 230.427
+      OffsetBottom -607.725
+     }
+     {
+      VerticalLayoutWidgetClass "{66F85A1BE96ECD2F}" {
+       Name "AssignedList"
+       Slot AlignableSlot "{66F85A1AF2675C87}" {
+        HorizontalAlign 0
+        VerticalAlign 3
+       }
+      }
+     }
+    }
+    ScrollLayoutWidgetClass "{66F85A1BE590DDD5}" {
+     Name "ScrollLayout2"
+     Slot FrameWidgetSlot "{66F80A3B31B75DD5}" {
+      PositionX 1276.39
+      OffsetLeft 1276.39
+      PositionY 377.298
+      OffsetTop 377.298
+      SizeX 203.253
+      OffsetRight -1479.65
+      SizeY 230.427
+      OffsetBottom -607.725
+     }
+     {
+      VerticalLayoutWidgetClass "{66F85A1BE590DDDB}" {
+       Name "FlightPathList"
+       Slot AlignableSlot "{66F85A1AF2675C87}" {
+        HorizontalAlign 0
+        VerticalAlign 3
+       }
+      }
+     }
+    }
+    PanelWidgetClass "{66FA02199496C667}" {
+     Name "LowButtonPanel"
+     Slot FrameWidgetSlot "{66F85A18275B3C8F}" {
+      PositionX 1486.85
+      OffsetLeft 1486.85
+      PositionY 378.797
+      OffsetTop 378.797
+      SizeX 100.195
+      OffsetRight -1587.05
+      SizeY 30.602
+      OffsetBottom -409.399
+     }
+     Color 0.0887 0.0887 0.0561 1
+    }
+    PanelWidgetClass "{66FA0219FE127E88}" {
+     Name "HighButtonPanel"
+     Slot FrameWidgetSlot "{66F85A18275B3C8F}" {
+      PositionX 1486.85
+      OffsetLeft 1486.85
+      PositionY 447.985
+      OffsetTop 447.985
+      SizeX 100.2
+      OffsetRight -1587.05
+      SizeY 30.602
+      OffsetBottom -478.587
+     }
+     Color 0.0887 0.0887 0.0561 1
+    }
+    PanelWidgetClass "{66FA02198747ADEF}" {
+     Name "MediumButtonPanel"
+     Slot FrameWidgetSlot "{66F85A18275B3C8F}" {
+      PositionX 1486.85
+      OffsetLeft 1486.85
+      PositionY 412.953
+      OffsetTop 412.953
+      SizeX 100.2
+      OffsetRight -1587.05
+      SizeY 30.602
+      OffsetBottom -443.555
+     }
+     Color 0.0887 0.0887 0.0561 1
+    }
+    ButtonWidgetClass "{66FA021800273624}" {
+     Name "LowAltitudeButton"
+     Slot FrameWidgetSlot "{66F85A1D5BFCAD69}" {
+      PositionX 1487.03
+      OffsetLeft 1487.03
+      PositionY 378.81
+      OffsetTop 378.81
+      SizeX 100
+      OffsetRight -1587.03
+      SizeY 30
+      OffsetBottom -408.81
+     }
+     Color 1 1 1 0
+     components {
+      SCR_ButtonComponent "{66F85A1EAEAF956A}" {
+      }
+     }
+     {
+      TextWidgetClass "{66FA02180027362A}" {
+       Name "Text0"
+       Slot ButtonWidgetSlot "{66F85A146CAFDD47}" {
+       }
+       Color 0.5583 0.5029 0.3324 1
+       Text "Low"
+       "Font Size" 18
+       "Min Font Size" 18
+       "Horizontal Alignment" Center
+       "Vertical Alignment" Center
+      }
+     }
+    }
+    ButtonWidgetClass "{66FA021848D24261}" {
+     Name "MediumAltitudeButtton"
+     Slot FrameWidgetSlot "{66F85A1D5BFCAD69}" {
+      PositionX 1487.03
+      OffsetLeft 1487.03
+      PositionY 413.404
+      OffsetTop 413.404
+      SizeX 100
+      OffsetRight -1587.03
+      SizeY 30
+      OffsetBottom -443.404
+     }
+     Color 1 1 1 0
+     components {
+      SCR_ButtonComponent "{66F85A1EAEAF956A}" {
+      }
+     }
+     {
+      TextWidgetClass "{66FA021848D24260}" {
+       Name "Text0"
+       Slot ButtonWidgetSlot "{66F85A146CAFDD47}" {
+       }
+       Color 0.5583 0.5029 0.3324 1
+       Text "Medium"
+       "Font Size" 18
+       "Min Font Size" 18
+       "Horizontal Alignment" Center
+       "Vertical Alignment" Center
+      }
+     }
+    }
+    ButtonWidgetClass "{66FA0219BC8C688D}" {
+     Name "HighAltitudeButton"
+     Slot FrameWidgetSlot "{66F85A1D5BFCAD69}" {
+      PositionX 1487.03
+      OffsetLeft 1487.03
+      PositionY 447.998
+      OffsetTop 447.998
+      SizeX 100
+      OffsetRight -1587.03
+      SizeY 30
+      OffsetBottom -477.998
+     }
+     Color 1 1 1 0
+     components {
+      SCR_ButtonComponent "{66F85A1EAEAF956A}" {
+      }
+     }
+     {
+      TextWidgetClass "{66FA0219BC8C68B3}" {
+       Name "Text0"
+       Slot ButtonWidgetSlot "{66F85A146CAFDD47}" {
+       }
+       Color 0.5583 0.5029 0.3324 1
+       Text "High"
+       "Font Size" 18
+       "Min Font Size" 18
+       "Horizontal Alignment" Center
+       "Vertical Alignment" Center
+      }
+     }
+    }
+    PanelWidgetClass "{66FA0219CF344721}" {
+     Name "SelectAltitudePanel"
+     Slot FrameWidgetSlot "{66F85A18275B3C8F}" {
+      PositionX 1486.43
+      OffsetLeft 1486.43
+      PositionY 329.752
+      OffsetTop 329.752
+      SizeX 125.28
+      OffsetRight -1611.71
+      SizeY 41.987
+      OffsetBottom -371.739
+     }
+     Color 0.0887 0.0887 0.0561 1
+    }
+    TextWidgetClass "{66FA0219CF3448E2}" {
+     Name "SelectAltidueText"
+     Slot FrameWidgetSlot "{66F85A1ED793E92A}" {
+      PositionX 1489.55
+      OffsetLeft 1489.55
+      PositionY 330.342
+      OffsetTop 330.342
+      SizeX 122.06
+      OffsetRight -1611.61
+      SizeY 40.993
+      OffsetBottom -371.335
+     }
+     Color 0.5583 0.5029 0.3324 1
+     Text "Select Altitude"
+     "Font Size" 20
+     "Min Font Size" 20
+     "Vertical Alignment" Center
+    }
+    FrameWidgetClass "{66FA02197B4BF8EF}" {
+     Name "FlightPathFrame"
+     Slot FrameWidgetSlot "{66FA02197B4BF701}" {
+     }
+    }
+   }
+  }
+  FrameWidgetClass "{66F85A1AA11D0E94}" {
+   Name "CreatePanel"
+   Slot FrameWidgetSlot "{66F85A1AA11D0E8F}" {
+    Anchor 0.5 0.5 0.5 0.5
+    PositionX -940.944
+    OffsetLeft -940.9
+    PositionY -540
+    OffsetTop -540
+    SizeX 1920
+    OffsetRight -979.1
+    SizeY 1080
+    OffsetBottom -540
+   }
+   {
+    ImageWidgetClass "{66F80A34B33B47F0}" {
+     Name "Image0"
+     Slot FrameWidgetSlot "{66F80A34B33B461B}" {
+      Anchor 0 0.5 0 0.5
+      PositionX 381.531
+      OffsetLeft 381.531
+      PositionY -300
+      OffsetTop -300
+      SizeX 277.877
+      OffsetRight -659.408
+      SizeY 600
+      OffsetBottom -300
+     }
+     Color 0.0152 0.0152 0.0152 1
+     Mask "{3E0BA033795A755A}UI/data/beveledIcon.edds"
+     "Transition width" 1
+     Progress 0.5
+     "Mask Mode" "Include Below"
+    }
+    PanelWidgetClass "{66F85A157A78F2ED}" {
+     Name "Panel1"
+     Slot FrameWidgetSlot "{66F85A18275B3C8F}" {
+      PositionX 511.827
+      OffsetLeft 511.827
+      PositionY 300.362
+      OffsetTop 300.362
+      SizeX 136.06
+      OffsetRight -647.887
+      SizeY 32.079
+      OffsetBottom -332.441
+     }
+     Color 0.0887 0.0887 0.0561 1
+    }
+    PanelWidgetClass "{66F85A15113B6C64}" {
+     Name "Panel0"
+     Slot FrameWidgetSlot "{66F85A18275B3C8F}" {
+      PositionX 394.082
+      OffsetLeft 394.082
+      PositionY 300.362
+      OffsetTop 300.362
+      SizeX 100.112
+      OffsetRight -494.194
+      SizeY 32.079
+      OffsetBottom -332.441
+     }
+     Color 0.0887 0.0887 0.0561 1
+    }
+    ButtonWidgetClass "{66F85A1D5BFCAD70}" {
+     Name "CreateFlightButton"
+     Slot FrameWidgetSlot "{66F85A1D5BFCAD69}" {
+      PositionX 393.736
+      OffsetLeft 393.736
+      PositionY 300.877
+      OffsetTop 300.877
+      SizeX 100
+      OffsetRight -493.736
+      SizeY 30
+      OffsetBottom -330.877
+     }
+     Color 1 1 1 0
+     components {
+      SCR_ButtonComponent "{66F85A1EAEAF956A}" {
+      }
+     }
+     {
+      TextWidgetClass "{66F85A1EA5A3232F}" {
+       Name "Text0"
+       Slot ButtonWidgetSlot "{66F85A146CAFDD47}" {
+       }
+       Color 0.5583 0.5029 0.3324 1
+       Text "Create Flight"
+       "Font Size" 18
+       "Min Font Size" 18
+       "Horizontal Alignment" Center
+       "Vertical Alignment" Center
+      }
+     }
+    }
+    ScrollLayoutWidgetClass "{66F80A3B31B75D53}" {
+     Name "ScrollLayout0"
+     Slot FrameWidgetSlot "{66F80A3B31B75DD5}" {
+      PositionX 393.984
+      OffsetLeft 393.984
+      PositionY 335.486
+      OffsetTop 335.486
+      SizeX 264.635
+      OffsetRight -658.619
+      SizeY 464.866
+      OffsetBottom -800.352
+     }
+     {
+      VerticalLayoutWidgetClass "{66F80A3B2B155BDB}" {
+       Name "FlightList"
+       Slot AlignableSlot "{66F85A1AF2675C87}" {
+        HorizontalAlign 0
+        VerticalAlign 3
+       }
+      }
+     }
+    }
+    ButtonWidgetClass "{66F85A18F7B6D269}" {
+     Name "CreateFlightpathButton"
+     Slot FrameWidgetSlot "{66F85A1D5BFCAD69}" {
+      PositionX 512.162
+      OffsetLeft 512.162
+      PositionY 300.877
+      OffsetTop 300.877
+      SizeX 134.415
+      OffsetRight -646.577
+      SizeY 30
+      OffsetBottom -330.877
+     }
+     Color 1 1 1 0
+     components {
+      SCR_ButtonComponent "{66F85A1EAEAF956A}" {
+      }
+     }
+     {
+      TextWidgetClass "{66F85A18F7B6D268}" {
+       Name "Text1"
+       Slot ButtonWidgetSlot "{66F85A146CAFC7E4}" {
+       }
+       Color 0.5583 0.5029 0.3324 1
+       Text "Create Flightplath"
+       "Font Size" 18
+       "Min Font Size" 18
+       "Horizontal Alignment" Center
+       "Vertical Alignment" Center
+      }
+     }
+    }
+   }
+  }
+ }
+}

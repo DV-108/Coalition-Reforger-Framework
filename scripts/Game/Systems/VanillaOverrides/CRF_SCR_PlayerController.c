@@ -153,4 +153,50 @@ modded class SCR_PlayerController
 	{
 		SCR_Global.TeleportPlayer(GetPlayerId(), location);
 	}
+	
+	void RequestAirdropUIUpdate()
+	{
+		Rpc(RpcDo_RequestAirdropUIUpdate, GetPlayerId());
+	}
+	
+	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
+	void RpcDo_RequestAirdropUIUpdate(int playerId)
+	{
+		SCR_PlayerController pc = SCR_PlayerController.Cast(GetGame().GetPlayerManager().GetPlayerController(playerId));
+		if (!pc)
+			return;
+		
+		CRF_AirdropManager airdropMan = CRF_AirdropManager.GetInstance();
+		if (!airdropMan)
+			return;
+		
+		Faction playerFaction = SCR_FactionManager.SGetPlayerFaction(playerId);
+		if (!playerFaction)
+			return;
+		
+		string factionKey = playerFaction.GetFactionKey();
+		pc.UpdateAirdropUI(airdropMan.GetSideAssignedSquad(factionKey), airdropMan.GetSideFlightPaths(factionKey));
+	}
+	
+	void UpdateAirdropUI(array<int> assignedSquads, array<CRF_Flightpath> flightPaths)
+	{
+		Rpc(RpcDo_UpdateAirdropUI, assignedSquads, flightPaths);
+	}
+	
+	[RplRpc(RplChannel.Reliable, RplRcver.Owner)]
+	void RpcDo_UpdateAirdropUI(array<int> assignedSquads, array<CRF_Flightpath> flightPaths)
+	{
+		MenuManager menuMan = GetGame().GetMenuManager();
+		
+		if (!menuMan.GetTopMenu())
+			return;
+		
+		if (!menuMan.GetTopMenu().IsInherited(CRF_AirdropUI))
+			return;
+		
+		CRF_AirdropUI ui = CRF_AirdropUI.Cast(menuMan.GetTopMenu());
+		ui.m_aAssignedSquads.Copy(assignedSquads);
+		ui.m_aFlightPaths.Copy(flightPaths);
+		ui.m_bUpdateMenu = true;
+	}
 }

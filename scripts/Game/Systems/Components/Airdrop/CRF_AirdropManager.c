@@ -5,7 +5,9 @@ class CRF_AirdropManagerClass: SCR_BaseGameModeComponentClass
 class CRF_AirdropManager: SCR_BaseGameModeComponent
 {
 	static CRF_AirdropManager m_sInstance;
-	protected ref array<ref CRF_AirdropFlight> m_aFlights = {};
+	protected ref array<ref CRF_AirdropFlightObject> m_aFlights = {};
+	ref array<int> m_aAssignedSquads = {};
+	ref array<ref CRF_Flightpath> m_aFlightpaths = {};
 	
 	void CRF_AirdropManager (IEntityComponentSource src, IEntity ent, IEntity parent)
 	{
@@ -77,7 +79,7 @@ class CRF_AirdropManager: SCR_BaseGameModeComponent
 		params.Transform[2] = angles[2];
 		params.Transform[3] = planeObject.m_vFlightCoordinates[0];
 		IEntity plane = GetGame().SpawnEntityPrefab(Resource.Load(planeObject.m_sPlane), null, params);
-		ref CRF_AirdropFlight flight = new CRF_AirdropFlight(plane, planeObject.m_vFlightCoordinates, 65);
+		ref CRF_AirdropFlightObject flight = new CRF_AirdropFlightObject(plane, planeObject.m_vFlightCoordinates, 65);
 		//Delay so the flight has a chance to actual load the entity
 		//Ensure the entity has also been streamed in for all players as well
 		GetGame().GetCallqueue().CallLater(TeleportPlayers, 2000, false, players, SlotManagerComponent.Cast(plane.FindComponent(SlotManagerComponent)), plane, flight);
@@ -97,7 +99,7 @@ class CRF_AirdropManager: SCR_BaseGameModeComponent
 			SCR_BaseInteractiveLightComponent.Cast(plane.FindComponent(SCR_BaseInteractiveLightComponent)).ToggleLight(true);
 	}
 	
-	void TeleportPlayers(string players, SlotManagerComponent slotMan, IEntity plane, CRF_AirdropFlight flight)
+	void TeleportPlayers(string players, SlotManagerComponent slotMan, IEntity plane, CRF_AirdropFlightObject flight)
 	{
 		array<string> playerIds = {};
 		players.Split("|", playerIds, true);
@@ -181,7 +183,7 @@ class CRF_AirdropManager: SCR_BaseGameModeComponent
 		}
 		else
 			m_fParachuteCheck += timeSlice;
-		foreach (CRF_AirdropFlight flight: m_aFlights)
+		foreach (CRF_AirdropFlightObject flight: m_aFlights)
 		{
 			
 			if (checkDeployParachutes)
@@ -316,16 +318,58 @@ class CRF_AirdropManager: SCR_BaseGameModeComponent
 		gPlane.OnTransformReset();
 	}
 	
-	void RegisterFlight(CRF_AirdropFlight flight)
+	void RegisterFlight(CRF_AirdropFlightObject flight)
 	{
 		m_aFlights.Insert(flight);
 		SetEventMask(GetOwner(), EntityEvent.FIXEDFRAME);
 	}
+	
+	void RequestAirdropUIUpdate()
+	{
+		SCR_PlayerController pc = SCR_PlayerController.Cast(GetGame().GetPlayerController());
+		pc.RequestAirdropUIUpdate();
+	}
+	
+	array<int> GetSideAssignedSquad(string factionKey)
+	{
+		array<int> groups = {};
+		SCR_GroupsManagerComponent groupsMan = SCR_GroupsManagerComponent.GetInstance();
+		if (!groupsMan) // oh fuck
+			return groups;
+	
+		foreach (int groupId: m_aAssignedSquads)
+		{
+			SCR_AIGroup group = groupsMan.FindGroup(groupId);
+			if (!group)
+				continue;
+			
+			Faction groupFaction = group.GetFaction();
+			if (!groupFaction)
+				continue;
+			
+			if (groupFaction.GetFactionKey() != factionKey)
+				continue;
+			
+			
+		}
+		return groups;
+	}
+	
+	array<CRF_Flightpath> GetSideFlightPaths(string factionKey)
+	{
+		array<CRF_Flightpath> flightPaths = {};
+		foreach (CRF_Flightpath flightPath: m_aFlightpaths)
+		{
+			if (flightPath.m_sFactionKey == factionKey)
+				flightPaths.Insert(flightPath);
+		}
+		return flightPaths;
+	}
 }
 
-class CRF_AirdropFlight
+class CRF_AirdropFlightObject
 {
-	void CRF_AirdropFlight(IEntity plane, vector flightCoordinates[4], float speed)
+	void CRF_AirdropFlightObject(IEntity plane, vector flightCoordinates[4], float speed)
 	{
 		m_Plane = plane;
 		m_RplId = RplComponent.Cast(plane.FindComponent(RplComponent)).Id();
@@ -334,7 +378,7 @@ class CRF_AirdropFlight
 		CRF_AirdropManager.GetInstance().RegisterFlight(this);
 	}
 	
-	void ~CRF_AirdropFlight()
+	void ~CRF_AirdropFlightObject()
 	{
 		if (!Replication.IsServer())
 			return;
@@ -350,6 +394,14 @@ class CRF_AirdropFlight
 	float m_fProgress = 0;
 	float m_fSpeed;
 	float m_fGreenT;
+}
+
+//For UI
+class CRF_AirdropFlight
+{
+	array<int> m_aAssignedGroups = {};
+	ref CRF_Flightpath m_FlightPath;
+	int m_iAltitude;
 }
 
 class CRF_AirdropObject
@@ -369,4 +421,67 @@ class CRF_AirdropObject
 	//2 - Greenlight start
 	//3 - Greenlight end
 	vector m_vFlightCoordinates[4];
+}
+
+class CRF_Flightpath
+{
+	string m_sFactionKey;
+	vector m_vStartPoint;
+	vector m_vEndPoint;
+	vector m_vGreenLight;
+	
+	
+	static bool Extract(CRF_Flightpath instance, ScriptCtx ctx, SSnapSerializerBase snapshot)
+	{
+		snapshot.SerializeString(instance.m_sFactionKey);
+		snapshot.SerializeBytes(instance.m_vStartPoint, 12);
+		snapshot.SerializeBytes(instance.m_vEndPoint, 12);
+		snapshot.SerializeBytes(instance.m_vGreenLight, 12);
+		
+		return true;
+	}
+	
+	static bool Inject(SSnapSerializerBase snapshot, ScriptCtx ctx, CRF_Flightpath instance)
+	{
+		snapshot.SerializeString(instance.m_sFactionKey);
+	    snapshot.SerializeBytes(instance.m_vStartPoint, 12);
+	    snapshot.SerializeBytes(instance.m_vEndPoint, 12);
+	    snapshot.SerializeBytes(instance.m_vGreenLight, 12);
+		
+		return true;
+	}
+	
+	static void Encode(SSnapSerializerBase snapshot, ScriptCtx ctx, ScriptBitSerializer packet)
+	{
+		snapshot.EncodeString(packet);
+	    snapshot.EncodeVector(packet);
+		snapshot.EncodeVector(packet);
+		snapshot.EncodeVector(packet);
+	}
+	
+	static bool Decode(ScriptBitSerializer packet, ScriptCtx ctx, SSnapSerializerBase snapshot)
+	{
+		snapshot.DecodeString(packet);
+	    snapshot.DecodeVector(packet);
+		snapshot.DecodeVector(packet);
+		snapshot.DecodeVector(packet);
+		
+		return true;
+	}
+	
+	static bool SnapCompare(SSnapSerializerBase lhs, SSnapSerializerBase rhs, ScriptCtx ctx)
+	{
+	    return lhs.CompareStringSnapshots(rhs)
+			&& lhs.CompareSnapshots(rhs, 12)
+	        && lhs.CompareSnapshots(rhs, 12)
+	        && lhs.CompareSnapshots(rhs, 12);
+	}	
+	
+	static bool PropCompare(CRF_Flightpath instance, SSnapSerializerBase snapshot, ScriptCtx ctx)
+	{
+	    return snapshot.CompareString(instance.m_sFactionKey)
+			&& snapshot.Compare(instance.m_vStartPoint, 12)
+	        && snapshot.Compare(instance.m_vEndPoint, 12)
+	        && snapshot.Compare(instance.m_vGreenLight, 12);
+	}	
 }

@@ -1,0 +1,69 @@
+FrameWidgetClass {
+ Name "rootFrame"
+ Slot LayoutSlot "{66F85A1D12B8236D}" {
+  Padding 0 0 0 10
+ }
+ {
+  ImageWidgetClass "{66F80A3578C11988}" {
+   Name "Image0"
+   Slot FrameWidgetSlot "{66F80A34B33B461B}" {
+    PositionX 0
+    OffsetLeft 0
+    PositionY 0
+    OffsetTop 0
+    SizeX 253.501
+    OffsetRight -253.501
+    SizeY 100
+    OffsetBottom -100
+   }
+   Color 0.0343 0.0648 0.0423 1
+   Mask "{3E0BA033795A755A}UI/data/beveledIcon.edds"
+   "Transition width" 1
+   Progress 0.5
+   "Mask Mode" "Include Below"
+  }
+  ItemPreviewWidgetClass "{66F80A3ABBB76AC0}" {
+   Name "ItemPreview0"
+   Slot FrameWidgetSlot "{66F80A3ABBB7692A}" {
+    PositionX 10
+    OffsetLeft 10
+    PositionY 10
+    OffsetTop 10
+    SizeX 80
+    OffsetRight -90
+    SizeY 80
+    OffsetBottom -90
+   }
+  }
+  TextWidgetClass "{66F80A3A90D32531}" {
+   Name "Text0"
+   Slot FrameWidgetSlot "{66F80A3A90D325E1}" {
+    PositionX 95.774
+    OffsetLeft 95.774
+    PositionY 10
+    OffsetTop 10
+    SizeX 155.6
+    OffsetRight -251.374
+    SizeY 28.603
+    OffsetBottom -38.603
+   }
+   Color 0.5583 0.5029 0.3324 1
+   Text "30/30 Assigned"
+  }
+  TextWidgetClass "{66F80A3AC51B7F87}" {
+   Name "Text1"
+   Slot FrameWidgetSlot "{66F80A3A90D325E1}" {
+    PositionX 95.774
+    OffsetLeft 95.774
+    PositionY 44.41
+    OffsetTop 44.41
+    SizeX 155.6
+    OffsetRight -251.374
+    SizeY 28.603
+    OffsetBottom -73.013
+   }
+   Color 0.5583 0.5029 0.3324 1
+   Text "Flightpath #1"
+  }
+ }
+}

@@ -1,0 +1,74 @@
+FrameWidgetClass {
+ Name "rootFrame"
+ Slot FrameWidgetSlot "{66F80A3114F23509}" {
+  OffsetLeft 0
+  OffsetTop 0
+  SizeX 1850
+  OffsetRight -1850
+  SizeY 70
+  OffsetBottom -70
+ }
+ {
+  ImageWidgetClass "{66F80A334D2A3845}" {
+   Name "Image0"
+   Slot FrameWidgetSlot "{66F80A334D2A38AF}" {
+    PositionX 3.512
+    OffsetLeft 3.512
+    PositionY 20
+    OffsetTop 20
+    SizeX 30
+    OffsetRight -33.512
+    SizeY 30
+    OffsetBottom -50
+   }
+   Rotation 45
+   Texture "{A474D33A70037A18}UI/data/planeIcon.edds"
+   Size 30 30
+  }
+  ImageWidgetClass "{66F80A31AA81A827}" {
+   Name "RedLight"
+   Slot FrameWidgetSlot "{66F80A31AA81A85D}" {
+    PositionX 50
+    OffsetLeft 50
+    PositionY 20
+    OffsetTop 20
+    SizeX 0
+    OffsetRight -50
+    SizeY 30
+    OffsetBottom -50
+   }
+   Color 0.2159 0 0 1
+  }
+  ImageWidgetClass "{66F80A31F2D7BA50}" {
+   Name "GreenLight"
+   Slot FrameWidgetSlot "{66F80A31AA81A85D}" {
+    PositionX 50
+    OffsetLeft 50
+    PositionY 20
+    OffsetTop 20
+    SizeX 0
+    OffsetRight -50
+    SizeY 30
+    OffsetBottom -50
+   }
+   Color 0 0.2705 0.0718 1
+  }
+  TextWidgetClass "{66F80A3A066B0A0D}" {
+   Name "FlightNumber"
+   Slot FrameWidgetSlot "{66F80A3A066B0A24}" {
+    PositionX 23.846
+    OffsetLeft 23.846
+    PositionY 1.16
+    OffsetTop 1.16
+    SizeX 37.565
+    OffsetRight -61.411
+    SizeY 30
+    OffsetBottom -31.16
+   }
+   Text "#1"
+   FontProperties FontProperties "{66F80A3A777CFE62}" {
+    OutlineSize 5
+   }
+  }
+ }
+}

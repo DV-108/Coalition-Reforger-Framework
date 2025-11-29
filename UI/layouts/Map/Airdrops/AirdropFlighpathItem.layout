@@ -1,0 +1,42 @@
+FrameWidgetClass {
+ Name "rootFrame"
+ Slot LayoutSlot "{66F85A14FAE0B5F6}" {
+  Padding 0 0 0 10
+ }
+ {
+  ImageWidgetClass "{66F85A14C4C7CA88}" {
+   Name "Image0"
+   Slot FrameWidgetSlot "{66F80A34B33B461B}" {
+    PositionX 0
+    OffsetLeft 0
+    PositionY 0
+    OffsetTop 0
+    SizeX 155.735
+    OffsetRight -155.735
+    SizeY 41
+    OffsetBottom -41
+   }
+   Color 0.0343 0.0648 0.0423 1
+   Mask "{3E0BA033795A755A}UI/data/beveledIcon.edds"
+   "Transition width" 1
+   Progress 0.5
+   "Mask Mode" "Include Below"
+  }
+  TextWidgetClass "{66F85A14C4C7CA8D}" {
+   Name "FlightpathText"
+   Slot FrameWidgetSlot "{66F85A149730EFBE}" {
+    PositionX 5.125
+    OffsetLeft 5.125
+    PositionY 5.115
+    OffsetTop 5.115
+    SizeX 147.894
+    OffsetRight -153.019
+    SizeY 30
+    OffsetBottom -35.115
+   }
+   Color 0.5583 0.5029 0.3324 1
+   Text "Flightpath #1"
+   "Vertical Alignment" Center
+  }
+ }
+}

@@ -1,0 +1,80 @@
+FrameWidgetClass {
+ Name "rootFrame"
+ Slot LayoutSlot "{66F85A14FAE0B5F6}" {
+  Padding 0 0 0 10
+ }
+ {
+  ImageWidgetClass "{66F85A1B43B7378B}" {
+   Name "Image0"
+   Slot FrameWidgetSlot "{66F80A34B33B461B}" {
+    PositionX 0
+    OffsetLeft 0
+    PositionY 0
+    OffsetTop 0
+    SizeX 185.774
+    OffsetRight -185.774
+    SizeY 41
+    OffsetBottom -41
+   }
+   Color 0.0343 0.0648 0.0423 1
+   Mask "{3E0BA033795A755A}UI/data/beveledIcon.edds"
+   "Transition width" 1
+   Progress 0.5
+   "Mask Mode" "Include Below"
+  }
+  OverlayWidgetClass "{66F85A14A6D3FA5E}" {
+   Name "Icon"
+   Slot FrameWidgetSlot "{66F85A14A6D3D288}" {
+    PositionX 0
+    OffsetLeft 0
+    PositionY 0
+    OffsetTop 0
+    SizeX 45.515
+    OffsetRight -45.515
+    SizeY 41.013
+    OffsetBottom -41.013
+   }
+   components {
+    SCR_MilitarySymbolUIComponent "{5DB880D56B45FA22}" {
+     m_MilitarySymbol SCR_MilitarySymbol "{5DB880D56FF1176A}" {
+      m_Identity BLUFOR
+      m_Icons INFANTRY
+     }
+    }
+   }
+  }
+  TextWidgetClass "{66F85A149730EF80}" {
+   Name "SquadName"
+   Slot FrameWidgetSlot "{66F85A149730EFBE}" {
+    PositionX 51.878
+    OffsetLeft 51.878
+    PositionY 5.115
+    OffsetTop 5.115
+    SizeX 96.986
+    OffsetRight -148.864
+    SizeY 30
+    OffsetBottom -35.115
+   }
+   Color 0.5583 0.5029 0.3324 1
+   Text "1-1"
+   "Vertical Alignment" Center
+  }
+  TextWidgetClass "{66FA021EDB75AC17}" {
+   Name "SquadSlots"
+   Slot FrameWidgetSlot "{66F85A149730EFBE}" {
+    PositionX 153.856
+    OffsetLeft 153.856
+    PositionY 5.115
+    OffsetTop 5.115
+    SizeX 30.319
+    OffsetRight -184.176
+    SizeY 30
+    OffsetBottom -35.115
+   }
+   Color 0.5583 0.5029 0.3324 1
+   Text "1"
+   "Horizontal Alignment" Right
+   "Vertical Alignment" Center
+  }
+ }
+}
