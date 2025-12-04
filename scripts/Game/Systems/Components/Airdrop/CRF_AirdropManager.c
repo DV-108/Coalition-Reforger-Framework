@@ -80,10 +80,30 @@ class CRF_AirdropManager: SCR_BaseGameModeComponent
 		params.Transform[2] = angles[2];
 		params.Transform[3] = planeObject.m_vFlightCoordinates[0];
 		IEntity plane = GetGame().SpawnEntityPrefab(Resource.Load(planeObject.m_sPlane), null, params);
+		//Redundant but just in case
+		StreamPlaneIntoReplication(plane);
 		ref CRF_AirdropFlightObject flight = new CRF_AirdropFlightObject(plane, planeObject.m_vFlightCoordinates, 65);
 		//Delay so the flight has a chance to actual load the entity
 		//Ensure the entity has also been streamed in for all players as well
 		GetGame().GetCallqueue().CallLater(TeleportPlayers, 2000, false, players, SlotManagerComponent.Cast(plane.FindComponent(SlotManagerComponent)), plane, flight);
+	}
+	
+	void StreamPlaneIntoReplication(IEntity plane)
+	{
+		array<int> playerIds = {};
+		GetGame().GetPlayerManager().GetPlayers(playerIds);
+		RplComponent rplComp = RplComponent.Cast(plane.FindComponent(RplComponent));
+		if (!rplComp)
+			return;
+		
+		foreach (int playerId: playerIds)
+		{
+			SCR_PlayerController pc = SCR_PlayerController.Cast(GetGame().GetPlayerManager().GetPlayerController(playerId));
+			if (!pc)
+				continue;
+
+			rplComp.EnableStreamingConNode(pc.GetRplIdentity(), false);
+		}
 	}
 	
 	[RplRpc(RplChannel.Reliable, RplRcver.Broadcast)]
@@ -271,7 +291,7 @@ class CRF_AirdropManager: SCR_BaseGameModeComponent
 				delete slot.GetAttachedEntity();
 			
 			slot.GetWorldTransform(params.Transform);
-			IEntity light = GetGame().SpawnEntityPrefab(Resource.Load("{22E711A4236A5FE4}PrefabsEditable/Auto/Props/RedLight.et"), null, params);
+			IEntity light = GetGame().SpawnEntityPrefab(Resource.Load("{CA26D8A680895BBD}PrefabsEditable/Auto/Props/RedLightObject.et"), null, params);
 			slot.AttachEntity(light);
 		}
 		
@@ -297,7 +317,7 @@ class CRF_AirdropManager: SCR_BaseGameModeComponent
 				delete slot.GetAttachedEntity();
 			
 			slot.GetWorldTransform(params.Transform);
-			IEntity light = GetGame().SpawnEntityPrefab(Resource.Load("{134538EF4DD59327}PrefabsEditable/Auto/Props/GreenLight.et"), null, params);
+			IEntity light = GetGame().SpawnEntityPrefab(Resource.Load("{7CBC56493AB0430E}PrefabsEditable/Auto/Props/GreenLightObject.et"), null, params);
 			slot.AttachEntity(light);
 		}
 		
