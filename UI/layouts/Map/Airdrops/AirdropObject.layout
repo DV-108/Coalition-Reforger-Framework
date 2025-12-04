@@ -23,7 +23,7 @@ FrameWidgetClass {
    "Mask Mode" "Include Below"
   }
   ItemPreviewWidgetClass "{66F80A3ABBB76AC0}" {
-   Name "ItemPreview0"
+   Name "Icon"
    Slot FrameWidgetSlot "{66F80A3ABBB7692A}" {
     PositionX 10
     OffsetLeft 10
@@ -36,7 +36,7 @@ FrameWidgetClass {
    }
   }
   TextWidgetClass "{66F80A3A90D32531}" {
-   Name "Text0"
+   Name "Players"
    Slot FrameWidgetSlot "{66F80A3A90D325E1}" {
     PositionX 95.774
     OffsetLeft 95.774
@@ -51,7 +51,7 @@ FrameWidgetClass {
    Text "30/30 Assigned"
   }
   TextWidgetClass "{66F80A3AC51B7F87}" {
-   Name "Text1"
+   Name "Flightpath"
    Slot FrameWidgetSlot "{66F80A3A90D325E1}" {
     PositionX 95.774
     OffsetLeft 95.774

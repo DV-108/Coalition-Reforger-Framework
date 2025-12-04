@@ -1,5 +1,8 @@
 class CRF_AirdropUI: ChimeraMenuBase
 {
+	CRF_AirdropManager m_AirdropManager;
+	SCR_MapEntity m_MapEntity;
+	
 	Widget m_wRoot;
 	
 	string m_sPlayerFactionKey;
@@ -25,6 +28,11 @@ class CRF_AirdropUI: ChimeraMenuBase
 	Widget m_FlightPath;
 	
 	WorkspaceWidget m_Workspace ;
+	
+	ref array<ref CRF_AirdropFlight> m_aFlights = {};
+	ref CRF_AirdropFlight m_SelectedFlight;
+	int m_iSelectedIndex;
+	bool m_bUpdateFlights = false;
 	
 	ref array<int> m_aAssignedSquads = {};
 	ref array<ref CRF_Flightpath> m_aFlightPaths = {};
@@ -59,16 +67,49 @@ class CRF_AirdropUI: ChimeraMenuBase
 		if (!playerFaction)
 			Close();
 		
+		m_AirdropManager = CRF_AirdropManager.GetInstance();
+		
 		m_sPlayerFactionKey = playerFaction.GetFactionKey();
-		 
+		m_AirdropManager.RequestFlightsUpdate();
+		m_MapEntity = SCR_MapEntity.GetMapInstance();
 	}
 	
 	override void OnMenuUpdate(float tDelta)
 	{
+		if (m_bUpdateFlights)
+		{
+			m_bUpdateFlights = false;
+			UpdateFlights();
+		}
 		if (m_bUpdateMenu)
 		{
 			m_bUpdateMenu = false;
 			UpdateMenuLists();
+		}
+	}
+	
+	void UpdateFlights()
+	{
+		while(m_FlightList.GetChildren())
+			delete m_FlightList.GetChildren();	
+	}
+	
+	void DrawFlights()
+	{
+		SCR_GroupsManagerComponent groupsMan = SCR_GroupsManagerComponent.GetInstance();
+		foreach (int i, CRF_AirdropFlight flight: m_aFlights)
+		{
+			Widget flightWidget = m_Workspace.CreateWidgets("{B6AC4D2F890072EC}UI/layouts/Map/Airdrops/AirdropObject.layout", m_FlightList);
+			int playersInPlane = 0;
+			foreach(int groupId: flight.m_aAssignedGroups)
+			{
+				playersInPlane += groupsMan.FindGroup(groupId).GetPlayerCount(true);
+			}
+			TextWidget.Cast(flightWidget.FindAnyWidget("Players")).SetText(playersInPlane.ToString() + "/30 Assigned");
+			if (flight.m_FlightPath)
+				TextWidget.Cast(flightWidget.FindAnyWidget("Flightpath")).SetText("Flightpath #" + flight.m_FlightPath.m_iFlightNumber);
+			else
+				TextWidget.Cast(flightWidget.FindAnyWidget("Flightpath")).SetText("No Flightpath");
 		}
 	}
 	

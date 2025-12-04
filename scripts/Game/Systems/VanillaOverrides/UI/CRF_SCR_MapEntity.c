@@ -1,6 +1,22 @@
 modded class SCR_MapEntity
 {
+	bool m_bCreatingFlight = false;
 	string m_sFactionKey = "";
+	vector m_vFlightStart;
+	vector m_vFlightEnd;
+	vector m_vGreenLightStart;
+	
+	int m_iPhase = 0;
+	// 0 = idle
+	// 1 = placing start
+	// 2 = placing end
+	// 3 = sliding green light
+	
+	override void CloseMap()
+	{
+		m_bCreatingFlight = false;
+		super.CloseMap();
+	}
 	
 	override void OpenMap(MapConfiguration config)
 	{

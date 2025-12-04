@@ -1,6 +1,10 @@
 SCR_PlayerController : "{225E51284CC95CFA}Prefabs/Characters/Core/DefaultPlayerControllerMP.et" {
  ID "1A9BA6BEFA06E3B1"
  components {
+  ParachuteComponent "{65932336581E53D0}" {
+   m_fHardLandingVelocity 30
+   m_fDeathLandingVelocity 50
+  }
   SCR_FastTravelComponent "{5DAA74121E45C2EB}" {
    m_iCooldown 0
    m_iDistanceToTarget 5

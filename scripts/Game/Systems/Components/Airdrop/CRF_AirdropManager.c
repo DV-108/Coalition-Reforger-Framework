@@ -5,7 +5,8 @@ class CRF_AirdropManagerClass: SCR_BaseGameModeComponentClass
 class CRF_AirdropManager: SCR_BaseGameModeComponent
 {
 	static CRF_AirdropManager m_sInstance;
-	protected ref array<ref CRF_AirdropFlightObject> m_aFlights = {};
+	protected ref array<ref CRF_AirdropFlightObject> m_aFlightObjects = {};
+	ref array<ref CRF_AirdropFlight> m_aFlights = {};
 	ref array<int> m_aAssignedSquads = {};
 	ref array<ref CRF_Flightpath> m_aFlightpaths = {};
 	
@@ -163,13 +164,13 @@ class CRF_AirdropManager: SCR_BaseGameModeComponent
 	float m_fParachuteCheck = 0;
 	override void EOnFixedFrame(IEntity owner, float timeSlice)
 	{
-		if (!m_aFlights)
+		if (!m_aFlightObjects)
 		{
 			ClearEventMask(GetOwner(), EntityEvent.FIXEDFRAME);
 			return;
 		}
 		
-		if (m_aFlights.Count() == 0)
+		if (m_aFlightObjects.Count() == 0)
 		{
 			ClearEventMask(GetOwner(), EntityEvent.FIXEDFRAME);
 			return;
@@ -183,7 +184,7 @@ class CRF_AirdropManager: SCR_BaseGameModeComponent
 		}
 		else
 			m_fParachuteCheck += timeSlice;
-		foreach (CRF_AirdropFlightObject flight: m_aFlights)
+		foreach (CRF_AirdropFlightObject flight: m_aFlightObjects)
 		{
 			
 			if (checkDeployParachutes)
@@ -205,7 +206,7 @@ class CRF_AirdropManager: SCR_BaseGameModeComponent
 			}		
 			
 			if (flight.m_fProgress >= 2.0)
-            	m_aFlights.RemoveItem(flight);
+            	m_aFlightObjects.RemoveItem(flight);
 
 			float distance = vector.Distance(flight.m_vFlightCoordinates[0], flight.m_vFlightCoordinates[3]);
 			float step = (flight.m_fSpeed * timeSlice) / distance;
@@ -320,17 +321,20 @@ class CRF_AirdropManager: SCR_BaseGameModeComponent
 	
 	void RegisterFlight(CRF_AirdropFlightObject flight)
 	{
-		m_aFlights.Insert(flight);
+		if (!Replication.IsServer())
+			return;
+		
+		m_aFlightObjects.Insert(flight);
 		SetEventMask(GetOwner(), EntityEvent.FIXEDFRAME);
 	}
 	
-	void RequestAirdropUIUpdate()
+	void RequestAirdropUIUpdate(int selectedFlight)
 	{
 		SCR_PlayerController pc = SCR_PlayerController.Cast(GetGame().GetPlayerController());
-		pc.RequestAirdropUIUpdate();
+		pc.RequestAirdropUIUpdate(selectedFlight);
 	}
 	
-	array<int> GetSideAssignedSquad(string factionKey)
+	array<int> GetSideAssignedSquad(string factionKey, int index)
 	{
 		array<int> groups = {};
 		SCR_GroupsManagerComponent groupsMan = SCR_GroupsManagerComponent.GetInstance();
@@ -350,7 +354,8 @@ class CRF_AirdropManager: SCR_BaseGameModeComponent
 			if (groupFaction.GetFactionKey() != factionKey)
 				continue;
 			
-			
+			if (m_aFlights.Get(index).m_aAssignedGroups.Contains(groupId))
+				groups.Insert(groupId);
 		}
 		return groups;
 	}
@@ -364,6 +369,24 @@ class CRF_AirdropManager: SCR_BaseGameModeComponent
 				flightPaths.Insert(flightPath);
 		}
 		return flightPaths;
+	}
+	
+	array<CRF_AirdropFlight> GetSideFlights(string factionKey)
+	{
+		array<CRF_AirdropFlight> flights = {};
+		foreach (CRF_AirdropFlight flight: m_aFlights)
+		{
+			if (flight.m_sFactionKey == factionKey)
+				flights.Insert(flight);
+		}
+		
+		return flights;
+	}
+	
+	void RequestFlightsUpdate()
+	{
+		SCR_PlayerController pc = SCR_PlayerController.Cast(GetGame().GetPlayerController());
+		pc.RequestFlightsUIUpdate();
 	}
 }
 
@@ -399,9 +422,204 @@ class CRF_AirdropFlightObject
 //For UI
 class CRF_AirdropFlight
 {
-	array<int> m_aAssignedGroups = {};
+	string m_sFactionKey;
+	ref array<int> m_aAssignedGroups = {};
 	ref CRF_Flightpath m_FlightPath;
 	int m_iAltitude;
+	
+	// -------------------------------------------------------------------------
+	// Extract: instance -> snapshot
+	// -------------------------------------------------------------------------
+	static bool Extract(CRF_AirdropFlight instance, ScriptCtx ctx, SSnapSerializerBase snapshot)
+	{
+		// Faction key
+		snapshot.SerializeString(instance.m_sFactionKey);
+
+		// --- Assigned groups array ---
+		int count = instance.m_aAssignedGroups.Count();
+		snapshot.SerializeInt(count);
+
+		for (int i = 0; i < count; i++)
+		{
+			int groupId = instance.m_aAssignedGroups[i]; // MUST be a variable, not expression
+			snapshot.SerializeInt(groupId);
+		}
+
+		// --- Flight path ---
+		// Treat null as "empty" path for safety
+		CRF_Flightpath path = instance.m_FlightPath;
+		if (!path)
+		{
+			string emptyKey = "";
+			vector zero = "0 0 0";
+			
+			snapshot.SerializeString(emptyKey);
+			snapshot.SerializeVector(zero);
+			snapshot.SerializeVector(zero);
+			snapshot.SerializeVector(zero);
+		}
+		else
+		{
+			snapshot.SerializeString(path.m_sFactionKey);
+			snapshot.SerializeVector(path.m_vStartPoint);
+			snapshot.SerializeVector(path.m_vEndPoint);
+			snapshot.SerializeVector(path.m_vGreenLight);
+		}
+
+		// Altitude
+		snapshot.SerializeInt(instance.m_iAltitude);
+
+		return true;
+	}
+	
+	// -------------------------------------------------------------------------
+	// Inject: snapshot -> instance
+	// -------------------------------------------------------------------------
+	static bool Inject(SSnapSerializerBase snapshot, ScriptCtx ctx, CRF_AirdropFlight instance)
+	{
+		// Faction key
+		snapshot.SerializeString(instance.m_sFactionKey);
+
+		// --- Assigned groups array ---
+		int count;
+		snapshot.SerializeInt(count);
+
+		if (!instance.m_aAssignedGroups)
+			instance.m_aAssignedGroups = new array<int>;
+		
+		instance.m_aAssignedGroups.Clear();
+
+		for (int i = 0; i < count; i++)
+		{
+			int groupId;
+			snapshot.SerializeInt(groupId);
+			instance.m_aAssignedGroups.Insert(groupId);
+		}
+
+		// --- Flight path ---
+		if (!instance.m_FlightPath)
+			instance.m_FlightPath = new CRF_Flightpath;
+
+		CRF_Flightpath path = instance.m_FlightPath;
+
+		snapshot.SerializeString(path.m_sFactionKey);
+		snapshot.SerializeVector(path.m_vStartPoint);
+		snapshot.SerializeVector(path.m_vEndPoint);
+		snapshot.SerializeVector(path.m_vGreenLight);
+
+		// Altitude
+		snapshot.SerializeInt(instance.m_iAltitude);
+
+		return true;
+	}
+	
+	// -------------------------------------------------------------------------
+	// Encode: snapshot -> bitstream
+	// -------------------------------------------------------------------------
+	static void Encode(SSnapSerializerBase snapshot, ScriptCtx ctx, ScriptBitSerializer packet)
+	{
+		// Faction key
+		snapshot.EncodeString(packet);
+
+		// --- Assigned groups array ---
+		// First int is the count, EncodeInt returns the value as well
+		int count = snapshot.EncodeInt(packet);
+
+		for (int i = 0; i < count; i++)
+		{
+			snapshot.EncodeInt(packet); // each call encodes the next int in the snapshot
+		}
+
+		// --- Flight path ---
+		snapshot.EncodeString(packet);  // path key
+		snapshot.EncodeVector(packet);  // start
+		snapshot.EncodeVector(packet);  // end
+		snapshot.EncodeVector(packet);  // green light
+
+		// Altitude
+		snapshot.EncodeInt(packet);
+	}
+	
+	// -------------------------------------------------------------------------
+	// Decode: bitstream -> snapshot
+	// -------------------------------------------------------------------------
+	static bool Decode(ScriptBitSerializer packet, ScriptCtx ctx, SSnapSerializerBase snapshot)
+	{
+		// Faction key
+		snapshot.DecodeString(packet);
+
+		// --- Assigned groups array ---
+		int count = snapshot.DecodeInt(packet);
+
+		for (int i = 0; i < count; i++)
+		{
+			snapshot.DecodeInt(packet);
+		}
+
+		// --- Flight path ---
+		snapshot.DecodeString(packet); // path key
+		snapshot.DecodeVector(packet); // start
+		snapshot.DecodeVector(packet); // end
+		snapshot.DecodeVector(packet); // green light
+
+		// Altitude
+		snapshot.DecodeInt(packet);
+
+		return true;
+	}
+	
+	// -------------------------------------------------------------------------
+	// SnapCompare: snapshot vs snapshot
+	// -------------------------------------------------------------------------
+	static bool SnapCompare(SSnapSerializerBase lhs, SSnapSerializerBase rhs, ScriptCtx ctx)
+	{
+		// Compare the whole buffers bit-wise.
+		// Tell() gives current size of used snapshot buffer in bytes.
+		int size = lhs.Tell();
+		return lhs.CompareSnapshots(rhs, size);
+	}
+	
+	// -------------------------------------------------------------------------
+	// PropCompare: instance vs snapshot
+	// -------------------------------------------------------------------------
+	static bool PropCompare(CRF_AirdropFlight instance, SSnapSerializerBase snapshot, ScriptCtx ctx)
+	{
+		// Faction key
+		if (!snapshot.CompareString(instance.m_sFactionKey))
+			return false;
+
+		// --- Assigned groups count ---
+		int count = instance.m_aAssignedGroups.Count();
+		if (!snapshot.CompareInt(count))
+			return false;
+
+		// --- Assigned groups values ---
+		for (int i = 0; i < count; i++)
+		{
+			if (!snapshot.CompareInt(instance.m_aAssignedGroups[i]))
+				return false;
+		}
+
+		// --- Flight path ---
+		CRF_Flightpath path = instance.m_FlightPath;
+		if (!path)
+			return false; // or treat as default/empty path if you prefer
+
+		if (!snapshot.CompareString(path.m_sFactionKey))
+			return false;
+		if (!snapshot.CompareVector(path.m_vStartPoint))
+			return false;
+		if (!snapshot.CompareVector(path.m_vEndPoint))
+			return false;
+		if (!snapshot.CompareVector(path.m_vGreenLight))
+			return false;
+
+		// Altitude
+		if (!snapshot.CompareInt(instance.m_iAltitude))
+			return false;
+
+		return true;
+	}
 }
 
 class CRF_AirdropObject
@@ -425,6 +643,7 @@ class CRF_AirdropObject
 
 class CRF_Flightpath
 {
+	int m_iFlightNumber;
 	string m_sFactionKey;
 	vector m_vStartPoint;
 	vector m_vEndPoint;
@@ -433,6 +652,7 @@ class CRF_Flightpath
 	
 	static bool Extract(CRF_Flightpath instance, ScriptCtx ctx, SSnapSerializerBase snapshot)
 	{
+		snapshot.SerializeBytes(instance.m_iFlightNumber, 4);
 		snapshot.SerializeString(instance.m_sFactionKey);
 		snapshot.SerializeBytes(instance.m_vStartPoint, 12);
 		snapshot.SerializeBytes(instance.m_vEndPoint, 12);
@@ -443,6 +663,7 @@ class CRF_Flightpath
 	
 	static bool Inject(SSnapSerializerBase snapshot, ScriptCtx ctx, CRF_Flightpath instance)
 	{
+		snapshot.SerializeBytes(instance.m_iFlightNumber, 4);
 		snapshot.SerializeString(instance.m_sFactionKey);
 	    snapshot.SerializeBytes(instance.m_vStartPoint, 12);
 	    snapshot.SerializeBytes(instance.m_vEndPoint, 12);
@@ -453,6 +674,7 @@ class CRF_Flightpath
 	
 	static void Encode(SSnapSerializerBase snapshot, ScriptCtx ctx, ScriptBitSerializer packet)
 	{
+		snapshot.EncodeInt(packet);
 		snapshot.EncodeString(packet);
 	    snapshot.EncodeVector(packet);
 		snapshot.EncodeVector(packet);
@@ -461,6 +683,7 @@ class CRF_Flightpath
 	
 	static bool Decode(ScriptBitSerializer packet, ScriptCtx ctx, SSnapSerializerBase snapshot)
 	{
+		snapshot.DecodeInt(packet);
 		snapshot.DecodeString(packet);
 	    snapshot.DecodeVector(packet);
 		snapshot.DecodeVector(packet);
@@ -471,7 +694,8 @@ class CRF_Flightpath
 	
 	static bool SnapCompare(SSnapSerializerBase lhs, SSnapSerializerBase rhs, ScriptCtx ctx)
 	{
-	    return lhs.CompareStringSnapshots(rhs)
+	    return lhs.CompareSnapshots(rhs, 4)
+			&& lhs.CompareStringSnapshots(rhs)
 			&& lhs.CompareSnapshots(rhs, 12)
 	        && lhs.CompareSnapshots(rhs, 12)
 	        && lhs.CompareSnapshots(rhs, 12);
@@ -479,7 +703,8 @@ class CRF_Flightpath
 	
 	static bool PropCompare(CRF_Flightpath instance, SSnapSerializerBase snapshot, ScriptCtx ctx)
 	{
-	    return snapshot.CompareString(instance.m_sFactionKey)
+	    return snapshot.Compare(instance.m_iFlightNumber, 4)
+			&& snapshot.CompareString(instance.m_sFactionKey)
 			&& snapshot.Compare(instance.m_vStartPoint, 12)
 	        && snapshot.Compare(instance.m_vEndPoint, 12)
 	        && snapshot.Compare(instance.m_vGreenLight, 12);

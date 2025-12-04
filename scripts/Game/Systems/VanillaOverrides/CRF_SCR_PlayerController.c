@@ -154,13 +154,13 @@ modded class SCR_PlayerController
 		SCR_Global.TeleportPlayer(GetPlayerId(), location);
 	}
 	
-	void RequestAirdropUIUpdate()
+	void RequestFlightsUIUpdate()
 	{
-		Rpc(RpcDo_RequestAirdropUIUpdate, GetPlayerId());
+		Rpc(RpcDo_RequestFlightsUIUpdate, GetPlayerId());
 	}
 	
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
-	void RpcDo_RequestAirdropUIUpdate(int playerId)
+	void RpcDo_RequestFlightsUIUpdate(int playerId)
 	{
 		SCR_PlayerController pc = SCR_PlayerController.Cast(GetGame().GetPlayerManager().GetPlayerController(playerId));
 		if (!pc)
@@ -175,7 +175,52 @@ modded class SCR_PlayerController
 			return;
 		
 		string factionKey = playerFaction.GetFactionKey();
-		pc.UpdateAirdropUI(airdropMan.GetSideAssignedSquad(factionKey), airdropMan.GetSideFlightPaths(factionKey));
+		pc.UpdateAirdropFlights(airdropMan.GetSideFlights(factionKey));
+	}
+	
+	void UpdateAirdropFlights(array<CRF_AirdropFlight> flights)
+	{
+		Rpc(RpcDo_UpdateAirdropFlights, flights);
+	}
+	
+	[RplRpc(RplChannel.Reliable, RplRcver.Owner)]
+	void RpcDo_UpdateAirdropFlights(array<CRF_AirdropFlight> flights)
+	{
+		MenuManager menuMan = GetGame().GetMenuManager();
+		
+		if (!menuMan.GetTopMenu())
+			return;
+		
+		if (!menuMan.GetTopMenu().IsInherited(CRF_AirdropUI))
+			return;
+		
+		CRF_AirdropUI ui = CRF_AirdropUI.Cast(menuMan.GetTopMenu());
+		ui.m_aFlights.Copy(flights);
+		ui.m_bUpdateFlights = true;
+	}
+	
+	void RequestAirdropUIUpdate(int selectedFlight)
+	{
+		Rpc(RpcDo_RequestAirdropUIUpdate, GetPlayerId(), selectedFlight);
+	}
+	
+	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
+	void RpcDo_RequestAirdropUIUpdate(int playerId, int selectedFlight)
+	{
+		SCR_PlayerController pc = SCR_PlayerController.Cast(GetGame().GetPlayerManager().GetPlayerController(playerId));
+		if (!pc)
+			return;
+		
+		CRF_AirdropManager airdropMan = CRF_AirdropManager.GetInstance();
+		if (!airdropMan)
+			return;
+		
+		Faction playerFaction = SCR_FactionManager.SGetPlayerFaction(playerId);
+		if (!playerFaction)
+			return;
+		
+		string factionKey = playerFaction.GetFactionKey();
+		pc.UpdateAirdropUI(airdropMan.GetSideAssignedSquad(factionKey, selectedFlight), airdropMan.GetSideFlightPaths(factionKey));
 	}
 	
 	void UpdateAirdropUI(array<int> assignedSquads, array<CRF_Flightpath> flightPaths)

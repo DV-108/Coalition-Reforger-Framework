@@ -145,5 +145,57 @@ FrameWidgetClass {
     }
    }
   }
+  FrameWidgetClass "{670231826309C00D}" {
+   Name "FlightHint"
+   Slot FrameWidgetSlot "{670231826309C02B}" {
+    Anchor 0.5 0 0.5 0
+    PositionX -960
+    OffsetLeft -960
+    PositionY 0
+    OffsetTop 0
+    SizeX 1920
+    OffsetRight -960
+    SizeY 1080
+    OffsetBottom -1080
+   }
+   "Z Order" 99
+   "Is Visible" 0
+   {
+    PanelWidgetClass "{670231827CFD06FB}" {
+     Name "Panel0"
+     Slot FrameWidgetSlot "{670231827CFD0515}" {
+      Anchor 0.5 0 0.5 0
+      PositionX -175.034
+      OffsetLeft -175.034
+      PositionY 11.343
+      OffsetTop 11.343
+      SizeX 345.334
+      OffsetRight -170.3
+      SizeY 51.55
+      OffsetBottom -62.894
+     }
+     Color 0 0 0 1
+    }
+    TextWidgetClass "{6702318243342C30}" {
+     Name "FlightHintText"
+     Slot FrameWidgetSlot "{6702318243342C2D}" {
+      Anchor 0.5 0 0.5 0
+      PositionX -170.829
+      OffsetLeft -170.829
+      PositionY 12.299
+      OffsetTop 12.299
+      SizeX 334.862
+      OffsetRight -164.033
+      SizeY 50.773
+      OffsetBottom -63.072
+     }
+     Text "Select Greenlight Position"
+     "Font Size" 50
+     "Min Font Size" 25
+     "Horizontal Alignment" Center
+     "Vertical Alignment" Center
+    }
+   }
+  }
  }
 }
