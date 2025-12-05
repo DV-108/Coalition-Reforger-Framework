@@ -1,0 +1,12 @@
+SCR_AIWorld : "{01DC74137CFDDB6A}Prefabs/AI/SCR_AIWorld_Arland.et" {
+ coords 6395.293 159.223 6424.57
+}
+CRF_Gamemode CRF_Lobby1 : "{6A996BBFCEB37E78}Prefabs/MP/Modes/Lobby/CRF_Lobby.et" {
+ components {
+  CRF_CTFGamemodeManager "{66A170B5E8BFA897}" {
+   m_FlagPrefab "{25782F94FA996F41}Prefabs/Items/Demining/MineFlags/CRF_CTF_Flag.et"
+   m_DropZonePrefab "{DA9AD40B98E630F9}Prefabs/Structures/Frontline/CTF_Drop_Zone.et"
+  }
+ }
+ coords 6399.726 159.603 6433.65
+}

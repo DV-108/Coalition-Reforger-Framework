@@ -1,0 +1,14 @@
+$grp SCR_BaseTriggerEntity {
+ FlagSpawn {
+  coords 6528.486 160.813 6458.544
+ }
+ BluforDropZone1 {
+  coords 6369.579 157.724 6415.584
+ }
+ OpforDropZone1 {
+  coords 6646.433 154.17 6494.243
+ }
+}
+SCR_AIGroup : "{3D4D53B053964445}Prefabs/Groups/BLUFOR/Standard/Command/CRF_BLUFOR_Platoon_p.et" {
+ coords 6526.615 160.787 6456.994
+}

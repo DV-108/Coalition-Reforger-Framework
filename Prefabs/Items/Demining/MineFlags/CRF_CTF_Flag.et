@@ -1,0 +1,75 @@
+GenericEntity : "{37535B53F57D1632}Prefabs/Items/Demining/MineFlags/MineFlag_base.et" {
+ ID "508AB2013EEE1E00"
+ components {
+  CRF_CTFFlagComponent "{6672F5D9EEAE1FA8}" {
+  }
+  MeshObject "{5A2CCE4594CABF3B}" {
+   Object "{9A49FEF88266C8E5}Assets/Items/Demining/MineFlags/MineFlag_US_01.xob"
+   Materials {
+    MaterialAssignClass "{6672F5DDC8162CFF}" {
+     SourceMaterial "Mineflag_US_01"
+     AssignedMaterial "{41FF5ED4614840C9}Assets/Props/Fabric/Flags/Data/Flag_1_2_CIVILIAN.emat"
+    }
+   }
+  }
+  RigidBody "{5A2CCE4594CABF3D}" {
+   ModelGeometry 1
+   Static 1
+  }
+  SCR_DestructionMultiPhaseComponent "{5C7EE70A42E61150}" {
+   m_DestroySpawnObjects {
+    SCR_DebrisSpawnable "{5C7EE709989B2A10}" {
+     m_ModelPrefabs {
+      "{9A49FEF88266C8E5}Assets/Items/Demining/MineFlags/MineFlag_US_01.xob"
+     }
+    }
+   }
+  }
+  SCR_MineFlagComponent "{6672F5D9EB778CC0}" {
+  }
+  SCR_PlaceableInventoryItemComponent "{6672F5D9EB778CB9}" {
+   Attributes SCR_ItemAttributeCollection "{6672F5D9EB778CBF}" {
+    ItemDisplayName UIInfo "{6672F5D9EB778CBD}" {
+     Name "CRF CTF Flag"
+     Description "You better fucking run, boy."
+    }
+    ItemPhysAttributes ItemPhysicalAttributes "{6672F5D9EB778CB0}" {
+     Weight 0.1
+     SizeSetupStrategy Manual
+     ItemDimensions 15 15 15
+     ItemVolume 250
+     RestingAdditiveRotationLS 0 0 0
+    }
+    CustomAttributes {
+     PreviewRenderAttributes "{6672F5D9EB778CB7}" {
+      CameraOffset 0 0.15 -0.2
+     }
+    }
+    CommonItemType "NONE"
+    m_Size SLOT_1x1
+    m_SlotType SLOT_ANY
+   }
+  }
+  ActionsManagerComponent "{508AB5952B584B2E}" {
+   ActionContexts {
+    UserActionContext "{508AC2ABEC97066C}" {
+     Position PointInfo "{508AC2ABEAC4A0F5}" {
+      Offset 0 0.4672 0
+     }
+    }
+   }
+   additionalActions {
+    SCR_MineFlagPickUpAction "{5C7EE70B7E0ED88D}" {
+     "Sort Priority" 90
+    }
+    CRF_CTFPickupFlagAction "{6672F5D97316BC2C}" {
+     UIInfo UIInfo "{5C7EE70B6D82D16A}" {
+      Name "Capture Flag"
+     }
+     m_sActionDisplayName "Capture Flag"
+    }
+   }
+  }
+ }
+ coords 108.8 1.001 164.934
+}
