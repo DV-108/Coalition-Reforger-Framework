@@ -15,13 +15,16 @@ Vehicle : "{C012BB3488BEA0C2}Prefabs/Vehicles/Wheeled/BTR70/BTR70.et" {
   }
   SlotManagerComponent "{55BCE45E438E4CFF}" {
    Slots {
+    RegisteringComponentSlotInfo Turret {
+     Prefab "{EA8AD6FDDFAD57F5}EG_BTR_70_Turret.et"
+    }
     EntitySlotInfo DecalL {
      Offset 0.5619 2.0237 0.9346
      Angles 0 180 39.3643
-     Prefab "{D8A72ECD421FF473}Prefabs/Vehicles/Shared/decal_vehicle_EastGermany.et"
+     Prefab ""
     }
     EntitySlotInfo DecalR {
-     Offset -0.5648 2.0253 0.9346
+     Offset 1.0522 -2.9397 0.9346
      Angles 0 0 39.3643
      Prefab "{D8A72ECD421FF473}Prefabs/Vehicles/Shared/decal_vehicle_EastGermany.et"
     }

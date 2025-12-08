@@ -39,6 +39,7 @@ GenericEntity {
    }
   }
   RplComponent "{66CA1B969A31802F}" {
+   "Rpl State Override" Runtime
    SpatialRelevancy 0
    Streamable Disabled
   }

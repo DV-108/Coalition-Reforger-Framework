@@ -16,17 +16,17 @@ Vehicle : "{254289B9C09904AB}Prefabs/Vehicles/Wheeled/BRDM2/BRDM2.et" {
   SlotManagerComponent "{55BCE45E438E4CFF}" {
    Slots {
     RegisteringComponentSlotInfo Turret {
-     Prefab "{C2D7D1900AAEF1DD}Prefabs/Weapons/Ammo/Kornet/BRDM2_Kornet.et"
+     Prefab "{B8390A1391CAB48B}Prefabs/Weapons/Ammo/Kornet/EG_BDRM2_Kornet.et"
     }
     EntitySlotInfo Decal {
-     Offset 0.5723 2.1408 0
+     Offset -4.8567 -2.2909 0
      Angles 0 -180 39.2257
      Prefab "{D8A72ECD421FF473}Prefabs/Vehicles/Shared/decal_vehicle_EastGermany.et"
     }
     EntitySlotInfo DecalR {
      Offset -0.5708 2.1538 0
      Angles 0 0 36.0395
-     Prefab "{D8A72ECD421FF473}Prefabs/Vehicles/Shared/decal_vehicle_EastGermany.et"
+     Prefab ""
     }
    }
   }

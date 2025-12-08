@@ -30,6 +30,7 @@ GenericEntity : "{76571A125EF9ECD7}Prefabs/Vehicles/Airplanes/FA18A/FA18A_Mesh.e
    }
   }
   RplComponent "{5EF4E663052AF91B}" {
+   "Rpl State Override" Runtime
    SpatialRelevancy 0
    Streamable Disabled
   }

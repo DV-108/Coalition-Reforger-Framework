@@ -156,8 +156,6 @@ class CRF_Gamemode : SCR_BaseGameMode
 	
 	protected ref array<Vehicle> m_aSpawnedVehicles = {};
 	
-	bool m_bIsInEndCredits = false;
-	
 	// Staggered Player Initialization System
 	//------------------------------------------------------------------------------------
 	protected ref array<int> m_aPendingPlayerInitializations = {};

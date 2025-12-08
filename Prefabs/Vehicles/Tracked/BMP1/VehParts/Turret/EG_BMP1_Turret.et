@@ -1,0 +1,22 @@
+Turret : "{8021A4D1ADFCF506}Prefabs/Vehicles/Tracked/BMP1/VehParts/Turret/BMP1_Turret.et" {
+ ID "51ACD0965653D003"
+ components {
+  SlotManagerComponent "{5E52AE0A31173B6B}" {
+   Slots {
+    EntitySlotInfo DecalL {
+     PivotID "v_turret_01"
+     Offset -0.5093 0.1404 0.437
+     Angles 0 40.618 41.436
+     Prefab "{D8A72ECD421FF473}Prefabs/Vehicles/Shared/decal_vehicle_EastGermany.et"
+    }
+    EntitySlotInfo DecalR {
+     PivotID "v_turret_01"
+     Offset 0.449 0.1555 0.4287
+     Angles 2.6664 136.9758 43.9025
+     Prefab "{D8A72ECD421FF473}Prefabs/Vehicles/Shared/decal_vehicle_EastGermany.et"
+    }
+   }
+  }
+ }
+ coords 4074.623 55.582 4239.91
+}

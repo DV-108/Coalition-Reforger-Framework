@@ -149,39 +149,6 @@ modded class SCR_VONController
 		return false;
 	}
 	
-	override void ComputeStereoLR(
-	    IEntity listener,
-	    vector  sourcePos,
-	    float   volume_m,    
-		int playerId ,       // interpret as the inaudible distance (≈ −45 dB)
-	    out float outLeft,
-	    out float outRight,
-	    out int  silencedDecibels = 0,
-	    float   rearPanBoost   = 0.55,
-	    float   rearShadow     = 0.12,
-	    float   elevNarrow     = 0.25,
-	    float   bleed          = 0.10,
-	    bool    normalizePeak  = true
-	)
-	{
-		if (CRF_Gamemode.GetInstance().m_bIsInEndCredits)
-		{
-			outLeft = 0;
-			outRight = 0;
-			return;
-		}
-		float specLeft;
-		float specRight;
-		if (SpectatorLRCheck(playerId, specLeft, specRight))
-		{
-			outLeft = specLeft;
-			outRight = specRight;
-			silencedDecibels = 0;
-			return;
-		}
-		super.ComputeStereoLR(listener, sourcePos, volume_m, playerId, outLeft, outRight, silencedDecibels, rearPanBoost, rearShadow, elevNarrow, bleed, normalizePeak);
-	}
-	
 	override void ComputeSpectatorLR(int playerId, out float outLeft = 1, out float outRight = 1, out int silencedDecibels = 0)
 	{
 		if (CRF_Gamemode.GetInstance().m_bIsInEndCredits)

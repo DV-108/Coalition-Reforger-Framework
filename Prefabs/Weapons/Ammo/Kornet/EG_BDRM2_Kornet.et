@@ -1,0 +1,28 @@
+Turret : "{C2D7D1900AAEF1DD}Prefabs/Weapons/Ammo/Kornet/BRDM2_Kornet.et" {
+ ID "51ACD0965653D003"
+ components {
+  SlotManagerComponent "{66CA11EF0ABF71E3}" {
+   Slots {
+    EntitySlotInfo DecalL {
+     PivotID "v_turret_01"
+     Offset 0.5576 0.2264 0
+     Angles 0 -180 39.2257
+     Prefab "{D8A72ECD421FF473}Prefabs/Vehicles/Shared/decal_vehicle_EastGermany.et"
+    }
+    EntitySlotInfo DecalR {
+     PivotID "v_turret_01"
+     Offset -0.5393 0.2319 0
+     Angles 0 0 36.0395
+     Prefab "{D8A72ECD421FF473}Prefabs/Vehicles/Shared/decal_vehicle_EastGermany.et"
+    }
+   }
+  }
+ }
+ coords 4084.352 54.564 4231.836
+ {
+  GameEnvironmentProbeEntity {
+   ID "654C8CCD03CBE797"
+   coords 0 1.544 0.026
+  }
+ }
+}

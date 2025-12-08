@@ -15,13 +15,16 @@ Tank : "{1DC01AAACFFA8B63}Prefabs/Vehicles/Tracked/BMP1/BMP1_base.et" {
   }
   SlotManagerComponent "{55BCE45E438E4CFF}" {
    Slots {
+    RegisteringComponentSlotInfo Turret {
+     Prefab "{302DCD56E7902E08}Prefabs/Vehicles/Tracked/BMP1/VehParts/Turret/EG_BMP1_Turret.et"
+    }
     EntitySlotInfo DecalL {
      Offset -0.4649 1.7986 0.2573
      Angles 0 40.618 41.436
-     Prefab "{D8A72ECD421FF473}Prefabs/Vehicles/Shared/decal_vehicle_EastGermany.et"
+     Prefab ""
     }
     EntitySlotInfo DecalR {
-     Offset 0.4911 1.7986 0.2573
+     Offset -3.4375 -3.593 -3.7529
      Angles 2.6664 136.9758 43.9025
      Prefab "{D8A72ECD421FF473}Prefabs/Vehicles/Shared/decal_vehicle_EastGermany.et"
     }
