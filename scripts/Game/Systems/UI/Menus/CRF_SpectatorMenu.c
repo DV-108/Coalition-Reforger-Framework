@@ -196,7 +196,7 @@ class CRF_SpectatorMenu: ChimeraMenuBase
 		m_bNVGActivated = !m_bNVGActivated;
 
 		if (m_bNVGActivated)
-			SCR_ScreenEffectsManager.GetScreenEffectsDisplay().RHS_SetHDR("{0AD0A1ADEBCF893F}Assets/Items/Equipment/NVG/pvs14/data/SpecNVGFilm.emat", true);
+			SCR_ScreenEffectsManager.GetScreenEffectsDisplay().RHS_SetHDR("{511CD467ED159EA2}Assets/Items/Equipment/NVG/pvs14/data/NVG_Spectator_HDR.emat", true);
 		else
 			SCR_ScreenEffectsManager.GetScreenEffectsDisplay().RHS_SetHDR("{765A5E642D09A4B8}Common/Postprocess/HDR_Vanila.emat", false);
 	}
@@ -552,7 +552,7 @@ class CRF_SpectatorMenu: ChimeraMenuBase
 		// ALL SLOT-BASED CHARACTERS
 		//------------------------------------------------------------------------------------------------
 		
-		map<int, CRF_SlotDataContainer> slotMap = CRF_SlottingManager.GetInstance().GetSlotMap();
+		map<int, ref CRF_SlotDataContainer> slotMap = CRF_SlottingManager.GetInstance().GetSlotMap();
 		
 		if (slotMap && !slotMap.IsEmpty())
 		{
@@ -1078,7 +1078,7 @@ class CRF_SpectatorMenu: ChimeraMenuBase
 	void InitSlots()
 	{
 		// Get all slots from the slotting manager
-		map<int, CRF_SlotDataContainer> slotMap = CRF_SlottingManager.GetInstance().GetSlotMap();
+		map<int, ref CRF_SlotDataContainer> slotMap = CRF_SlottingManager.GetInstance().GetSlotMap();
 		
 		// Process each slot to count by faction
 		foreach (int slotId, CRF_SlotDataContainer slotData : slotMap)
@@ -1162,7 +1162,7 @@ class CRF_SpectatorMenu: ChimeraMenuBase
 			m_iAliveCivSlots, m_iCivSlots);
 		
 		// Get slot and group data
-		map<int, CRF_SlotDataContainer> slotMap = CRF_SlottingManager.GetInstance().GetSlotMap();
+		map<int, ref CRF_SlotDataContainer> slotMap = CRF_SlottingManager.GetInstance().GetSlotMap();
 		
 		array<SCR_AIGroup> factionGroups = {};
 		

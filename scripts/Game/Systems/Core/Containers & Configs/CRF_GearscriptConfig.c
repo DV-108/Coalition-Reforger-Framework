@@ -44,6 +44,12 @@ class CRF_GearScriptContainer
 	[Attribute("false", UIWidgets.CheckBox)]
 	bool m_bEnableMagnifiedOptics;
 	
+	[Attribute("true", UIWidgets.CheckBox)]
+	bool m_bEnableShareableMarkers;
+  
+ 	[Attribute("true", UIWidgets.CheckBox)]
+	bool m_bEnableBFT;
+	
 	[Attribute(uiwidget: "resourcePickerThumbnail", params: "et")]
 	ResourceName m_rShortRangeRadioPrefab;
 	

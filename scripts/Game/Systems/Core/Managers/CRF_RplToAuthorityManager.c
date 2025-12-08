@@ -14,8 +14,10 @@ class CRF_RplToAuthorityManager : ScriptComponent
 	protected CRF_GamemodeManager m_GamemodeManager;
 	protected CRF_SlottingManager m_SlottingManager;
 	protected CRF_SafestartManager m_SafestartManager;
+	protected CRF_AdminMenuManager m_AdminMenuManager;
 	protected CRF_GearscriptManager m_GearscriptManager;
 	protected CRF_RplBroadcastManager m_RplBroadcastManager;
+	protected CRF_BandwidthTelemetryManager m_TelemetryManager;
 	protected SCR_GroupsManagerComponent m_GroupsManagerComponent;
 	
 	protected static CRF_RplToAuthorityManager m_sInstance;
@@ -53,9 +55,26 @@ class CRF_RplToAuthorityManager : ScriptComponent
 		m_GamemodeManager = CRF_GamemodeManager.GetInstance();
 		m_SlottingManager = CRF_SlottingManager.GetInstance();
 		m_SafestartManager = CRF_SafestartManager.GetInstance();
+		m_AdminMenuManager = CRF_AdminMenuManager.GetInstance();
 		m_GearscriptManager = CRF_GearscriptManager.GetInstance();
 		m_RplBroadcastManager = CRF_RplBroadcastManager.GetInstance();
+		m_TelemetryManager = CRF_BandwidthTelemetryManager.GetInstance();
 		m_GroupsManagerComponent = SCR_GroupsManagerComponent.GetInstance();
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	// Log RPC call to telemetry system (server-side only)
+	//------------------------------------------------------------------------------------------------
+	protected void LogTelemetry(string rpcName, int estimatedBytes)
+	{
+		if (!Replication.IsServer())
+			return;
+			
+		if (!m_TelemetryManager)
+			m_TelemetryManager = CRF_BandwidthTelemetryManager.GetInstance();
+			
+		if (m_TelemetryManager)
+			m_TelemetryManager.LogRPC(rpcName, estimatedBytes);
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -122,50 +141,15 @@ class CRF_RplToAuthorityManager : ScriptComponent
 			Rpc(RpcAsk_RequestAdvanceSlottingPhase); 
 	}
 	
-	// Slot management functions - Batched update system for better performance
-	void BatchUpdateSlot(int slotId, int playerId = -1, RplId groupId = RplId.Invalid(), RplId charId = RplId.Invalid(), 
-	                    ResourceName resource = "", string name = "", bool isLocked = false, bool isDead = false)
-	{
-		Rpc(RpcAsk_BatchUpdateSlot, slotId, playerId, groupId, charId, resource, name, isLocked, isDead);
-	}
-	
-	// Individual slot management functions - Modified to use batched updates
-	// DEPRECATED: Individual slot update methods have been replaced with BatchUpdateSlot for better performance
-	// These methods are kept for backward compatibility but redirect to the batched implementation
 	void UpdateSlotPlayerID(int slotId, int playerId)
 	{
-		// Use the optimized batched method
-		if (m_SlottingManager)
-		{
-			CRF_SlotDataContainer currentData = m_SlottingManager.GetSlotData(slotId);
-			if (currentData)
-			{
-				BatchUpdateSlot(slotId, playerId, currentData.GetSlotCurrentGroup(), currentData.GetSlotCurrentCharacter(),
-				               currentData.GetSlotResource(), currentData.GetSlotName(), 
-				               currentData.GetIsLockedSlot(), currentData.GetIsDeadSlot());
-				return;
-			}
-		}
-		// Direct manager call if BatchUpdateSlot unavailable 
-		m_SlottingManager.UpdateSlotPlayerID(slotId, playerId);
+		Rpc(RpcAsk_UpdateSlotPlayerID, slotId, playerId);
 	}
 	
 	void UpdateSlotLockedState(int slotId, bool input)
 	{
-		// Use the optimized batched method
-		if (m_SlottingManager)
-		{
-			CRF_SlotDataContainer currentData = m_SlottingManager.GetSlotData(slotId);
-			if (currentData)
-			{
-				BatchUpdateSlot(slotId, currentData.GetSlotCurrentPlayerId(), currentData.GetSlotCurrentGroup(), 
-				               currentData.GetSlotCurrentCharacter(), currentData.GetSlotResource(), 
-				               currentData.GetSlotName(), input, currentData.GetIsDeadSlot());
-				return;
-			}
-		}
 		// Direct manager call if BatchUpdateSlot unavailable
-		m_SlottingManager.UpdateSlotLockedState(slotId, input);
+		Rpc(RpcAsk_UpdateSlotLockedState, slotId, input);
 	}
 	
 	void UpdateGroupLockedState(RplId groupRplId, bool input)
@@ -176,74 +160,26 @@ class CRF_RplToAuthorityManager : ScriptComponent
 	
 	void UpdateSlotDeathState(int slotId, bool input)
 	{
-		// Use the optimized batched method
-		if (m_SlottingManager)
-		{
-			CRF_SlotDataContainer currentData = m_SlottingManager.GetSlotData(slotId);
-			if (currentData)
-			{
-				BatchUpdateSlot(slotId, currentData.GetSlotCurrentPlayerId(), currentData.GetSlotCurrentGroup(), 
-				               currentData.GetSlotCurrentCharacter(), currentData.GetSlotResource(), 
-				               currentData.GetSlotName(), currentData.GetIsLockedSlot(), input);
-				return;
-			}
-		}
 		// Direct manager call if BatchUpdateSlot unavailable
-		m_SlottingManager.UpdateSlotDeathState(slotId, input);
+		Rpc(RpcAsk_UpdateSlotDeathState, slotId, input);
 	}
 	
 	void UpdateSlotGroup(int slotId, RplId groupRplId)
 	{
-		// Use the optimized batched method
-		if (m_SlottingManager)
-		{
-			CRF_SlotDataContainer currentData = m_SlottingManager.GetSlotData(slotId);
-			if (currentData)
-			{
-				BatchUpdateSlot(slotId, currentData.GetSlotCurrentPlayerId(), groupRplId, 
-				               currentData.GetSlotCurrentCharacter(), currentData.GetSlotResource(), 
-				               currentData.GetSlotName(), currentData.GetIsLockedSlot(), currentData.GetIsDeadSlot());
-				return;
-			}
-		}
 		// Direct manager call if BatchUpdateSlot unavailable
-		m_SlottingManager.UpdateSlotGroup(slotId, groupRplId);
+		Rpc(RpcAsk_UpdateSlotGroup, slotId, groupRplId);
 	}
 	
 	void UpdateSlotResource(int slotId, ResourceName resource)
 	{
-		// Use the optimized batched method
-		if (m_SlottingManager)
-		{
-			CRF_SlotDataContainer currentData = m_SlottingManager.GetSlotData(slotId);
-			if (currentData)
-			{
-				BatchUpdateSlot(slotId, currentData.GetSlotCurrentPlayerId(), currentData.GetSlotCurrentGroup(), 
-				               currentData.GetSlotCurrentCharacter(), resource, currentData.GetSlotName(), 
-				               currentData.GetIsLockedSlot(), currentData.GetIsDeadSlot());
-				return;
-			}
-		}
 		// Direct manager call if BatchUpdateSlot unavailable
-		m_SlottingManager.UpdateSlotResource(slotId, resource);
+		Rpc(RpcAsk_UpdateSlotResource, slotId, resource);
 	}
 	
 	void UpdateSlotCharacter(int slotId, RplId charId)
 	{
-		// Use the optimized batched method
-		if (m_SlottingManager)
-		{
-			CRF_SlotDataContainer currentData = m_SlottingManager.GetSlotData(slotId);
-			if (currentData)
-			{
-				BatchUpdateSlot(slotId, currentData.GetSlotCurrentPlayerId(), currentData.GetSlotCurrentGroup(), 
-				               charId, currentData.GetSlotResource(), currentData.GetSlotName(), 
-				               currentData.GetIsLockedSlot(), currentData.GetIsDeadSlot());
-				return;
-			}
-		}
 		// Direct manager call if BatchUpdateSlot unavailable
-		m_SlottingManager.UpdateSlotCharacter(slotId, charId);
+		Rpc(RpcAsk_UpdateSlotCharacter, slotId, charId);
 	}
 	
 	// Admin messaging functions
@@ -266,6 +202,16 @@ class CRF_RplToAuthorityManager : ScriptComponent
 	void AssignAdminTicket(int ticketID, int adminID, bool logAction)
 	{
 		Rpc(RpcAsk_AssignAdminTicket, ticketID, adminID, logAction); 
+	}
+	
+	void GetOpenTickets(int playerID)
+	{
+		Rpc(RpcAsk_GetOpenTickets, playerID); 
+	}
+	
+	void GetTicketMessages(int playerID, int ticketID)
+	{
+		Rpc(RpcAsk_GetTicketMessages, playerID, ticketID); 
 	}
 	
 	// Player management functions
@@ -446,6 +392,16 @@ class CRF_RplToAuthorityManager : ScriptComponent
 		Rpc(RpcAsk_MoveSpecCamToSlot, slotID, playerID);
 	}
 	
+	void RequestForwardDeploy(vector cursorWorldPos, string factionKey, int playerId)
+	{
+		Rpc(RpcAsk_RequestForwardDeploy, cursorWorldPos, factionKey, playerId);
+	}
+	
+	void RequestSpreadPos(RplId entityId)
+	{
+		Rpc(RpcAsk_RequestSpreadPos, entityId);
+	}
+	
 	//------------------------------------------------------------------------------------------------
 	// SERVER-SIDE RPC HANDLERS - Executed on the authority (server)
 	//------------------------------------------------------------------------------------------------
@@ -453,24 +409,44 @@ class CRF_RplToAuthorityManager : ScriptComponent
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
 	protected void RpcAsk_RequestInitilizePlayer(int playerId)
 	{
-		m_GamemodeManager.InitilizePlayer(playerId, CRF_GamemodeManager.ZERO_SPAWN_VECTOR);
+		// Telemetry: int
+		LogTelemetry("RpcAsk_RequestInitilizePlayer", CRF_BandwidthTelemetryManager.EstimateSize_Int());
+		
+		// Use staggered initialization system to prevent server overload
+		m_Gamemode.QueuePlayerInitialization(playerId);
 	}
 	
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
 	protected void RpcAsk_ToggleSideReady(string setReady, string playerName, bool adminForced)
 	{
+		// Telemetry: 2 strings + bool
+		int bytes = CRF_BandwidthTelemetryManager.EstimateSize_String(setReady);
+		bytes += CRF_BandwidthTelemetryManager.EstimateSize_String(playerName);
+		bytes += CRF_BandwidthTelemetryManager.EstimateSize_Bool();
+		LogTelemetry("RpcAsk_ToggleSideReady", bytes);
+		
 		m_SafestartManager.ToggleSideReady(setReady, playerName, adminForced);
 	}
 	
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
 	protected void RpcAsk_ToggleBombPlanted(string sitePlanted, bool togglePlanted)
 	{
+		// Telemetry: string + bool
+		int bytes = CRF_BandwidthTelemetryManager.EstimateSize_String(sitePlanted);
+		bytes += CRF_BandwidthTelemetryManager.EstimateSize_Bool();
+		LogTelemetry("RpcAsk_ToggleBombPlanted", bytes);
+		
 		CRF_SearchAndDestroyGamemodeManager.Cast(GetGame().GetGameMode().FindComponent(CRF_SearchAndDestroyGamemodeManager)).ToggleBombPlanted(sitePlanted, togglePlanted);
 	}
 
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
 	protected void RpcAsk_ToggleRushMCOMPlanted(string mcomIdentifier, bool togglePlanted)
 	{
+		// Telemetry: string + bool
+		int bytes = CRF_BandwidthTelemetryManager.EstimateSize_String(mcomIdentifier);
+		bytes += CRF_BandwidthTelemetryManager.EstimateSize_Bool();
+		LogTelemetry("RpcAsk_ToggleRushMCOMPlanted", bytes);
+		
 		Print("[CRF_RplToAuthorityManager] RpcAsk_ToggleRushMCOMPlanted received: " + mcomIdentifier + ", planted: " + togglePlanted);
 		CRF_RushGamemodeManager rushGamemode = CRF_RushGamemodeManager.Cast(GetGame().GetGameMode().FindComponent(CRF_RushGamemodeManager));
 		if (rushGamemode)
@@ -480,6 +456,9 @@ class CRF_RplToAuthorityManager : ScriptComponent
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
 	protected void RpcAsk_StartRushPlantingSound()
 	{
+		// Telemetry: no parameters
+		LogTelemetry("RpcAsk_StartRushPlantingSound", 0);
+		
 		Print("[CRF_RplToAuthorityManager] RpcAsk_StartRushPlantingSound received on server");
 		CRF_RushGamemodeManager rushGamemode = CRF_RushGamemodeManager.Cast(GetGame().GetGameMode().FindComponent(CRF_RushGamemodeManager));
 		if (rushGamemode)
@@ -489,6 +468,9 @@ class CRF_RplToAuthorityManager : ScriptComponent
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
 	protected void RpcAsk_StopRushPlantingSound()
 	{
+		// Telemetry: no parameters
+		LogTelemetry("RpcAsk_StopRushPlantingSound", 0);
+		
 		CRF_RushGamemodeManager rushGamemode = CRF_RushGamemodeManager.Cast(GetGame().GetGameMode().FindComponent(CRF_RushGamemodeManager));
 		if (rushGamemode)
 		{
@@ -499,6 +481,9 @@ class CRF_RplToAuthorityManager : ScriptComponent
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
 	protected void RpcAsk_StartRushDefuseSound()
 	{
+		// Telemetry: no parameters
+		LogTelemetry("RpcAsk_StartRushDefuseSound", 0);
+		
 		CRF_RushGamemodeManager rushGamemode = CRF_RushGamemodeManager.Cast(GetGame().GetGameMode().FindComponent(CRF_RushGamemodeManager));
 		if (rushGamemode)
 		{
@@ -509,6 +494,9 @@ class CRF_RplToAuthorityManager : ScriptComponent
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
 	protected void RpcAsk_StopRushDefuseSound()
 	{
+		// Telemetry: no parameters
+		LogTelemetry("RpcAsk_StopRushDefuseSound", 0);
+		
 		CRF_RushGamemodeManager rushGamemode = CRF_RushGamemodeManager.Cast(GetGame().GetGameMode().FindComponent(CRF_RushGamemodeManager));
 		if (rushGamemode)
 		{
@@ -519,6 +507,9 @@ class CRF_RplToAuthorityManager : ScriptComponent
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
 	protected void RpcAsk_StopRushBombTickingSound()
 	{
+		// Telemetry: no parameters
+		LogTelemetry("RpcAsk_StopRushBombTickingSound", 0);
+		
 		Print("[CRF_RplToAuthorityManager] RpcAsk_StopRushBombTickingSound received on server");
 		CRF_RushGamemodeManager rushGamemode = CRF_RushGamemodeManager.Cast(GetGame().GetGameMode().FindComponent(CRF_RushGamemodeManager));
 		if (rushGamemode)
@@ -535,41 +526,49 @@ class CRF_RplToAuthorityManager : ScriptComponent
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
 	protected void RpcAsk_RequestAdvanceGamemodeState(bool overriden)
 	{
+		// Telemetry: bool
+		LogTelemetry("RpcAsk_RequestAdvanceGamemodeState", CRF_BandwidthTelemetryManager.EstimateSize_Bool());
+		
 		m_Gamemode.AdvanceGamemodeState(overriden);
 	}
 	
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
 	protected void RpcAsk_RequestAdvanceSlottingPhase()
 	{
+		// Telemetry: no parameters
+		LogTelemetry("RpcAsk_RequestAdvanceSlottingPhase", 0);
+		
 		m_Gamemode.AdvanceSlottingState();
-	}
-
-	// NEW: Batched slot update RPC handler for improved performance
-	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
-	protected void RpcAsk_BatchUpdateSlot(int slotId, int playerId, RplId groupId, RplId charId, ResourceName resource, string name, bool isLocked, bool isDead)
-	{
-		if (!m_SlottingManager)
-			return;
-			
-		// Use the fully optimized batch update method from SlottingManager
-		m_SlottingManager.BatchUpdateSlot(slotId, playerId, groupId, charId, resource, name, isLocked, isDead);
 	}
 
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
 	protected void RpcAsk_UpdateSlotPlayerID(int slotId, int playerId)
 	{
+		// Telemetry: 2 ints
+		LogTelemetry("RpcAsk_UpdateSlotPlayerID", CRF_BandwidthTelemetryManager.EstimateSize_Int() * 2);
+		
 		m_SlottingManager.UpdateSlotPlayerID(slotId, playerId);
 	}
 	
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
 	protected void RpcAsk_UpdateSlotLockedState(int slotId, bool input)
 	{
+		// Telemetry: int + bool
+		int bytes = CRF_BandwidthTelemetryManager.EstimateSize_Int();
+		bytes += CRF_BandwidthTelemetryManager.EstimateSize_Bool();
+		LogTelemetry("RpcAsk_UpdateSlotLockedState", bytes);
+		
 		m_SlottingManager.UpdateSlotLockedState(slotId, input);
 	}
 	
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
 	void RpcAsk_UpdateGroupLockedState(RplId groupRplId, bool input)
 	{
+		// Telemetry: RplId + bool
+		int bytes = CRF_BandwidthTelemetryManager.EstimateSize_RplId();
+		bytes += CRF_BandwidthTelemetryManager.EstimateSize_Bool();
+		LogTelemetry("RpcAsk_UpdateGroupLockedState", bytes);
+		
 		RplComponent rplComponent = RplComponent.Cast(Replication.FindItem(groupRplId));
 		if (!rplComponent)
 			return;
@@ -582,54 +581,125 @@ class CRF_RplToAuthorityManager : ScriptComponent
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
 	protected void RpcAsk_UpdateSlotDeathState(int slotId, bool input)
 	{
+		// Telemetry: int + bool
+		int bytes = CRF_BandwidthTelemetryManager.EstimateSize_Int();
+		bytes += CRF_BandwidthTelemetryManager.EstimateSize_Bool();
+		LogTelemetry("RpcAsk_UpdateSlotDeathState", bytes);
+		
 		m_SlottingManager.UpdateSlotDeathState(slotId, input); 
 	}
 	
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
 	protected void RpcAsk_UpdateSlotGroup(int slotId, RplId groupRplId)
 	{
+		// Telemetry: int + RplId
+		int bytes = CRF_BandwidthTelemetryManager.EstimateSize_Int();
+		bytes += CRF_BandwidthTelemetryManager.EstimateSize_RplId();
+		LogTelemetry("RpcAsk_UpdateSlotGroup", bytes);
+		
 		m_SlottingManager.UpdateSlotGroup(slotId, groupRplId); 
 	}
 	
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
 	protected void RpcAsk_UpdateSlotResource(int slotId, ResourceName resource)
 	{
+		// Telemetry: int + ResourceName
+		int bytes = CRF_BandwidthTelemetryManager.EstimateSize_Int();
+		bytes += CRF_BandwidthTelemetryManager.EstimateSize_ResourceName(resource);
+		LogTelemetry("RpcAsk_UpdateSlotResource", bytes);
+		
 		m_SlottingManager.UpdateSlotResource(slotId, resource); 
 	}
 	
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
 	protected void RpcAsk_UpdateSlotCharacter(int slotId, RplId charId)
 	{
+		// Telemetry: int + RplId
+		int bytes = CRF_BandwidthTelemetryManager.EstimateSize_Int();
+		bytes += CRF_BandwidthTelemetryManager.EstimateSize_RplId();
+		LogTelemetry("RpcAsk_UpdateSlotCharacter", bytes);
+		
 		m_SlottingManager.UpdateSlotCharacter(slotId, charId); 
 	}
 	
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
 	protected void RpcAsk_SendAdminMessage(string data, int playerID)
 	{
-		m_RplBroadcastManager.SendAdminMessage(data, playerID);
+		// Telemetry: string + int
+		int bytes = CRF_BandwidthTelemetryManager.EstimateSize_String(data);
+		bytes += CRF_BandwidthTelemetryManager.EstimateSize_Int();
+		LogTelemetry("RpcAsk_SendAdminMessage", bytes);
+		
+		// Broadcast a new ticket/message to admins
+		bool ticketExists = m_AdminMenuManager.TicketExists(playerID);
+		m_RplBroadcastManager.SendAdminMessage(data, playerID, ticketExists);
+		
+		// Create a new ticket or/and add reply to existing ticket if not a admin/mod
+		if (!SCR_Global.IsAdmin(playerID) && !m_GamemodeManager.IsModerator(playerID))
+			m_AdminMenuManager.NewTicketMessage(playerID, playerID, data);
 	}
 
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
 	protected void RpcAsk_ReplyAdminMessage(string data, int playerId, int adminID, bool logAction)
 	{
+		// Telemetry: string + 2 ints + bool
+		int bytes = CRF_BandwidthTelemetryManager.EstimateSize_String(data);
+		bytes += CRF_BandwidthTelemetryManager.EstimateSize_Int() * 2;
+		bytes += CRF_BandwidthTelemetryManager.EstimateSize_Bool();
+		LogTelemetry("RpcAsk_ReplyAdminMessage", bytes);
+		
+		// Create a new ticket or/and add reply to existing ticket
+		m_AdminMenuManager.NewTicketMessage(playerId, adminID, data);
+		
+		// Broadcast to the reply to the player
 		m_RplBroadcastManager.ReplyAdminMessage(data, playerId, adminID, logAction);
 	}
 	
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
 	protected void RpcAsk_CloseAdminTicket(int ticketID, int adminID, bool logAction)
 	{
-		m_RplBroadcastManager.CloseAdminTicket(ticketID, adminID, logAction);
+		// Telemetry: 2 ints + bool
+		int bytes = CRF_BandwidthTelemetryManager.EstimateSize_Int() * 2;
+		bytes += CRF_BandwidthTelemetryManager.EstimateSize_Bool();
+		LogTelemetry("RpcAsk_CloseAdminTicket", bytes);
+		
+		m_AdminMenuManager.CloseTicket(ticketID);
+		
+		// Broadcast to admins that ticket was clsoed
+		m_RplBroadcastManager.CloseAdminTicket(ticketID, adminID, true);
 	}
 	
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
 	protected void RpcAsk_AssignAdminTicket(int ticketID, int adminID, bool logAction)
 	{
-		m_RplBroadcastManager.AssignAdminTicket(ticketID, adminID, logAction);
+		// Telemetry: 2 ints + bool
+		int bytes = CRF_BandwidthTelemetryManager.EstimateSize_Int() * 2;
+		bytes += CRF_BandwidthTelemetryManager.EstimateSize_Bool();
+		LogTelemetry("RpcAsk_AssignAdminTicket", bytes);
+		
+		m_AdminMenuManager.AssignAdminTicket(ticketID, adminID);
+	}
+	
+	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
+	protected void RpcAsk_GetOpenTickets(int playerID)
+	{
+		m_RplBroadcastManager.GetOpenTickets(playerID);
+	}
+	
+	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
+	protected void RpcAsk_GetTicketMessages(int playerID, int ticketID)
+	{
+		m_RplBroadcastManager.GetTicketMessages(playerID, ticketID);
 	}
 	
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
 	protected void RpcAsk_RespawnPlayer(int playerId, RplId SpawnRplID)
 	{
+		// Telemetry: int + RplId
+		int bytes = CRF_BandwidthTelemetryManager.EstimateSize_Int();
+		bytes += CRF_BandwidthTelemetryManager.EstimateSize_RplId();
+		LogTelemetry("RpcAsk_RespawnPlayer", bytes);
+		
 		vector overrideLocation[4];
 		overrideLocation = CRF_GamemodeManager.ZERO_SPAWN_VECTOR;
 		
@@ -639,6 +709,9 @@ class CRF_RplToAuthorityManager : ScriptComponent
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
 	protected void RpcAsk_RequestToJoinChannel(int channel, int requestId)
 	{
+		// Telemetry: 2 ints
+		LogTelemetry("RpcAsk_RequestToJoinChannel", CRF_BandwidthTelemetryManager.EstimateSize_Int() * 2);
+		
 		Print(string.Format("[VON] Server processing join request: channel=%1, requestId=%2", channel, requestId), LogLevel.NORMAL);
 		
 		// Instead of using BroadcastManager, handle the request directly on the server
@@ -684,6 +757,9 @@ class CRF_RplToAuthorityManager : ScriptComponent
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
 	protected void RpcAsk_CheckVONRegister(int playerId)
 	{
+		// Telemetry: int
+		LogTelemetry("RpcAsk_CheckVONRegister", CRF_BandwidthTelemetryManager.EstimateSize_Int());
+		
 		int channelIndex;
 		if (!m_MenuManager.IsPlayerInAnyChannel(playerId, channelIndex))
 		{
@@ -694,6 +770,9 @@ class CRF_RplToAuthorityManager : ScriptComponent
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
 	protected void RpcAsk_CreateChannel(int playerId)
 	{
+		// Telemetry: int
+		LogTelemetry("RpcAsk_CreateChannel", CRF_BandwidthTelemetryManager.EstimateSize_Int());
+		
 		string playerName = GetGame().GetPlayerManager().GetPlayerName(playerId);
 		// Include player ID in channel name to ensure uniqueness when players have same username
 		string uniqueChannelName = playerName + "'s Channel (" + playerId + ")";
@@ -703,12 +782,21 @@ class CRF_RplToAuthorityManager : ScriptComponent
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
 	protected void RpcAsk_JoinChannel(int playerId, int channel)
 	{
+		// Telemetry: 2 ints
+		LogTelemetry("RpcAsk_JoinChannel", CRF_BandwidthTelemetryManager.EstimateSize_Int() * 2);
+		
 		m_MenuManager.AddPlayerToChannel(playerId, channel, false);
 	}
 
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
 	protected void RpcAsk_SpawnOnGroup(int playerId, vector spawnLocation[4], int groupID, bool logAction)
 	{
+		// Telemetry: 2 ints + vector[4] + bool (vector array = 4 vectors * 12 bytes = 48)
+		int bytes = CRF_BandwidthTelemetryManager.EstimateSize_Int() * 2;
+		bytes += 48; // vector[4]
+		bytes += CRF_BandwidthTelemetryManager.EstimateSize_Bool();
+		LogTelemetry("RpcAsk_SpawnOnGroup", bytes);
+		
 		m_RespawnManager.RespawnPlayer(playerId, spawnLocation, groupID);
 
 		if (logAction)
@@ -726,6 +814,11 @@ class CRF_RplToAuthorityManager : ScriptComponent
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
 	protected void RpcAsk_RequestVehicleDepotInteraction(int playerId, int vehicleIndex, RplId depotRplId)
 	{
+		// Telemetry: 2 ints + RplId
+		int bytes = CRF_BandwidthTelemetryManager.EstimateSize_Int() * 2;
+		bytes += CRF_BandwidthTelemetryManager.EstimateSize_RplId();
+		LogTelemetry("RpcAsk_RequestVehicleDepotInteraction", bytes);
+		
 		RplComponent rplComponent = RplComponent.Cast(Replication.FindItem(depotRplId));
 		if (!rplComponent)
 			return;
@@ -754,6 +847,11 @@ class CRF_RplToAuthorityManager : ScriptComponent
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
 	protected void RpcAsk_RespawnFaction(FactionKey faction, bool logAction)
 	{
+		// Telemetry: string (FactionKey) + bool
+		int bytes = CRF_BandwidthTelemetryManager.EstimateSize_String(faction);
+		bytes += CRF_BandwidthTelemetryManager.EstimateSize_Bool();
+		LogTelemetry("RpcAsk_RespawnFaction", bytes);
+		
 		m_RespawnManager.RespawnSide(faction);
 		
 		if (logAction)
@@ -766,6 +864,12 @@ class CRF_RplToAuthorityManager : ScriptComponent
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
 	protected void RpcAsk_ResetGear(int playerId, ResourceName prefab, bool logAction)
 	{
+		// Telemetry: int + ResourceName + bool
+		int bytes = CRF_BandwidthTelemetryManager.EstimateSize_Int();
+		bytes += CRF_BandwidthTelemetryManager.EstimateSize_ResourceName(prefab);
+		bytes += CRF_BandwidthTelemetryManager.EstimateSize_Bool();
+		LogTelemetry("RpcAsk_ResetGear", bytes);
+		
 		// Prevent stuck on map
 		m_RplBroadcastManager.Closemap(playerId);
 		
@@ -788,11 +892,18 @@ class CRF_RplToAuthorityManager : ScriptComponent
 		
 		CRF_RoleConfig roleConfig = rolesConfig.FindRoleConfig(role);
 		int slotId = m_SlottingManager.GetPlayerSlotID(playerId);
+		CRF_SlotDataContainer slotData = m_SlottingManager.GetSlotData(slotId);
 		
-		m_SlottingManager.UpdateSlotResource(slotId, prefab);
-		m_SlottingManager.UpdateSlotName(slotId, roleConfig.m_sRoleName);
-		m_SlottingManager.UpdateSlotType(slotId, roleConfig.m_SlottingType);
-		m_SlottingManager.UpdateSlotIcon(slotId, roleConfig.m_RoleIcon);
+		// Use delta updates for individual field changes (90%+ bandwidth savings)
+		slotData.SetSlotResource(prefab);
+		m_RplBroadcastManager.UpdateSlotResourceDelta(slotId, prefab);
+		
+		slotData.SetSlotName(roleConfig.m_sRoleName);
+		slotData.SetSlotType(roleConfig.m_SlottingType);
+		slotData.SetSlotIcon(roleConfig.m_RoleIcon);
+		
+		// Note: Name, Type, and Icon don't have delta updates as they rarely change
+		// If they change frequently in the future, add delta methods for them too
 		
 		if (logAction)
 		{
@@ -806,6 +917,11 @@ class CRF_RplToAuthorityManager : ScriptComponent
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
 	protected void RpcAsk_UpdateGearSet(string faction, ResourceName path)
 	{
+		// Telemetry: string + ResourceName
+		int bytes = CRF_BandwidthTelemetryManager.EstimateSize_String(faction);
+		bytes += CRF_BandwidthTelemetryManager.EstimateSize_ResourceName(path);
+		LogTelemetry("RpcAsk_UpdateGearSet", bytes);
+		
 		// Update gearscript in the gamemode
 		CRF_Gamemode.GetInstance().UpdateGearscriptResource(faction, path);
 
@@ -874,6 +990,12 @@ class CRF_RplToAuthorityManager : ScriptComponent
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
 	protected void RpcAsk_AddItem(int playerId, string prefab, bool logAction)
 	{
+		// Telemetry: int + string + bool
+		int bytes = CRF_BandwidthTelemetryManager.EstimateSize_Int();
+		bytes += CRF_BandwidthTelemetryManager.EstimateSize_String(prefab);
+		bytes += CRF_BandwidthTelemetryManager.EstimateSize_Bool();
+		LogTelemetry("RpcAsk_AddItem", bytes);
+		
 		if (playerId == 0 || prefab.IsEmpty())
 			return;
 
@@ -901,11 +1023,29 @@ class CRF_RplToAuthorityManager : ScriptComponent
 		IEntity resourceSpawned = GetGame().SpawnEntityPrefab(resource, GetGame().GetWorld(), spawnParams);
 		if (!entityInventoryManager.TryInsertItem(resourceSpawned))
 			delete resourceSpawned;
+		
+		if (resourceSpawned)
+			if (resourceSpawned.FindComponent(CVON_RadioComponent))
+			{
+				IEntity player = GetGame().GetPlayerManager().GetPlayerControlledEntity(playerId);
+				SCR_PlayerController pc = SCR_PlayerController.Cast(GetGame().GetPlayerManager().GetPlayerController(playerId));
+				SCR_GroupsManagerComponent groupsMan = SCR_GroupsManagerComponent.GetInstance();
+				GetGame().GetCallqueue().CallLater(groupsMan.TuneFreqDelayWithPresets, 500, false, playerId, player);
+				GetGame().GetCallqueue().CallLater(pc.InitializeRadios, 500, false, player);
+				pc.InitializeRadioFromServer();
+			
+			}
 	}
 	
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
 	protected void RpcAsk_RemoveItem(int playerId, RplId entityID, bool logAction)
 	{
+		// Telemetry: int + RplId + bool
+		int bytes = CRF_BandwidthTelemetryManager.EstimateSize_Int();
+		bytes += CRF_BandwidthTelemetryManager.EstimateSize_RplId();
+		bytes += CRF_BandwidthTelemetryManager.EstimateSize_Bool();
+		LogTelemetry("RpcAsk_RemoveItem", bytes);
+		
 		if (playerId == 0)
 			return;
 		
@@ -933,18 +1073,34 @@ class CRF_RplToAuthorityManager : ScriptComponent
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
 	protected void RpcAsk_TeleportPlayers(int playerId1, int playerId2, bool logAction)
 	{
+		// Telemetry: 2 ints + bool
+		int bytes = CRF_BandwidthTelemetryManager.EstimateSize_Int() * 2;
+		bytes += CRF_BandwidthTelemetryManager.EstimateSize_Bool();
+		LogTelemetry("RpcAsk_TeleportPlayers", bytes);
+		
 		m_RplBroadcastManager.TeleportPlayers(playerId1, playerId2, logAction);
 	}
 
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
 	protected void RpcAsk_SendHint(string data, int playerId, string factionKey)
 	{
+		// Telemetry: 2 strings + int
+		int bytes = CRF_BandwidthTelemetryManager.EstimateSize_String(data);
+		bytes += CRF_BandwidthTelemetryManager.EstimateSize_String(factionKey);
+		bytes += CRF_BandwidthTelemetryManager.EstimateSize_Int();
+		LogTelemetry("RpcAsk_SendHint", bytes);
+		
 		m_RplBroadcastManager.SendHint(data, playerId, factionKey);
 	}
 	
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
 	protected void RpcAsk_Heal(int playerId, bool logAction, bool isVehicle)
 	{
+		// Telemetry: int + 2 bools
+		int bytes = CRF_BandwidthTelemetryManager.EstimateSize_Int();
+		bytes += CRF_BandwidthTelemetryManager.EstimateSize_Bool() * 2;
+		LogTelemetry("RpcAsk_Heal", bytes);
+		
 		IEntity entityToFix = GetGame().GetPlayerManager().GetPlayerControlledEntity(playerId);
 		if (!entityToFix)
 			return;
@@ -974,12 +1130,21 @@ class CRF_RplToAuthorityManager : ScriptComponent
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
 	protected void RpcAsk_LogAdminAction(string data, int playerId, bool sendToPlayer)
 	{
+		// Telemetry: string + int + bool
+		int bytes = CRF_BandwidthTelemetryManager.EstimateSize_String(data);
+		bytes += CRF_BandwidthTelemetryManager.EstimateSize_Int();
+		bytes += CRF_BandwidthTelemetryManager.EstimateSize_Bool();
+		LogTelemetry("RpcAsk_LogAdminAction", bytes);
+		
 		m_RplBroadcastManager.LogAdminAction(data, playerId, sendToPlayer);
 	}
 	
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
 	protected void RpcAsk_UpdateTimer(int delta)
 	{
+		// Telemetry: int
+		LogTelemetry("RpcAsk_UpdateTimer", CRF_BandwidthTelemetryManager.EstimateSize_Int());
+		
 		// Get current end time
 		int currentEndTime = CRF_SafestartManager.GetInstance().m_iTimeMissionEnds;
 		if ((currentEndTime + delta) < 0 || m_SafestartManager.GetSafestartStatus())
@@ -995,6 +1160,12 @@ class CRF_RplToAuthorityManager : ScriptComponent
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
 	protected void RpcAsk_UpdateTicket(string action, FactionKey faction, int delta)
 	{
+		// Telemetry: 2 strings + int
+		int bytes = CRF_BandwidthTelemetryManager.EstimateSize_String(action);
+		bytes += CRF_BandwidthTelemetryManager.EstimateSize_String(faction);
+		bytes += CRF_BandwidthTelemetryManager.EstimateSize_Int();
+		LogTelemetry("RpcAsk_UpdateTicket", bytes);
+		
 		if (action == "Add")
 			m_RespawnManager.AddTicket(faction, delta, true);
 		else if (action == "Subtract")
@@ -1007,6 +1178,11 @@ class CRF_RplToAuthorityManager : ScriptComponent
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
 	protected void RpcAsk_MiniArsenalRequestNewItem(int playerId, string newResource, int slotId)
 	{
+		// Telemetry: 2 ints + string
+		int bytes = CRF_BandwidthTelemetryManager.EstimateSize_Int() * 2;
+		bytes += CRF_BandwidthTelemetryManager.EstimateSize_String(newResource);
+		LogTelemetry("RpcAsk_MiniArsenalRequestNewItem", bytes);
+		
 		IEntity player = GetGame().GetPlayerManager().GetPlayerControlledEntity(playerId);
 		if (!player)
 			return;
@@ -1051,6 +1227,16 @@ class CRF_RplToAuthorityManager : ScriptComponent
 			SCR_EntityHelper.DeleteEntityAndChildren(newItem);
 			return;
 		}
+		InventoryItemComponent oldItemComp = InventoryItemComponent.Cast(oldItem.FindComponent(InventoryItemComponent));
+		InventoryItemComponent newItemComp = InventoryItemComponent.Cast(newItem.FindComponent(InventoryItemComponent));
+		if (oldItemComp && newItemComp)
+		{
+			string oldItemName = oldItemComp.GetUIInfo().GetName();
+			string newItemName = newItemComp.GetUIInfo().GetName();
+			CRF_RplBroadcastManager.GetInstance().LogAdminAction(GetGame().GetPlayerManager().GetPlayerName(playerId) + " has replaced " + oldItemName + " with " + 
+			newItemName, playerId, false);
+		}
+		
 		SCR_EntityHelper.DeleteEntityAndChildren(oldItem);
 		GetGame().GetCallqueue().CallLater(AddVestDelay, 250, false, newItem, invComponent, slotId, oldItem, items, invManager, newStorageComp, playerId, player);
 	}
@@ -1097,6 +1283,23 @@ class CRF_RplToAuthorityManager : ScriptComponent
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
 	void RpcAsk_MiniArsenalRequestNewWeapon(int playerId, string newWeaponResource, array<ResourceName> attachments, array<ResourceName> magazines, array<int> magazineCounts, bool isPistol)
 	{
+		// Telemetry: 2 ints + string + 2 ResourceName arrays + int array + bool
+		int bytes = CRF_BandwidthTelemetryManager.EstimateSize_Int() * 2;
+		bytes += CRF_BandwidthTelemetryManager.EstimateSize_String(newWeaponResource);
+		
+		// Manually calculate ResourceName array sizes
+		bytes += 4; // Array length for attachments
+		foreach (ResourceName attachment : attachments)
+			bytes += CRF_BandwidthTelemetryManager.EstimateSize_ResourceName(attachment);
+		
+		bytes += 4; // Array length for magazines
+		foreach (ResourceName magazine : magazines)
+			bytes += CRF_BandwidthTelemetryManager.EstimateSize_ResourceName(magazine);
+		
+		bytes += CRF_BandwidthTelemetryManager.EstimateSize_IntArray(magazineCounts);
+		bytes += CRF_BandwidthTelemetryManager.EstimateSize_Bool();
+		LogTelemetry("RpcAsk_MiniArsenalRequestNewWeapon", bytes);
+		
 		IEntity player = GetGame().GetPlayerManager().GetPlayerControlledEntity(playerId);
 		if (!player)
 			return;
@@ -1150,6 +1353,16 @@ class CRF_RplToAuthorityManager : ScriptComponent
 			}
 		}
 		
+		InventoryItemComponent oldItemComp = InventoryItemComponent.Cast(weapon.FindComponent(InventoryItemComponent));
+		InventoryItemComponent newItemComp = InventoryItemComponent.Cast(newWeapon.FindComponent(InventoryItemComponent));
+		if (oldItemComp && newItemComp)
+		{
+			string oldItemName = oldItemComp.GetUIInfo().GetName();
+			string newItemName = newItemComp.GetUIInfo().GetName();
+			CRF_RplBroadcastManager.GetInstance().LogAdminAction(GetGame().GetPlayerManager().GetPlayerName(playerId) + " has replaced " + oldItemName + " with " + 
+			newItemName, playerId, false);
+		}
+		
 		//Delete Old Weapon;
 		SCR_EntityHelper.DeleteEntityAndChildren(weapon);
 		GetGame().GetCallqueue().CallLater(MiniArsenalRequestNewWeaponDelay, 500, false, storageMan, storageComp, newWeapon, attachments, magazines, magazineCounts, role);
@@ -1199,6 +1412,12 @@ class CRF_RplToAuthorityManager : ScriptComponent
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
 	protected void RpcAsk_SightArsenalRequestNewSight(int playerId, string newResource, string type)
 	{
+		// Telemetry: int + 2 strings
+		int bytes = CRF_BandwidthTelemetryManager.EstimateSize_Int();
+		bytes += CRF_BandwidthTelemetryManager.EstimateSize_String(newResource);
+		bytes += CRF_BandwidthTelemetryManager.EstimateSize_String(type);
+		LogTelemetry("RpcAsk_SightArsenalRequestNewSight", bytes);
+		
 		IEntity player = GetGame().GetPlayerManager().GetPlayerControlledEntity(playerId);
 		if (!player)
 			return;
@@ -1230,47 +1449,79 @@ class CRF_RplToAuthorityManager : ScriptComponent
 			
 			invManager.TryInsertItemInStorage(newSight, weaponInv);
 		}
+		
+		InventoryItemComponent itemComp = InventoryItemComponent.Cast(newSight.FindComponent(InventoryItemComponent));
+		CRF_RplBroadcastManager.GetInstance().LogAdminAction(GetGame().GetPlayerManager().GetPlayerName(playerId) + " has replaced their sight with " + 
+		itemComp.GetUIInfo().GetName(), playerId, false);
 	}
     
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
 	protected void RpcAsk_TogglePlayerLisntening(int playerId, bool input)
 	{
+		// Telemetry: int + bool
+		int bytes = CRF_BandwidthTelemetryManager.EstimateSize_Int();
+		bytes += CRF_BandwidthTelemetryManager.EstimateSize_Bool();
+		LogTelemetry("RpcAsk_TogglePlayerLisntening", bytes);
+		
 		CVON_VONGameModeComponent.GetInstance().TogglePlayerListening(playerId, input);
 	}
 	
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
 	void RpcAsk_ToggleWaveRespawn()
 	{
+		// Telemetry: no parameters
+		LogTelemetry("RpcAsk_ToggleWaveRespawn", 0);
+		
 		CRF_RespawnManager.GetInstance().ToggleRespawnWave();
 	}
 	
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
 	void RpcAsk_ToggleRespawn()
 	{
+		// Telemetry: no parameters
+		LogTelemetry("RpcAsk_ToggleRespawn", 0);
+		
 		CRF_RespawnManager.GetInstance().ToggleRespawn();
 	}
 	
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
 	void RpcAsk_SetRespawnTime(int seconds)
 	{
+		// Telemetry: int
+		LogTelemetry("RpcAsk_SetRespawnTime", CRF_BandwidthTelemetryManager.EstimateSize_Int());
+		
 		CRF_RespawnManager.GetInstance().SetRespawnTime(seconds);
 	}
 	
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
 	void RpcAsk_ToggleEnableAIInGameState()
 	{
+		// Telemetry: no parameters
+		LogTelemetry("RpcAsk_ToggleEnableAIInGameState", 0);
+		
 		CRF_Gamemode.GetInstance().ToggleEnableAIInGameState();
 	}
 	
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
 	void RpcAsk_CleanUpBodies()
 	{
+		// Telemetry: no parameters
+		LogTelemetry("RpcAsk_CleanUpBodies", 0);
+		
 		CRF_GamemodeManager.GetInstance().CleanUpBodies();
 	}
 	
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
 	void RpcAsk_AddItemToTruck(RplId truckId, ResourceName item, int amount, array<RplId> supplyItems, array<int> supplyCounts, RplId supplyArsenalId)
 	{
+		// Telemetry: 3 RplIds + ResourceName + int + RplId array + int array
+		int bytes = CRF_BandwidthTelemetryManager.EstimateSize_RplId() * 3;
+		bytes += CRF_BandwidthTelemetryManager.EstimateSize_ResourceName(item);
+		bytes += CRF_BandwidthTelemetryManager.EstimateSize_Int();
+		bytes += 4 + (supplyItems.Count() * CRF_BandwidthTelemetryManager.EstimateSize_RplId()); // Array length + items
+		bytes += CRF_BandwidthTelemetryManager.EstimateSize_IntArray(supplyCounts);
+		LogTelemetry("RpcAsk_AddItemToTruck", bytes);
+		
 		for (int i = 0; i < supplyItems.Count(); i++)
 		{
 			IEntity supplyDepot = RplComponent.Cast(Replication.FindItem(supplyItems[i])).GetEntity();
@@ -1308,6 +1559,9 @@ class CRF_RplToAuthorityManager : ScriptComponent
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
 	void RpcAsk_UpdateSupplyArsneal(RplId supplyArsenalId)
 	{
+		// Telemetry: RplId
+		LogTelemetry("RpcAsk_UpdateSupplyArsneal", CRF_BandwidthTelemetryManager.EstimateSize_RplId());
+		
 		IEntity supplyArsenal = RplComponent.Cast(Replication.FindItem(supplyArsenalId)).GetEntity();
 		
 		CRF_SupplyArsenalComponent supplyComp = CRF_SupplyArsenalComponent.Cast(supplyArsenal.FindComponent(CRF_SupplyArsenalComponent));
@@ -1337,6 +1591,9 @@ class CRF_RplToAuthorityManager : ScriptComponent
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
 	void RpcAsk_CreateCache(RplId truckId, RplId playerId)
 	{
+		// Telemetry: 2 RplIds
+		LogTelemetry("RpcAsk_CreateCache", CRF_BandwidthTelemetryManager.EstimateSize_RplId() * 2);
+		
 		if (!Replication.FindItem(truckId) || !Replication.FindItem(playerId))
 			return;
 		
@@ -1398,6 +1655,9 @@ class CRF_RplToAuthorityManager : ScriptComponent
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
 	void RpcAsk_RequestVehicleSupplies(RplId truckId)
 	{
+		// Telemetry: RplId
+		LogTelemetry("RpcAsk_RequestVehicleSupplies", CRF_BandwidthTelemetryManager.EstimateSize_RplId());
+		
 		if (!Replication.FindItem(truckId))
 			return;
 		
@@ -1409,6 +1669,12 @@ class CRF_RplToAuthorityManager : ScriptComponent
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
 	void RpcAsk_RearmVehicle(RplId truckId, array<RplId> supplyItems, array<int> supplyCounts, RplId rearmTruckId)
 	{
+		// Telemetry: 2 RplIds + RplId array + int array
+		int bytes = CRF_BandwidthTelemetryManager.EstimateSize_RplId() * 2;
+		bytes += 4 + (supplyItems.Count() * CRF_BandwidthTelemetryManager.EstimateSize_RplId()); // Array length + items
+		bytes += CRF_BandwidthTelemetryManager.EstimateSize_IntArray(supplyCounts);
+		LogTelemetry("RpcAsk_RearmVehicle", bytes);
+		
 		if (!Replication.FindItem(truckId))
 			return;
 		
@@ -1444,5 +1710,114 @@ class CRF_RplToAuthorityManager : ScriptComponent
 	void RpcAsk_BeginEndGame()
 	{
 		CRF_Gamemode.GetInstance().StartEndMission();
+	}
+	
+	void RpcAsk_RequestForwardDeploy(vector cursorWorldPos, string factionKey, int playerId)
+	{
+		LogTelemetry("RpcAsk_RequestForwardDeploy", CRF_BandwidthTelemetryManager.EstimateSize_Vector() + CRF_BandwidthTelemetryManager.EstimateSize_String(factionKey) + CRF_BandwidthTelemetryManager.EstimateSize_Int());
+		IEntity polyzone;
+		cursorWorldPos[1] = SCR_TerrainHelper.GetTerrainY(cursorWorldPos);
+		foreach (IEntity zone: CRF_GamemodeManager.GetInstance().GetForwardDeployZones())
+		{
+			CRF_PolyZone zoneComp = CRF_PolyZone.Cast(zone.FindComponent(CRF_PolyZone));
+			if (!zoneComp.IsInsidePolygon(Vector(cursorWorldPos[0], 0, cursorWorldPos[2])))
+				continue;
+			
+			if (!zoneComp.m_aVisibleForFactions.Contains(factionKey))
+				continue;
+			
+			polyzone = zone;
+			break;
+		}
+		
+		if (!polyzone)
+		{
+			SCR_PlayerController.Cast(GetGame().GetPlayerManager().GetPlayerController(playerId)).ForwardDeployRequestRejected();
+			return;
+		}
+		
+		array<IEntity> teleportedVehicles = {};
+		array<AIAgent> players = {};
+		array<IEntity> entities = {};
+		
+		SCR_GroupsManagerComponent groupMan = SCR_GroupsManagerComponent.GetInstance();
+		SCR_AIGroup playerGroup = groupMan.GetPlayerGroup(playerId);
+		if (!playerGroup)
+		{
+		    SCR_PlayerController.Cast(GetGame().GetPlayerManager().GetPlayerController(playerId)).ForwardDeployRequestRejected();
+		    return;
+		}
+		playerGroup.GetAgents(players);
+		foreach (AIAgent agent : players)
+		{
+			IEntity entity = agent.GetControlledEntity();
+			if (!entity)
+				continue;
+				
+			SCR_ChimeraCharacter character = SCR_ChimeraCharacter.Cast(entity);
+			if (!character)
+				continue;
+			
+			entities.Insert(entity);
+		}
+		foreach (IEntity entity: entities)
+		{
+			int currentPlayerId = GetGame().GetPlayerManager().GetPlayerIdFromControlledEntity(entity);
+			if (currentPlayerId <= 0)
+				continue;
+			SCR_CompartmentAccessComponent compartmentAccess = SCR_CompartmentAccessComponent.Cast(entity.FindComponent(SCR_CompartmentAccessComponent));
+			if (compartmentAccess)
+			{
+				IEntity vehicle = compartmentAccess.GetVehicle();
+				
+				if (vehicle)
+				{
+					SCR_BaseCompartmentManagerComponent compartmentMan = SCR_BaseCompartmentManagerComponent.Cast(vehicle.FindComponent(SCR_BaseCompartmentManagerComponent));
+					array<BaseCompartmentSlot> slots = {};
+					compartmentMan.GetCompartments(slots);
+					//Check if majority of the vic is the same group, if not don't teleport.
+					int amountInGroup = 0;
+					int amountNotInGroup = 0;
+					foreach (BaseCompartmentSlot slot: slots)
+					{
+						if (!slot.IsOccupied())
+							continue;
+						
+						if (!slot.GetOccupant().FindComponent(FactionAffiliationComponent))
+							continue;
+						
+						if (entities.Contains(slot.GetOccupant()))
+							amountInGroup++;
+						else
+							amountNotInGroup++;
+					}
+					if (amountInGroup < amountNotInGroup)
+						continue; 
+					if (teleportedVehicles.Contains(vehicle))
+						continue;
+					teleportedVehicles.Insert(vehicle);
+					CRF_GamemodeManager.GetInstance().CreateForwardDeployRequest(currentPlayerId, cursorWorldPos);
+					continue;
+				}
+			}
+			CRF_GamemodeManager.GetInstance().CreateForwardDeployRequest(currentPlayerId, cursorWorldPos);
+		}
+	}
+	
+	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
+	void RpcAsk_RequestSpreadPos(RplId entityId)
+	{
+		if (!Replication.FindItem(entityId))
+			return;
+		
+		IEntity entity = RplComponent.Cast(Replication.FindItem(entityId)).GetEntity();
+		if (!entity)
+			return;
+		
+		if (!entity.FindComponent(CRF_PlayableCharacter))
+			return;
+		
+		CRF_PlayableCharacter playableCharacter = CRF_PlayableCharacter.Cast(entity.FindComponent(CRF_PlayableCharacter));
+		playableCharacter.SendSpreadPos();
 	}
 };
