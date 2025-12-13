@@ -7,6 +7,17 @@ modded class SCR_MapMarkerBase
 		//Nuclear option, cause this is fucking called in a million places
 		if (!m_bIsShared && m_wRoot)
 		{
+			SCR_FactionManager factionMan = SCR_FactionManager.Cast(GetGame().GetFactionManager());
+			Faction playerFaction;
+			if (factionMan)
+				playerFaction = factionMan.GetPlayerFaction(SCR_PlayerController.GetLocalPlayerId());
+			
+			if (playerFaction)
+				if (!CRF_Gamemode.GetInstance().DoesFactionShareMarker(playerFaction.GetFactionKey()))
+				{
+					m_wRoot.SetVisible(true);
+					return;
+				}
 			m_wRoot.SetVisible(false);
 			return;
 		}
@@ -25,6 +36,17 @@ modded class SCR_MapMarkerBase
 		//Nuclear option, cause this is fucking called in a million places
 		if (!m_bIsShared && m_wRoot)
 		{
+			SCR_FactionManager factionMan = SCR_FactionManager.Cast(GetGame().GetFactionManager());
+			Faction playerFaction;
+			if (factionMan)
+				playerFaction = factionMan.GetPlayerFaction(SCR_PlayerController.GetLocalPlayerId());
+			
+			if (playerFaction)
+				if (!CRF_Gamemode.GetInstance().DoesFactionShareMarker(playerFaction.GetFactionKey()))
+				{
+					m_wRoot.SetVisible(true);
+					return;
+				}
 			m_wRoot.SetVisible(false);
 			return;
 		}

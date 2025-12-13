@@ -44,19 +44,29 @@ modded class SCR_MapMarkerManagerComponent
 		CRF_SafestartManager safestartMan = CRF_SafestartManager.GetInstance();	
 		SCR_FactionManager factionMan = SCR_FactionManager.Cast(GetGame().GetFactionManager());
 		SCR_PlayerController pc = SCR_PlayerController.Cast(GetGame().GetPlayerController());
+		CRF_Gamemode gamemode = CRF_Gamemode.GetInstance();
 		if (pc)
 		{
 			int playerId = pc.GetPlayerId();
 			Faction playerFaction;
 			if (factionMan)
 				playerFaction = factionMan.GetPlayerFaction(playerId);
-			CRF_Gamemode gamemode = CRF_Gamemode.GetInstance();
+			
+			if (!gamemode.DoesFactionShareMarker(playerFaction.GetFactionKey()))
+			{
+				marker.m_bIsShared = true;
+				UpdateMarkerVisibility(marker);
+				super.OnAddSynchedMarker(marker);
+				return;
+			}
+			
 			if (safestartMan && gamemode && playerFaction)
 				if (safestartMan.GetSafestartStatus() && marker.GetMarkerOwnerID() == playerId)
 					CRF_RplToAuthorityManager.GetInstance().SharerMapMarkerGlobal(marker.GetMarkerID(), playerId);
 				else if (!gamemode.DoesFactionShareMarker(playerFaction.GetFactionKey()) && marker.GetMarkerOwnerID() == playerId)
 					CRF_RplToAuthorityManager.GetInstance().SharerMapMarkerGlobal(marker.GetMarkerID(), playerId);
 		}
+			
 		
 		super.OnAddSynchedMarker(marker);
 		
@@ -70,7 +80,19 @@ modded class SCR_MapMarkerManagerComponent
 	{
 		if (!marker)
 			return;
-			
+		
+		SCR_FactionManager factionMan = SCR_FactionManager.Cast(GetGame().GetFactionManager());
+		Faction playerFaction;
+		if (factionMan)
+			playerFaction = factionMan.GetPlayerFaction(SCR_PlayerController.GetLocalPlayerId());
+		
+		if (playerFaction)
+			if (!CRF_Gamemode.GetInstance().DoesFactionShareMarker(playerFaction.GetFactionKey()))
+			{
+				marker.SetVisible(true);
+				return;
+			}
+		
 		// Cache the local player ID to avoid repeated calls
 		if (m_iCachedLocalPlayerId == -1)
 			m_iCachedLocalPlayerId = SCR_PlayerController.GetLocalPlayerId();

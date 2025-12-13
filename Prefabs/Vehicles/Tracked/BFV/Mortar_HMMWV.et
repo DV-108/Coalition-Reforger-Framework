@@ -40,5 +40,10 @@ Vehicle : "{B55C6990A6A9411B}Prefabs/Vehicles/Wheeled/M998/M998_covered.et" {
    m_iAmountOfItemSupplyTruck 0
    m_iAmountOfItemRegularVehicle 20
   }
+  CRF_VehicleGearScriptAdditionalItem "{671A444894FACEA7}" {
+   m_Prefab "{6113990D163E5249}Prefabs/Items/Equipment/BallisticTable/BallisticTable_US.et"
+   m_iAmountOfItemSupplyTruck 10
+   m_iAmountOfItemRegularVehicle 10
+  }
  }
 }
