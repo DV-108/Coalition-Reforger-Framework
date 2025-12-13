@@ -200,7 +200,7 @@ class CRF_AirdropManager: SCR_BaseGameModeComponent
 					if (charCon.GetAnimationComponent().PhysicsIsLinked())
 						continue;
 					
-					ParachuteComponent.Cast(pm.GetPlayerController(playerId).FindComponent(ParachuteComponent)).RpcAskDeployParachute();
+					//ParachuteComponent.Cast(pm.GetPlayerController(playerId).FindComponent(ParachuteComponent)).RpcAskDeployParachute();
 					flight.m_PlayersInPlane.Remove(i);
 				}
 			}		

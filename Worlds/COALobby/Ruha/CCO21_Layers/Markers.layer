@@ -1,3 +1,11 @@
+$grp GenericEntity : "{6543141E2B6EA9AF}Prefabs/Systems/Sound/sound_ccobackground.et" {
+ {
+  coords -1361.976 0 3151.477
+ }
+ {
+  coords 5978.378 56.955 7468.48
+ }
+}
 PolylineShapeEntity : "{8AE1D02BC25C93C5}PrefabsEditable/PolyZone/BLUFORSafestartBoundry.et" {
  components {
   CRF_PolyZone "{65865377C721CCB0}" {
