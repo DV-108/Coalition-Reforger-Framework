@@ -108,6 +108,8 @@ void GammaBrightnessCheck()
 
 modded class SCR_BaseGameMode : BaseGameMode
 {
+	protected CRF_ClientFPSReporter m_FPSReporter;
+	
 	protected override void OnGameModeStart()
 	{
 		super.OnGameModeStart();
@@ -115,6 +117,24 @@ modded class SCR_BaseGameMode : BaseGameMode
 		ShadowCheck();
 		GrassCheck();
 		//GammaBrightnessCheck();
+		
+		// Initialize FPS reporter on clients
+		if (!Replication.IsServer())
+		{
+			m_FPSReporter = CRF_ClientFPSReporter.GetInstance();
+			SetEventMask(EntityEvent.FRAME);
+		}
+	}
+	
+	override void EOnFrame(IEntity owner, float timeSlice)
+	{
+		super.EOnFrame(owner, timeSlice);
+		
+		// Update FPS reporter on clients
+		if (!Replication.IsServer() && m_FPSReporter)
+		{
+			m_FPSReporter.Update();
+		}
 	}
 }
 

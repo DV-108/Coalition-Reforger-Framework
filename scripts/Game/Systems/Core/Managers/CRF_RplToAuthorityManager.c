@@ -201,6 +201,11 @@ class CRF_RplToAuthorityManager : ScriptComponent
 		Rpc(RpcAsk_ReportSettingsViolation, playerId, violationType);
 	}
 	
+	void ReportClientFPS(int playerId, float fps, string playerName)
+	{
+		Rpc(RpcAsk_ReportClientFPS, playerId, fps, playerName);
+	}
+	
 	void ReplyAdminMessage(string data, int playerId, int adminID, bool logAction)
 	{
 		if (SCR_Global.IsAdmin() || m_GamemodeManager.IsModerator())
@@ -1196,6 +1201,21 @@ class CRF_RplToAuthorityManager : ScriptComponent
 		
 		// Also log to server console
 		Print(message, LogLevel.WARNING);
+	}
+	
+	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
+	protected void RpcAsk_ReportClientFPS(int playerId, float fps, string playerName)
+	{
+		// Telemetry: int + float + string
+		int bytes = CRF_BandwidthTelemetryManager.EstimateSize_Int();
+		bytes += CRF_BandwidthTelemetryManager.EstimateSize_Float();
+		bytes += CRF_BandwidthTelemetryManager.EstimateSize_String(playerName);
+		LogTelemetry("RpcAsk_ReportClientFPS", bytes);
+		
+		// Forward to FPS Telemetry Manager
+		CRF_FPSTelemetryManager fpsManager = CRF_FPSTelemetryManager.GetInstance();
+		if (fpsManager)
+			fpsManager.ReportClientFPS(playerId, fps, playerName);
 	}
 	
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
