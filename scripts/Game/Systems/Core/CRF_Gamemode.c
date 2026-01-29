@@ -145,8 +145,6 @@ class CRF_Gamemode : SCR_BaseGameMode
 	
 	protected static CRF_Gamemode m_sInstance;
 	
-	protected ref array<Vehicle> m_aSpawnedVehicles = {};
-	
 	[RplProp()]
 	protected vector m_vGenericSpawn;
 	
@@ -179,6 +177,16 @@ class CRF_Gamemode : SCR_BaseGameMode
 	static CRF_Gamemode GetInstance()
 	{
 		return m_sInstance;
+	}
+	
+	vector GetGenericSpawn()
+	{
+		return m_vGenericSpawn;
+	}
+	
+	ScriptInvoker GetOnStateChanged()
+	{
+		return m_OnStateChanged;
 	}
 
 	//===================================================================================
@@ -271,7 +279,7 @@ class CRF_Gamemode : SCR_BaseGameMode
 		m_GamemodeState += 1;
 		if (m_GamemodeState == CRF_EGamemodeState.GAME)
 		{
-			foreach (Vehicle vehicle: m_aSpawnedVehicles)
+			foreach (Vehicle vehicle: CRF_VehicleGearscriptManager.GetInstance().GetSpawnedVehicleArray())
 			{
 				if (!vehicle)
 					continue;
@@ -281,15 +289,6 @@ class CRF_Gamemode : SCR_BaseGameMode
 		}
 		Replication.BumpMe();
 		OnGamemodeStateChanged();
-	}
-
-	/**
-	 * Get the state change event invoker
-	 * @return ScriptInvoker for state change events
-	 */
-	ScriptInvoker GetOnStateChanged()
-	{
-		return m_OnStateChanged;
 	}
 	
 	/**
@@ -383,6 +382,39 @@ class CRF_Gamemode : SCR_BaseGameMode
 		
 		// Make sure we close logging memory leak
 		m_LoggingManager.OnGameModeEnd(GetEndGameData());
+	}
+	
+	/**
+	 * Forces a living player to die and enter spectator mode for AAR without permanently marking their slot as dead
+	 * This allows proper death handling while preserving their alive status for AAR display
+	 * @param playerId The player ID to kill and move to spectator
+	 * @param playerEntity The player's current entity
+	 */
+	void ForcePlayerToSpectatorForAAR(int playerId, IEntity playerEntity)
+	{
+		if (!playerEntity || playerId <= 0)
+			return;
+		
+		// Get the player's slot ID before killing them
+		int slotId = m_SlottingManager.GetPlayerSlotID(playerId);
+		if (slotId == -1)
+			return;
+		
+		// Store original alive state (should be false since they're alive)
+		bool originalDeadState = m_SlottingManager.IsPlayerConsideredDead(playerId);
+		
+		// Kill the player to trigger proper death handling and spectator transition
+		// This will automatically handle the transition to spectator mode
+		SCR_CharacterDamageManagerComponent damageManager = SCR_CharacterDamageManagerComponent.Cast(
+			playerEntity.FindComponent(SCR_CharacterDamageManagerComponent)
+		);
+		
+		if (!damageManager)
+			return;
+			
+		HitZone defaultHitZone = damageManager.GetDefaultHitZone();
+		if (defaultHitZone)
+			defaultHitZone.SetHealth(0);
 	}
 	
 	void ProcessStats(SCR_DataCollectorComponent dataCollector, int player)
@@ -631,39 +663,6 @@ class CRF_Gamemode : SCR_BaseGameMode
 		m_GamemodeManager.InitilizePlayer(playerId, location);
 	}
 	
-	/**
-	 * Forces a living player to die and enter spectator mode for AAR without permanently marking their slot as dead
-	 * This allows proper death handling while preserving their alive status for AAR display
-	 * @param playerId The player ID to kill and move to spectator
-	 * @param playerEntity The player's current entity
-	 */
-	void ForcePlayerToSpectatorForAAR(int playerId, IEntity playerEntity)
-	{
-		if (!playerEntity || playerId <= 0)
-			return;
-		
-		// Get the player's slot ID before killing them
-		int slotId = m_SlottingManager.GetPlayerSlotID(playerId);
-		if (slotId == -1)
-			return;
-		
-		// Store original alive state (should be false since they're alive)
-		bool originalDeadState = m_SlottingManager.IsPlayerConsideredDead(playerId);
-		
-		// Kill the player to trigger proper death handling and spectator transition
-		// This will automatically handle the transition to spectator mode
-		SCR_CharacterDamageManagerComponent damageManager = SCR_CharacterDamageManagerComponent.Cast(
-			playerEntity.FindComponent(SCR_CharacterDamageManagerComponent)
-		);
-		
-		if (!damageManager)
-			return;
-			
-		HitZone defaultHitZone = damageManager.GetDefaultHitZone();
-		if (defaultHitZone)
-			defaultHitZone.SetHealth(0);
-	}
-	
 	void UpdateGearscriptResource(string factionKey, string resource)
 	{
 		switch (factionKey)
@@ -674,21 +673,6 @@ class CRF_Gamemode : SCR_BaseGameMode
 			case "CIV" : m_rCIVILIANCurrentGearScript = resource; break;
 		}
 		Replication.BumpMe();
-	}
-	
-	void AddVehicleToArray(Vehicle vehicle)
-	{
-		if (m_aSpawnedVehicles.Contains(vehicle))
-			return;
-		
-		m_aSpawnedVehicles.Insert(vehicle);
-	}
-	
-	void RemoveVehicleFromArray(Vehicle vehicle)
-	{
-		if (!m_aSpawnedVehicles.Contains(vehicle))
-			return;
-		m_aSpawnedVehicles.RemoveItem(vehicle);
 	}
 	
 	//===================================================================================
@@ -781,52 +765,6 @@ class CRF_Gamemode : SCR_BaseGameMode
 		return m_aPendingPlayerInitializations.Contains(playerId);
 	}
 	
-	vector ComputeAOCenter(vector pts[4])
-	{
-		vector sum = "0 0 0";
-		int count = 0;
-	
-		for (int i = 0; i < 4; i++)
-		{
-			vector p = pts[i];
-			if (p[0] == 0 && p[1] == 0 && p[2] == 0)   // ignore empty
-				continue;
-	
-			sum += p;
-			count++;
-		}
-	
-		if (count == 0)
-			return "0 0 0";   // no data
-	
-		return sum / count;
-	}
-	
-	/*
-	float ComputeAORadius(vector pts[4], vector center)
-	{
-		float maxDist = 0;
-	
-		for (int i = 0; i < 4; i++)
-		{
-			vector p = pts[i];
-			if (p[0] == 0 && p[1] == 0 && p[2] == 0)
-				continue;
-	
-			float d = vector.Distance(center, p);
-			if (d > maxDist)
-				maxDist = d;
-		}
-	
-		return maxDist;
-	}
-	*/
-	
-	vector GetGenericSpawn()
-	{
-		return m_vGenericSpawn;
-	}
-	
 	void GetAOCenter()//out vector center, out float radius)
 	{
 		CRF_RespawnManager respawnMan = CRF_RespawnManager.GetInstance();
@@ -844,7 +782,7 @@ class CRF_Gamemode : SCR_BaseGameMode
 			registeredPosition[i] = spawnPointLocation[3];
 		};
 		
-	 	m_vGenericSpawn = ComputeAOCenter(registeredPosition);
+	 	m_vGenericSpawn = CRF_MissionHelper.ComputeAOCenter(registeredPosition);
 		Replication.BumpMe();
 	}
 	

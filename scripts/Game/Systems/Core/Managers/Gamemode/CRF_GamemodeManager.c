@@ -22,11 +22,7 @@ class CRF_GamemodeManager : SCR_BaseGameModeComponent
 	
 	static ref CRF_GearScriptRolesConfig m_RolesConfig;
 	
-	protected CRF_Gamemode m_Gamemode;
-	protected CRF_SlottingManager m_SlottingManager;
 	protected CRF_SafestartManager m_SafestartManager;
-	protected SCR_GroupsManagerComponent m_GroupsManagerComponent;
-	protected CRF_AdminMenuManager m_AdminMenuManager;
 	
 	protected static CRF_GamemodeManager m_sInstance;
 	
@@ -42,99 +38,22 @@ class CRF_GamemodeManager : SCR_BaseGameModeComponent
 		m_sInstance = this;
 	}
 	
-	override void OnControllableDestroyed(notnull SCR_InstigatorContextData instigatorContextData)
+	//------------------------------------------------------------------------------------------------
+	static CRF_GamemodeManager GetInstance()
 	{
-		super.OnControllableDestroyed(instigatorContextData);
-		#ifdef WORKBENCH
-		#else
-		if (!System.IsConsoleApp())
-			return;
-		#endif
-		
-		m_aDeadBodies.Insert(instigatorContextData.GetVictimEntity());
-	}
-	
-	void CleanUpBodies()
-	{
-		array<IEntity> bodiesToRemove = new array<IEntity>();
-		bodiesToRemove.Reserve(m_aDeadBodies.Count()); // Pre-allocate capacity for performance
-		
-		foreach (IEntity body: m_aDeadBodies)
-		{
-			if (!body)
-				continue;
-			
-			if (!GetGame().GetWorld().QueryEntitiesBySphere(body.GetOrigin(), 30, CleanUpBodyCallback, null))
-				continue;
-
-			bodiesToRemove.Insert(body);
-		}
-		
-		int delay = 1;
-		foreach (IEntity body: bodiesToRemove)
-		{
-			m_aDeadBodies.RemoveItem(body);
-			//Lets not delete 100s of entities in one frame now
-			GetGame().GetCallqueue().CallLater(SCR_EntityHelper.DeleteEntityAndChildren, 100 * delay, false, body);
-			delay++;
-		}
-	}
-	
-	bool CleanUpBodyCallback(IEntity entity)
-	{
-		if (ChimeraCharacter.Cast(entity))
-		{
-			//Is this character dead
-			SCR_DamageManagerComponent damageManager = SCR_DamageManagerComponent.GetDamageManager(entity);
-			if (damageManager)
-			{
-				if (damageManager.GetState() == EDamageState.DESTROYED)
-					return true;
-				else
-					return false;
-			}
-		}
-			
-		return true;
+		return m_sInstance;
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	/**
-	* Get the spectator resource name
-	* @param vectorToCheck vector to check
-	* @return ResourceName of the spectator entity
-	*/
-	static bool IsValidSpawnVector(vector vectorToCheck)
-	{	
-		bool finalcheck = false;
-		bool zeroCheck = (vector.Distance(ZERO_SPAWN_VECTOR[3], vectorToCheck) > 5);
-		bool tenCheck = (vector.Distance("0 10000 0", vectorToCheck) > 5);
-		bool negCheck = (vectorToCheck[1] >= 0);
-		
-		if (zeroCheck && tenCheck && negCheck)
-			finalcheck = true;
-		
-		return finalcheck;
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	/**
-	* Get the spectator resource name
-	* @return ResourceName of the spectator entity
-	*/
 	static ResourceName GetSpectatorResource()
 	{
 		return SPECTATOR_RESOURCE;
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	/**
-	* Get the instance of the GamemodeManager from the current game mode
-	* @return Instance of the GamemodeManager, null if not found
-	*/
-	static CRF_GamemodeManager GetInstance()
+	static CRF_GearScriptRolesConfig RolesConfig()
 	{
-		return m_sInstance;
+		return m_RolesConfig;
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -142,39 +61,8 @@ class CRF_GamemodeManager : SCR_BaseGameModeComponent
 	{	
 		super.OnPostInit(owner);
 		// Initialize all required manager references
-		InitializeManagers();
-		LoadConfigurations();
-	}
-	
-	//Needed so when we teleport players/vehicles the aren't spawning on top of each other.
-	float m_fBuffer = 0;
-	override void EOnFrame(IEntity owner, float timeSlice)
-	{
-	    super.EOnFrame(owner, timeSlice);
-	    m_fBuffer += timeSlice;
-	    if (m_fBuffer > 0.1)
-	    {
-	        m_fBuffer = 0;
-	        if (m_aForwardDeployRequests.Count() > 0)
-	        {
-	            CRF_ForwardDeployRequest request = m_aForwardDeployRequests.Get(0);
-	            if (request)
-	            {
-	                PerformForwardDeploy(request.m_iPlayerId, request.m_vTransform);
-	                m_aForwardDeployRequests.RemoveOrdered(0);
-	            }
-	        }
-	        if (m_aForwardDeployRequests.Count() == 0)
-	            ClearEventMask(owner, EntityEvent.FRAME);
-	    }
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	/**
-	 * @brief Load necessary configurations for gearscript
-	 */
-	protected void LoadConfigurations()
-	{
+		m_SafestartManager = CRF_SafestartManager.GetInstance();
+		
 		ResourceName rolesConfigPath;
 		if (!CVON_VONGameModeComponent.GetInstance())
 			  rolesConfigPath = "{4388548E9F600148}Configs/Gearscripts/CRF_Global_Roles_Config.conf";
@@ -186,22 +74,17 @@ class CRF_GamemodeManager : SCR_BaseGameModeComponent
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	static CRF_GearScriptRolesConfig RolesConfig()
-	{
-		return m_RolesConfig;
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	/**
-	* Initialize all manager references needed for this component
-	*/
-	protected void InitializeManagers()
-	{
-		m_Gamemode = CRF_Gamemode.GetInstance();
-		m_SlottingManager = CRF_SlottingManager.GetInstance();
-		m_SafestartManager = CRF_SafestartManager.GetInstance();
-		m_GroupsManagerComponent = SCR_GroupsManagerComponent.GetInstance();
-		m_AdminMenuManager = CRF_AdminMenuManager.GetInstance();
+	static bool IsValidSpawnVector(vector vectorToCheck)
+	{	
+		bool finalcheck = false;
+		bool zeroCheck = (vector.Distance(ZERO_SPAWN_VECTOR[3], vectorToCheck) > 5);
+		bool tenCheck = (vector.Distance("0 10000 0", vectorToCheck) > 5);
+		bool negCheck = (vectorToCheck[1] >= 0);
+		
+		if (zeroCheck && tenCheck && negCheck)
+			finalcheck = true;
+		
+		return finalcheck;
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -237,298 +120,6 @@ class CRF_GamemodeManager : SCR_BaseGameModeComponent
 			return true;
 
 		return false;
-	}
-
-	//------------------------------------------------------------------------------------------------
-	// PLAYER INITIALIZATION
-	//------------------------------------------------------------------------------------------------
-	
-	//------------------------------------------------------------------------------------------------
-	/**
-	* Initialize a player into the game either as a playable character or spectator
-	* @param playerId ID of the player to initialize
-	* @param spawnLocation Location to spawn the player (Use "CRF_GamemodeManager.ZERO_SPAWN_VECTOR" as the input to have players spawn at their original slot location)
-	*/
-	void InitilizePlayer(int playerId, vector spawnLocation[4])
-	{
-		if (!IsValidSpawnVector(spawnLocation[3]) && spawnLocation != ZERO_SPAWN_VECTOR)
-		{
-			Print(string.Format("[CRF ERROR]: %1 DOESN'T HAVE VALID SPAWN VECTOR!", playerId), LogLevel.ERROR);
-			return;
-		};
-		
-		if (playerId <= 0)
-			return;
-		
-		SCR_PlayerController playerController = SCR_PlayerController.Cast(GetGame().GetPlayerManager().GetPlayerController(playerId));
-		if (!playerController)
-			return;
-			
-		SCR_ChimeraCharacter playerCharacter = null;
-		Faction faction = null;
-		bool alreadyCreated;
-		
-		// Determine if player should be spectator or playable character
-		if (!m_SlottingManager.IsPlayerInASlot(playerId) || m_SlottingManager.IsPlayerConsideredDead(playerId))
-		{
-			// SPECTATOR PATH: Create initial entity for spectators
-			playerCharacter = CreateSpectatorEntity(CRF_GamemodeManager.ZERO_SPAWN_VECTOR);
-	
-			
-			faction = GetGame().GetFactionManager().GetFactionByKey("SPEC");
-			
-			RemovePlayerFromCurrentGroup(playerId);
-			DisableDamageForSpectator(playerCharacter);
-		} 
-		else 
-		{
-			// PLAYABLE CHARACTER PATH: Skip initial entity, spawn real character directly
-			// This optimization eliminates 50% of entity spawns (no temporary initial entities)
-			playerCharacter = GetOrCreatePlayableCharacter(playerId, spawnLocation, alreadyCreated);
-			faction = m_SlottingManager.GetPlayerSlotFaction(playerId);
-			
-			// If character already existed (respawn case), clean up any old initial/spectator entity
-			if (alreadyCreated)
-			{
-				DeleteOldInitialEntity(playerController, playerCharacter);
-			}
-			
-			CRF_MenuManager.GetInstance().RemovePlayerFromAnyChannel(playerId, false);
-		}
-		
-		if (playerCharacter)
-		{
-			AssignFactionToPlayer(playerController, faction);
-			GetGame().GetCallqueue().CallLater(InitilizePlayerCharacter, CRF_GamemodeManager.PLAYER_INITILIZATION_TIME, false, playerId, playerController, playerCharacter);
-		};
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	/**
-	* Assign the player to the set entity
-	* @param playerId ID of the player
-	* @param playerController controller of the player
-	* @param playerCharacter entity the player will take
-	*/
-	protected void InitilizePlayerCharacter(int playerId, SCR_PlayerController playerController, SCR_ChimeraCharacter playerCharacter)
-	{
-		// Validate that player is still connected before proceeding
-		if (!GetGame().GetPlayerManager().IsPlayerConnected(playerId))
-			return;
-			
-		// Validate that the character still exists
-		if (!playerCharacter)
-			return;
-			
-		AssignCharacterToPlayer(playerController, playerCharacter);
-		
-		// Wait a frame for the entity assignment to take effect, then verify success
-		GetGame().GetCallqueue().Call(VerifyCharacterAssignment, playerId, playerController, playerCharacter);
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	/**
-	* Verify that character assignment was successful and complete initialization
-	* @param playerId ID of the player
-	* @param playerController controller of the player
-	* @param playerCharacter entity the player should control
-	*/
-	protected void VerifyCharacterAssignment(int playerId, SCR_PlayerController playerController, SCR_ChimeraCharacter playerCharacter)
-	{
-		// Validate that player is still connected
-		if (!GetGame().GetPlayerManager().IsPlayerConnected(playerId))
-			return;
-			
-		// Check if character assignment was successful
-		IEntity controlledEntity = GetGame().GetPlayerManager().GetPlayerControlledEntity(playerId);
-		
-		// If player is still controlling the initial entity, retry the assignment
-		if (controlledEntity && controlledEntity.GetPrefabData().GetPrefabName() == GetSpectatorResource() && (playerCharacter.GetPrefabData().GetPrefabName() != GetSpectatorResource()))
-		{
-			// Force reassign the character
-			AssignCharacterToPlayer(playerController, playerCharacter);
-			
-			// Schedule another verification attempt
-			GetGame().GetCallqueue().CallLater(VerifyCharacterAssignment, 100, false, playerId, playerController, playerCharacter);
-			return;
-		}
-		
-		// Assignment successful, complete initialization
-		if (playerCharacter.GetPrefabData().GetPrefabName() != GetSpectatorResource())
-			AssignPlayerToGroup(playerId);
-		
-		RplComponent playerRplComp = RplComponent.Cast(playerCharacter.FindComponent(RplComponent));
-
-		GetGame().GetCallqueue().CallLater(CRF_RplBroadcastManager.GetInstance().InitilizePlayerBroadcast, PLAYER_INITILIZATION_TIME, false, playerId, playerRplComp.Id());
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	/**
-	* Create a spectator entity in the world
-	* @return The created spectator character
-	*/
-	protected SCR_ChimeraCharacter CreateSpectatorEntity(vector spawnLocation[4])
-	{
-		// Setup spawn parameters
-		EntitySpawnParams spawnParams = new EntitySpawnParams();
-		spawnParams.TransformMode = ETransformMode.WORLD;
-		spawnParams.Transform = spawnLocation;
-		
-		Resource spectatorRes = Resource.Load(GetSpectatorResource());
-		return SCR_ChimeraCharacter.Cast(GetGame().SpawnEntityPrefab(spectatorRes, GetGame().GetWorld(), spawnParams));
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	/**
-	* Remove player from their current group if any
-	* @param playerId ID of the player to remove from group
-	*/
-	protected void RemovePlayerFromCurrentGroup(int playerId)
-	{
-		SCR_AIGroup currentGroup = m_GroupsManagerComponent.GetPlayerGroup(playerId);
-		if (currentGroup)
-			currentGroup.RemovePlayer(playerId);
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	/**
-	* Disable damage handling for spectator character
-	* @param character Character to disable damage for
-	*/
-	protected void DisableDamageForSpectator(SCR_ChimeraCharacter character)
-	{
-		if (!character)
-			return;
-			
-		SCR_CharacterDamageManagerComponent damManager = SCR_CharacterDamageManagerComponent.Cast(character.FindComponent(SCR_CharacterDamageManagerComponent)); 
-		if (damManager)
-			damManager.EnableDamageHandling(false);
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	/**
-	* Get existing character or create a new one for playable roles
-	* @param playerId ID of the player
-	* @param overrideLocation Optional spawn location
-	* @return The character entity
-	*/
-	protected SCR_ChimeraCharacter GetOrCreatePlayableCharacter(int playerId, vector overrideLocation[4], out bool alreadyCreated)
-	{
-		alreadyCreated = true;
-		SCR_ChimeraCharacter playerCharacter = m_SlottingManager.GetPlayerSlotCharacter(playerId);
-		
-		if (!playerCharacter || playerCharacter.GetCharacterController().IsDead())
-		{
-			alreadyCreated = false;
-			
-			CRF_RplBroadcastManager.GetInstance().SendCharacterLoadingScreen(playerId);
-			playerCharacter = m_SlottingManager.SpawnPlayableEntity(playerId, overrideLocation);
-			
-			if (!playerCharacter)
-			{
-				Print(string.Format("[CRF_GamemodeManager] ERROR: Failed to spawn character for player %1", playerId), LogLevel.ERROR);
-				return null;
-			}
-			
-			// Notify data collector about the spawn
-			SCR_DataCollectorComponent dc = GetGame().GetDataCollector();
-			if (dc)
-			{
-				// Use our custom notification method since we don't use the spawn request system
-				dc.NotifyPlayerSpawned(playerId, playerCharacter);
-			}
-		}
-			
-		return playerCharacter;
-	}
-
-	//------------------------------------------------------------------------------------------------
-	/**
-	* Assign faction to player controller
-	* @param playerController Player controller to assign faction to
-	* @param faction Faction to assign
-	*/
-	protected void AssignFactionToPlayer(SCR_PlayerController playerController, Faction faction)
-	{
-		if (!faction || !playerController)
-			return;
-			
-		SCR_PlayerFactionAffiliationComponent affiliationComponent = SCR_PlayerFactionAffiliationComponent.Cast(
-			playerController.FindComponent(SCR_PlayerFactionAffiliationComponent)
-		);
-		
-		if (affiliationComponent)
-			affiliationComponent.RequestFaction(faction);
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	/**
-	* Assign character entity to player controller
-	* @param playerController Player controller to assign character to
-	* @param character Character to assign
-	*/
-	protected void AssignCharacterToPlayer(SCR_PlayerController playerController, SCR_ChimeraCharacter character)
-	{
-		if (!character || !playerController)
-			return;
-		
-		// Delete the old initial entity BEFORE assigning new character
-		// This prevents "ghost" entities
-		DeleteOldInitialEntity(playerController, character);
-		
-		playerController.SetInitialMainEntity(character);
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	/**
-	* Delete old initial entity if it exists (prevents ghost entities)
-	* @param playerController Player controller to check
-	* @param newCharacter The new character being assigned (don't delete this one)
-	*/
-	static void DeleteOldInitialEntity(SCR_PlayerController playerController, IEntity newCharacter)
-	{
-		if (!playerController)
-			return;
-			
-		IEntity oldEntity = playerController.GetMainEntity();
-		if (!oldEntity || oldEntity == newCharacter)
-			return;
-		
-		// Check if old entity is an initial entity (spawned at 1000m)
-		string oldPrefab = oldEntity.GetPrefabData().GetPrefabName();
-		if (oldPrefab == SPECTATOR_RESOURCE || oldPrefab.Contains("InitialEntity"))
-		{
-			// Log deletion for debugging
-			Print(string.Format("[CRF] Deleting ghost initial entity for player %1 at position %2", 
-				playerController.GetPlayerId(), 
-				oldEntity.GetOrigin()), 
-				LogLevel.VERBOSE);
-			
-			// Delete immediately to prevent replication
-			SCR_EntityHelper.DeleteEntityAndChildren(oldEntity);
-		}
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	/**
-	* Assign player to their slotted group
-	* @param playerId ID of the player to assign
-	*/
-	protected void AssignPlayerToGroup(int playerId)
-	{
-		SCR_AIGroup group = m_SlottingManager.GetPlayerSlotGroup(playerId);
-		if (!group)
-			return;
-			
-		int groupId = group.GetGroupID();
-		if (groupId == -1)
-			return;
-			
-		m_GroupsManagerComponent.AddPlayerToGroup(groupId, playerId);
-		
-		SCR_PlayerControllerGroupComponent groupComponent = SCR_PlayerControllerGroupComponent.GetPlayerControllerComponent(playerId);
-		if (groupComponent)
-			groupComponent.RequestJoinGroup(groupId);
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -603,8 +194,41 @@ class CRF_GamemodeManager : SCR_BaseGameModeComponent
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	// MODERATOR MANAGEMENT
+	// PLAYER JSON MANAGEMENT
 	//------------------------------------------------------------------------------------------------
+	
+	//------------------------------------------------------------------------------------------------
+	/**
+	* Check if local player is a moderator
+	* @return True if local player is a moderator, false otherwise
+	*/
+	bool IsModerator()
+	{
+		return m_aModerators.Contains(SCR_PlayerController.GetLocalPlayerId());
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	bool IsModerator(int playerId)
+	{
+		return m_aModerators.Contains(playerId);
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/**
+	* Check if local player is a donator
+	* NOTE: Not used in game mode. Added for future uses.
+	* @return True if local player is a donator, false otherwise
+	*/
+	bool IsDonator()
+	{
+		return m_aDonators.Contains(SCR_PlayerController.GetLocalPlayerId());
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	bool IsDonator(int playerId)
+	{
+		return m_aDonators.Contains(playerId);
+	}
 	
 	/**
 	* Set a player status
@@ -735,40 +359,31 @@ class CRF_GamemodeManager : SCR_BaseGameModeComponent
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	/**
-	* Check if a given player is a moderator
-	* @param playerId ID of the player to check
-	* @return True if player is a moderator, false otherwise
-	*/
-	bool IsModerator(int playerId)
-	{
-		return m_aModerators.Contains(playerId);
-	}
-	
+	// FORWARD DEPLOY MANAGEMENT
 	//------------------------------------------------------------------------------------------------
-	/**
-	* Check if local player is a moderator
-	* @return True if local player is a moderator, false otherwise
-	*/
-	bool IsModerator()
-	{
-		return m_aModerators.Contains(SCR_PlayerController.GetLocalPlayerId());
-	}
 	
+	//Needed so when we teleport players/vehicles the aren't spawning on top of each other.
+	float m_fBuffer = 0;
 	//------------------------------------------------------------------------------------------------
-	/**
-	* Check if local player is a donator
-	* NOTE: Not used in game mode. Added for future uses.
-	* @return True if local player is a donator, false otherwise
-	*/
-	bool IsDonator()
+	override void EOnFrame(IEntity owner, float timeSlice)
 	{
-		return m_aDonators.Contains(SCR_PlayerController.GetLocalPlayerId());
-	}
-	
-	bool IsDonator(int playerId)
-	{
-		return m_aDonators.Contains(playerId);
+	    super.EOnFrame(owner, timeSlice);
+	    m_fBuffer += timeSlice;
+	    if (m_fBuffer > 0.1)
+	    {
+	        m_fBuffer = 0;
+	        if (m_aForwardDeployRequests.Count() > 0)
+	        {
+	            CRF_ForwardDeployRequest request = m_aForwardDeployRequests.Get(0);
+	            if (request)
+	            {
+	                PerformForwardDeploy(request.m_iPlayerId, request.m_vTransform);
+	                m_aForwardDeployRequests.RemoveOrdered(0);
+	            }
+	        }
+	        if (m_aForwardDeployRequests.Count() == 0)
+	            ClearEventMask(owner, EntityEvent.FRAME);
+	    }
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -782,7 +397,6 @@ class CRF_GamemodeManager : SCR_BaseGameModeComponent
 	{
 		return m_aForwardDeployZones;
 	}
-	
 		
 	//------------------------------------------------------------------------------------------------
 	void DeleteAllForwardDeployZones()
@@ -796,6 +410,7 @@ class CRF_GamemodeManager : SCR_BaseGameModeComponent
 		m_aForwardDeployZones.Clear();
 	}
 	
+	//------------------------------------------------------------------------------------------------
 	void CreateForwardDeployRequest(int playerId, vector transform)
 	{
 		ref CRF_ForwardDeployRequest request = new CRF_ForwardDeployRequest();
@@ -805,6 +420,7 @@ class CRF_GamemodeManager : SCR_BaseGameModeComponent
 		SetEventMask(GetOwner(), EntityEvent.FRAME);
 	}
 	
+	//------------------------------------------------------------------------------------------------
 	void PerformForwardDeploy(int playerId, vector transform)
 	{
 		vector initialSpawnLocation;
@@ -817,6 +433,69 @@ class CRF_GamemodeManager : SCR_BaseGameModeComponent
 		params[3] = finalSpawnLocation;
 		SCR_Global.TeleportPlayer(playerId, finalSpawnLocation, SCR_EPlayerTeleportedReason.NONE);
 		CRF_RplBroadcastManager.GetInstance().BroadcastVehiclePosUpdate(finalSpawnLocation, playerId);
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	// BODY CLEANUP MANAGEMENT
+	//------------------------------------------------------------------------------------------------
+	
+	//------------------------------------------------------------------------------------------------
+	override void OnControllableDestroyed(notnull SCR_InstigatorContextData instigatorContextData)
+	{
+		super.OnControllableDestroyed(instigatorContextData);
+		#ifdef WORKBENCH
+		#else
+		if (!System.IsConsoleApp())
+			return;
+		#endif
+		
+		m_aDeadBodies.Insert(instigatorContextData.GetVictimEntity());
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	void CleanUpBodies()
+	{
+		array<IEntity> bodiesToRemove = new array<IEntity>();
+		bodiesToRemove.Reserve(m_aDeadBodies.Count()); // Pre-allocate capacity for performance
+		
+		foreach (IEntity body: m_aDeadBodies)
+		{
+			if (!body)
+				continue;
+			
+			if (!GetGame().GetWorld().QueryEntitiesBySphere(body.GetOrigin(), 30, CleanUpBodyCallback, null))
+				continue;
+
+			bodiesToRemove.Insert(body);
+		}
+		
+		int delay = 1;
+		foreach (IEntity body: bodiesToRemove)
+		{
+			m_aDeadBodies.RemoveItem(body);
+			//Lets not delete 100s of entities in one frame now
+			GetGame().GetCallqueue().CallLater(SCR_EntityHelper.DeleteEntityAndChildren, 100 * delay, false, body);
+			delay++;
+		}
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	bool CleanUpBodyCallback(IEntity entity)
+	{
+		if (ChimeraCharacter.Cast(entity))
+		{
+			//Is this character dead
+			SCR_DamageManagerComponent damageManager = SCR_DamageManagerComponent.GetDamageManager(entity);
+			if (damageManager)
+			{
+				if (damageManager.GetState() == EDamageState.DESTROYED)
+					return true;
+				else
+					return false;
+			}
+		}
+			
+		return true;
 	}
 }
 

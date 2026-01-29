@@ -1,0 +1,20 @@
+SCR_ManualCamera : "{E1FF38EC8894C5F3}Prefabs/Editor/Camera/ManualCameraSpectate.et" {
+ ID "51625C12EB8231E4"
+ components {
+  SlotManagerComponent "{68751A0CD2D59969}" {
+   Slots {
+    EntitySlotInfo SpectatorEntity {
+     DisablePhysicsInteraction 1
+     DeactivatePhysicsOnAtaching 1
+    }
+   }
+  }
+ }
+ cameraFlags 0x4 0x2
+ m_aComponents {
+  SCR_HideHUDManualCameraComponent "{52CC693B212FF1ED}" {
+   m_FlagsBlacklist 127
+   m_LayersWhitelist 0
+  }
+ }
+}

@@ -6,8 +6,6 @@ class CRF_GearscriptManager : ScriptComponent
 
 	const ref array<EWeaponType> WEAPON_TYPES_THROWABLE = {EWeaponType.WT_FRAGGRENADE, EWeaponType.WT_SMOKEGRENADE};
 	
-	protected ref map<ResourceName, int> m_mVehicleSupplyCosts = new map<ResourceName, int>;
-	
 	// Track entities currently having gear applied to prevent race conditions
 	protected ref set<IEntity> m_sEntitiesBeingGeared = new set<IEntity>();
 	
@@ -24,6 +22,18 @@ class CRF_GearscriptManager : ScriptComponent
 		
 		return CRF_GearscriptManager.Cast(gameMode.FindComponent(CRF_GearscriptManager));
 	}
+	
+	//------------------------------------------------------------------------------------------------
+	override void OnPostInit(IEntity owner)
+	{
+		super.OnPostInit(owner);
+	
+		// Only run on in-game post init
+		if (!GetGame().InPlayMode())
+			return;
+		
+		m_Gamemode = CRF_Gamemode.GetInstance();
+	}	
 	
 	//------------------------------------------------------------------------------------------------
 	/**
@@ -89,6 +99,28 @@ class CRF_GearscriptManager : ScriptComponent
 		
 		return gearScriptContainer;
 	}
+	
+	//------------------------------------------------------------------------------------------------
+	/**
+	 * @brief Check if an entity is a throwable weapon
+	 * @param entity Entity to check
+	 * @return True if entity is a throwable weapon
+	 */
+	protected bool IsThrowableWeapon(IEntity entity)
+	{
+		WeaponComponent weaponComp = WeaponComponent.Cast(entity.FindComponent(WeaponComponent));
+		return weaponComp && WEAPON_TYPES_THROWABLE.Contains(weaponComp.GetWeaponType());
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/*
+	Public method to insert an item into a storage and keep the same storage it would usually be assigned to
+	*/
+	void InsertInventoryItemPublic(IEntity item, SCR_CharacterInventoryStorageComponent inventory, 
+		SCR_InventoryStorageManagerComponent inventoryManager, CRF_EGearRole role = 0, bool isThrowable = false)
+	{
+		InsertInventoryItem(item, inventory, inventoryManager, role, isThrowable);
+	}
 
 	//------------------------------------------------------------------------------------------------
 	/**
@@ -138,6 +170,7 @@ class CRF_GearscriptManager : ScriptComponent
 		GetGame().GetCallqueue().CallLater(SetEntityGearDelay, 500, false, gearScriptResourceName, entity, role, inventory, inventoryManager, gearScriptSettings);
 	}
 	
+	//------------------------------------------------------------------------------------------------
 	void SetEntityGearDelay(string gearScriptResourceName, IEntity entity, CRF_EGearRole role, SCR_CharacterInventoryStorageComponent inventory,
 	SCR_InventoryStorageManagerComponent inventoryManager, CRF_GearScriptContainer gearScriptSettings)
 	{
@@ -358,21 +391,9 @@ class CRF_GearscriptManager : ScriptComponent
 	 * @param resourceName Resource to load
 	 * @return Loaded config or null if failed
 	 */
-	protected CRF_GearScriptConfig LoadGearScriptConfig(ResourceName resourceName)
+	CRF_GearScriptConfig LoadGearScriptConfig(ResourceName resourceName)
 	{
 		return CRF_GearScriptConfig.Cast(BaseContainerTools.CreateInstanceFromContainer(
-			BaseContainerTools.LoadContainer(resourceName).GetResource().ToBaseContainer()));
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	/**
-	 * @brief Load vehicle gear script config from resource
-	 * @param resourceName Resource to load
-	 * @return Loaded config or null if failed
-	 */
-	protected CRF_VehicleGearscriptConfig LoadVehicleGearScriptConfig(ResourceName resourceName)
-	{
-		return CRF_VehicleGearscriptConfig.Cast(BaseContainerTools.CreateInstanceFromContainer(
 			BaseContainerTools.LoadContainer(resourceName).GetResource().ToBaseContainer()));
 	}
 	
@@ -929,7 +950,7 @@ class CRF_GearscriptManager : ScriptComponent
 	 * @param specMagazineArray Array of specialized magazines
 	 * @return Converted magazine array
 	 */
-	array<ref CRF_Magazine_Class> ConvertSpecMagArrayIntoMagArray(array<ref CRF_Spec_Magazine_Class> specMagazineArray, bool isAssistant)
+	protected array<ref CRF_Magazine_Class> ConvertSpecMagArrayIntoMagArray(array<ref CRF_Spec_Magazine_Class> specMagazineArray, bool isAssistant)
 	{
 		array<ref CRF_Magazine_Class> tempArray = {};
 		
@@ -983,7 +1004,8 @@ class CRF_GearscriptManager : ScriptComponent
 		GetGame().GetCallqueue().CallLater(SelectWeapon, 500, false, inventory.GetOwner()); 
 	}
 	
-	void SelectWeapon(IEntity entity)
+	//------------------------------------------------------------------------------------------------
+	protected void SelectWeapon(IEntity entity)
 	{
 		if (!ChimeraCharacter.Cast(entity))
 			return;
@@ -1043,21 +1065,6 @@ class CRF_GearscriptManager : ScriptComponent
 				}
 			}
 		}
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	/**
-	 * @brief Log weapon error
-	 * @param weaponResource Weapon resource that failed
-	 * @param entity Entity that the weapon was being added to
-	 */
-	protected void LogWeaponError(ResourceName weaponResource, IEntity entity)
-	{
-		Print("--------------------------------------------------------------------------------", LogLevel.ERROR);
-		Print(string.Format("CRF GEAR SCRIPT ERROR: UNABLE TO INSERT WEAPON INTO ENTITY: %1", entity.GetPrefabData().GetPrefabName()), LogLevel.ERROR);
-		Print(" ", LogLevel.ERROR);
-		Print("CRF GEAR SCRIPT ERROR: INVALID WEAPON ITEM!", LogLevel.ERROR);
-		Print("--------------------------------------------------------------------------------", LogLevel.ERROR);
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -1160,22 +1167,6 @@ class CRF_GearscriptManager : ScriptComponent
 			LogAttachmentError(attachmentResource, weapon);
 			delete attachmentSpawned;
 		}
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	/**
-	 * @brief Log attachment error
-	 * @param attachmentResource Attachment resource that failed
-	 * @param weapon Weapon entity it was being attached to
-	 */
-	protected void LogAttachmentError(ResourceName attachmentResource, IEntity weapon)
-	{
-		Print("--------------------------------------------------------------------------------", LogLevel.ERROR);
-		Print(string.Format("CRF GEAR SCRIPT ERROR: UNABLE TO INSERT ATTACHMENT: %1", attachmentResource), LogLevel.ERROR);
-		Print(string.Format("CRF GEAR SCRIPT ERROR: INTO ENTITY: %1", weapon.GetPrefabData().GetPrefabName()), LogLevel.ERROR);
-		Print(" ", LogLevel.ERROR);
-		Print("CRF GEAR SCRIPT ERROR: INVALID ATTACHMENT ITEM FOR WEAPON!", LogLevel.ERROR);
-		Print("--------------------------------------------------------------------------------", LogLevel.ERROR);
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -1281,22 +1272,6 @@ class CRF_GearscriptManager : ScriptComponent
 	
 	//------------------------------------------------------------------------------------------------
 	/**
-	 * @brief Log clothing error
-	 * @param clothingResource Clothing resource that failed
-	 * @param entity Entity that the clothing was being added to
-	 */
-	protected void LogClothingError(ResourceName clothingResource, IEntity entity)
-	{
-		Print("--------------------------------------------------------------------------------", LogLevel.ERROR);
-		Print(string.Format("CRF GEAR SCRIPT ERROR: UNABLE TO INSERT CLOTHING: %1", clothingResource), LogLevel.ERROR);
-		Print(string.Format("CRF GEAR SCRIPT ERROR: INTO ENTITY: %1", entity.GetPrefabData().GetPrefabName()), LogLevel.ERROR);
-		Print(" ", LogLevel.ERROR);
-		Print("CRF GEAR SCRIPT ERROR: INVALID CLOTHING ITEM!", LogLevel.ERROR);
-		Print("--------------------------------------------------------------------------------", LogLevel.ERROR);
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	/**
 	 * @brief Handle items removed from previous clothing
 	 * @param removedItems Items that were removed
 	 * @param deletePreviousItems Whether to delete previous items
@@ -1376,28 +1351,6 @@ class CRF_GearscriptManager : ScriptComponent
 			InsertInventoryItem(resourceSpawned, inventory, inventoryManager, role, isThrowable);
 		}
 	}
-	
-	//------------------------------------------------------------------------------------------------
-	/**
-	 * @brief Check if an entity is a throwable weapon
-	 * @param entity Entity to check
-	 * @return True if entity is a throwable weapon
-	 */
-	protected bool IsThrowableWeapon(IEntity entity)
-	{
-		WeaponComponent weaponComp = WeaponComponent.Cast(entity.FindComponent(WeaponComponent));
-		return weaponComp && WEAPON_TYPES_THROWABLE.Contains(weaponComp.GetWeaponType());
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	/*
-	Public method to insert an item into a storage and keep the same storage it would usually be assigned to
-	*/
-	void InsertInventoryItemPublic(IEntity item, SCR_CharacterInventoryStorageComponent inventory, 
-		SCR_InventoryStorageManagerComponent inventoryManager, CRF_EGearRole role = 0, bool isThrowable = false)
-	{
-		InsertInventoryItem(item, inventory, inventoryManager, role, isThrowable);
-	}
 
 	//------------------------------------------------------------------------------------------------
 	/**
@@ -1466,22 +1419,6 @@ class CRF_GearscriptManager : ScriptComponent
 		
 		return false;
 	}
-	
-	//------------------------------------------------------------------------------------------------
-	/**
-	 * @brief Log inventory item error
-	 * @param item Item that failed to insert
-	 * @param entity Entity that the item was being added to
-	 */
-	protected void LogInventoryItemError(IEntity item, IEntity entity)
-	{
-		Print("--------------------------------------------------------------------------------", LogLevel.ERROR);
-		Print(string.Format("CRF GEAR SCRIPT ERROR: UNABLE TO INSERT ITEM: %1", item.GetPrefabData().GetPrefabName()), LogLevel.ERROR);
-		Print(string.Format("CRF GEAR SCRIPT ERROR: INTO ENTITY: %1", entity.GetPrefabData().GetPrefabName()), LogLevel.ERROR);
-		Print(" ", LogLevel.ERROR);
-		Print("CRF GEAR SCRIPT ERROR: NOT ENOUGH SPACE IN INVENTORY/INVALID INVENTORY ITEM!", LogLevel.ERROR);
-		Print("--------------------------------------------------------------------------------", LogLevel.ERROR);
-	}
 
 	//------------------------------------------------------------------------------------------------
 	/**
@@ -1491,7 +1428,7 @@ class CRF_GearscriptManager : ScriptComponent
 	 * @param isThrowable Whether item is a throwable
 	 * @return Array of appropriate clothing slot IDs
 	 */
-	TIntArray FilterItemToClothing(IEntity item, CRF_EGearRole role = 0, bool isThrowable = false)
+	protected TIntArray FilterItemToClothing(IEntity item, CRF_EGearRole role = 0, bool isThrowable = false)
 	{
 		array<int> clothingIDs = {};
 
@@ -1584,46 +1521,65 @@ class CRF_GearscriptManager : ScriptComponent
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	// RplSave: Serialize vehicle supply costs for JIP sync
-	override bool RplSave(ScriptBitWriter writer)
+	/**
+	 * @brief Log weapon error
+	 * @param weaponResource Weapon resource that failed
+	 * @param entity Entity that the weapon was being added to
+	 */
+	protected void LogWeaponError(ResourceName weaponResource, IEntity entity)
 	{
-		// Write the count of vehicle supply cost entries
-		int count = m_mVehicleSupplyCosts.Count();
-		writer.WriteInt(count);
-		
-		// Write each vehicle resource and its supply cost
-		foreach (ResourceName vehicleResource, int supplyCost : m_mVehicleSupplyCosts)
-		{
-			writer.WriteResourceName(vehicleResource);
-			writer.WriteInt(supplyCost);
-		}
-		
-		return true;
+		Print("--------------------------------------------------------------------------------", LogLevel.ERROR);
+		Print(string.Format("CRF GEAR SCRIPT ERROR: UNABLE TO INSERT WEAPON INTO ENTITY: %1", entity.GetPrefabData().GetPrefabName()), LogLevel.ERROR);
+		Print(" ", LogLevel.ERROR);
+		Print("CRF GEAR SCRIPT ERROR: INVALID WEAPON ITEM!", LogLevel.ERROR);
+		Print("--------------------------------------------------------------------------------", LogLevel.ERROR);
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	// RplLoad: Deserialize vehicle supply costs for JIP sync
-	override bool RplLoad(ScriptBitReader reader)
+	/**
+	 * @brief Log attachment error
+	 * @param attachmentResource Attachment resource that failed
+	 * @param weapon Weapon entity it was being attached to
+	 */
+	protected void LogAttachmentError(ResourceName attachmentResource, IEntity weapon)
 	{
-		// Read the count of vehicle supply cost entries
-		int count;
-		reader.ReadInt(count);
-		
-		// Clear existing data (for JIP clients)
-		m_mVehicleSupplyCosts.Clear();
-		
-		// Read each vehicle resource and its supply cost
-		for (int i = 0; i < count; i++)
-		{
-			ResourceName vehicleResource;
-			int supplyCost;
-			
-			reader.ReadResourceName(vehicleResource);
-			reader.ReadInt(supplyCost);
-			
-			m_mVehicleSupplyCosts.Set(vehicleResource, supplyCost);
-		}
-		
-		return true;
+		Print("--------------------------------------------------------------------------------", LogLevel.ERROR);
+		Print(string.Format("CRF GEAR SCRIPT ERROR: UNABLE TO INSERT ATTACHMENT: %1", attachmentResource), LogLevel.ERROR);
+		Print(string.Format("CRF GEAR SCRIPT ERROR: INTO ENTITY: %1", weapon.GetPrefabData().GetPrefabName()), LogLevel.ERROR);
+		Print(" ", LogLevel.ERROR);
+		Print("CRF GEAR SCRIPT ERROR: INVALID ATTACHMENT ITEM FOR WEAPON!", LogLevel.ERROR);
+		Print("--------------------------------------------------------------------------------", LogLevel.ERROR);
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/**
+	 * @brief Log clothing error
+	 * @param clothingResource Clothing resource that failed
+	 * @param entity Entity that the clothing was being added to
+	 */
+	protected void LogClothingError(ResourceName clothingResource, IEntity entity)
+	{
+		Print("--------------------------------------------------------------------------------", LogLevel.ERROR);
+		Print(string.Format("CRF GEAR SCRIPT ERROR: UNABLE TO INSERT CLOTHING: %1", clothingResource), LogLevel.ERROR);
+		Print(string.Format("CRF GEAR SCRIPT ERROR: INTO ENTITY: %1", entity.GetPrefabData().GetPrefabName()), LogLevel.ERROR);
+		Print(" ", LogLevel.ERROR);
+		Print("CRF GEAR SCRIPT ERROR: INVALID CLOTHING ITEM!", LogLevel.ERROR);
+		Print("--------------------------------------------------------------------------------", LogLevel.ERROR);
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	/**
+	 * @brief Log inventory item error
+	 * @param item Item that failed to insert
+	 * @param entity Entity that the item was being added to
+	 */
+	protected void LogInventoryItemError(IEntity item, IEntity entity)
+	{
+		Print("--------------------------------------------------------------------------------", LogLevel.ERROR);
+		Print(string.Format("CRF GEAR SCRIPT ERROR: UNABLE TO INSERT ITEM: %1", item.GetPrefabData().GetPrefabName()), LogLevel.ERROR);
+		Print(string.Format("CRF GEAR SCRIPT ERROR: INTO ENTITY: %1", entity.GetPrefabData().GetPrefabName()), LogLevel.ERROR);
+		Print(" ", LogLevel.ERROR);
+		Print("CRF GEAR SCRIPT ERROR: NOT ENOUGH SPACE IN INVENTORY/INVALID INVENTORY ITEM!", LogLevel.ERROR);
+		Print("--------------------------------------------------------------------------------", LogLevel.ERROR);
 	}
 };

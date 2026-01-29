@@ -664,7 +664,7 @@ class CRF_RespawnManager : ScriptComponent
 				//Is the vehicle non existant anymore
 				if (!vehicle.m_eVehicle && vehicle.m_bShouldRespawnOnSideRespawn)
 				{
-					CRF_GearscriptManager.GetInstance().SpawnVehicle(vehicle);
+					CRF_VehicleGearscriptManager.GetInstance().SpawnVehicle(vehicle);
 					continue;
 				}
 				
@@ -677,7 +677,7 @@ class CRF_RespawnManager : ScriptComponent
 					continue;
 				
 				//Vehicle is destroyed respawn it.
-				CRF_GearscriptManager.GetInstance().SpawnVehicle(vehicle);
+				CRF_VehicleGearscriptManager.GetInstance().SpawnVehicle(vehicle);
 				continue;
 			}
 		}
@@ -698,7 +698,7 @@ class CRF_RespawnManager : ScriptComponent
 			//Is the vehicle non existant anymore
 			if (!vehicle.m_eVehicle && vehicle.m_bShouldRespawnOnSideRespawn)
 			{
-				CRF_GearscriptManager.GetInstance().SpawnVehicle(vehicle);
+				CRF_VehicleGearscriptManager.GetInstance().SpawnVehicle(vehicle);
 				continue;
 			}
 			
@@ -711,7 +711,7 @@ class CRF_RespawnManager : ScriptComponent
 				continue;
 			
 			//Vehicle is destroyed respawn it.
-			CRF_GearscriptManager.GetInstance().SpawnVehicle(vehicle);
+			CRF_VehicleGearscriptManager.GetInstance().SpawnVehicle(vehicle);
 			continue;
 		}
 	}

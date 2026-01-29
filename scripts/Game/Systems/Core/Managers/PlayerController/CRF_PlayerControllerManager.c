@@ -31,7 +31,7 @@ class CRF_PlayerControllerManager : ScriptComponent
 	protected CRF_GamemodeManager m_GamemodeManager;        // Reference to the gamemode manager
 	protected CRF_SlottingManager m_SlottingManager;		 // Reference to the slotting manager
 	protected CRF_RplToAuthorityManager m_RplToAuthorityManager;  // Network authority manager
-	protected CRF_CameraManager m_CameraManager;                  // Reference to the local camera manager
+	protected CRF_PlayerCameraManager m_CameraManager;                  // Reference to the local camera manager
 	
 	// Map and Markers
 	ref array<string> m_aScriptedMarkers = {};  // Custom map markers
@@ -76,7 +76,7 @@ class CRF_PlayerControllerManager : ScriptComponent
 		m_GamemodeManager = CRF_GamemodeManager.GetInstance();
 		m_SlottingManager = CRF_SlottingManager.GetInstance();
 		m_RplToAuthorityManager = CRF_RplToAuthorityManager.GetInstance();
-		m_CameraManager = CRF_CameraManager.GetInstance();
+		m_CameraManager = CRF_PlayerCameraManager.GetInstance();
 
 		// Register input action handlers
 		GetGame().GetInputManager().AddActionListener("CRF_ToggleSideReady", EActionTrigger.DOWN, ToggleSideReady);
@@ -88,88 +88,6 @@ class CRF_PlayerControllerManager : ScriptComponent
 		GetGame().GetCallqueue().Call(InitFPSLock);
 		GetGame().GetCallqueue().Call(InitAudioLock);
 		GetGame().GetCallqueue().Call(OpenCurrentStateMenu);
-	}
-
-	/**
-	 * Initializes the player client
-	 * Cleans up previous camera, closes menus, and sets up player-specific settings
-	 * @param playerCharacter - The spectator entity the server created and set to this player
-	 */
-	void InitilizePlayerClient(RplId playerCharID)
-	{
-		// Get player character
-		IEntity playerCharacter = m_SlottingManager.GetCharacterFromRplId(playerCharID);
-		
-		// if we cant get the player character or it's null, wait another full initilization time before attempting again
-		if (!playerCharacter || !SCR_ChimeraCharacter.Cast(playerCharacter))
-		{
-			// Schedule another verification attempt
-			GetGame().GetCallqueue().CallLater(InitilizePlayerClient, CRF_GamemodeManager.PLAYER_INITILIZATION_TIME, false, playerCharID);
-			return;
-		};
-		
-		m_Gamemode = CRF_Gamemode.GetInstance();
-		m_RplToAuthorityManager = CRF_RplToAuthorityManager.GetInstance();
-		
-		// Close all menus
-		if (m_Gamemode.m_GamemodeState == CRF_EGamemodeState.GAME)
-		{
-			GetGame().GetMenuManager().CloseAllMenus();
-			ResetSettingsToStoredValues();
-			if (!CVON_VONGameModeComponent.GetInstance())
-				SetupRadioFrequency();
-		}; 
-		
-		if (playerCharacter.GetPrefabData().GetPrefabName() == CRF_GamemodeManager.GetSpectatorResource())
-			InitilizeLocalSpectator(playerCharacter);
-		else
-			InitilizeLocalCharacter();
-	}
-	
-	/**
-	 * Initilizes players if they have a valid spectator entity
-	 * @param playerCharacter - The spectator entity the server created and set to this player
-	 */
-	void InitilizeLocalSpectator(IEntity playerCharacter)
-	{
-		m_CameraManager.InitilizeSpecCamera();
-		
-		// Register for VON (voice chat)
-		m_RplToAuthorityManager.CheckVONRegister(SCR_PlayerController.GetLocalPlayerId());
-		
-		// Open spectator menu if in game state
-		if (m_Gamemode.m_GamemodeState == CRF_EGamemodeState.GAME)
-			GetGame().GetMenuManager().OpenMenu(ChimeraMenuPreset.CRF_SpectatorMenu);
-		
-		// Turn on killfeed for specs
-		SCR_NotificationSenderComponent sender = SCR_NotificationSenderComponent.Cast(
-			GetGame().GetGameMode().FindComponent(SCR_NotificationSenderComponent)
-		);
-		if (sender)
-			sender.SetKillFeedTypeDeadLocal();
-	}
-	
-	/**
-	 * Initilizes players if they have a valid slotted character
-	 */
-	void InitilizeLocalCharacter()
-	{
-		// Clean up previous camera if exists
-		if (m_CameraManager.m_eCamera)
-			delete m_CameraManager.m_eCamera;
-		
-		// Originally added for data collector
-		m_Gamemode.GetOnPlayerSpawned().Invoke(SCR_PlayerController.GetLocalPlayerId(), SCR_PlayerController.GetLocalMainEntity());
-		
-		// Reset Stored Pos
-		GetGame().GetCallqueue().CallLater(m_CameraManager.UpdateStoredCameraPos, 200, false, vector.Zero, vector.Zero, vector.Zero, vector.Zero);
-		
-		// Reset kill feed type to default
-		SCR_NotificationSenderComponent sender = SCR_NotificationSenderComponent.Cast(
-			GetGame().GetGameMode().FindComponent(SCR_NotificationSenderComponent)
-		);
-		if (sender)
-			sender.SetKillFeedTypeNoneLocal();
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -210,70 +128,6 @@ class CRF_PlayerControllerManager : ScriptComponent
 			phys.SetVelocity(vector.Zero);
 			phys.SetAngularVelocity(vector.Zero);
 		}
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	// PLAYER EQUIPMENT
-	//------------------------------------------------------------------------------------------------
-
-	/**
-	 * Sets up radio frequencies based on player group
-	 * Configures both group and platoon frequencies
-	 */
-	void SetupRadioFrequency()
-	{
-		// Get player's entity
-		IEntity entity = SCR_PlayerController.GetLocalMainEntity();
-		if (!entity || CRF_GamemodeManager.IsSpectator(entity))
-			return;
-
-		// Find radio in inventory
-		array<IEntity> items = {};
-		SCR_InventoryStorageManagerComponent.Cast(entity.FindComponent(SCR_InventoryStorageManagerComponent)).GetItems(items);
-		IEntity radioEntity;
-		foreach (IEntity item : items)
-		{
-			if (item.FindComponent(BaseRadioComponent))
-			{
-				radioEntity = item;
-				break;
-			}
-		}
-
-		if (!radioEntity)
-			return;
-
-		// Get radio components
-		BaseRadioComponent radio = BaseRadioComponent.Cast(radioEntity.FindComponent(BaseRadioComponent));
-		BaseTransceiver grpTsv = radio.GetTransceiver(0);
-
-		// Get player's group
-		SCR_GroupsManagerComponent m_GroupManager = SCR_GroupsManagerComponent.GetInstance();
-		if (!m_GroupManager)
-			return;
-
-		SCR_AIGroup group = m_GroupManager.GetPlayerGroup(SCR_PlayerController.GetLocalPlayerId());
-		PlayerController pc = GetGame().GetPlayerController();
-
-		// Set frequency based on group
-		if (pc && group)
-		{
-			grpTsv.SetFrequency(group.GetRadioFrequency());
-		}
-
-		// Set up Voice over Network component
-		SCR_VONController vc = SCR_VONController.Cast(pc.FindComponent(SCR_VONController));
-		SCR_VoNComponent von = SCR_VoNComponent.Cast(entity.FindComponent(SCR_VoNComponent));
-
-		von.SetTransmitRadio(grpTsv);
-
-		// Set up platoon radio if available
-		BaseTransceiver pltTsv = radio.GetTransceiver(1);
-		if (pltTsv)
-			von.SetTransmitRadio(pltTsv);
-
-		vc.PublicResetVON();
-		vc.SetVONComponent(von);
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -345,52 +199,6 @@ class CRF_PlayerControllerManager : ScriptComponent
 	//------------------------------------------------------------------------------------------------
 	// MENU MANAGEMENT
 	//------------------------------------------------------------------------------------------------
-	
-	/**
-	 * Opens appropriate menu based on current gamemode state
-	 */
-	void OpenCurrentStateMenu()
-	{	
-		// Initialize references first
-		m_RplToAuthorityManager = CRF_RplToAuthorityManager.GetInstance();
-		m_Gamemode = CRF_Gamemode.GetInstance();
-		
-		// Check if we should skip AAR
-		if (m_Gamemode && m_Gamemode.m_GamemodeState == CRF_EGamemodeState.AAR && !m_Gamemode.m_bUseAAR)
-			return;
-		
-		// Close any existing menus
-		MenuBase topMenu = GetGame().GetMenuManager().GetTopMenu();
-		if (topMenu)
-			topMenu.Close();
-		GetGame().GetMenuManager().CloseAllMenus();
-		
-		// Open appropriate menu based on gamemode state
-		switch (m_Gamemode.m_GamemodeState)
-		{
-			case CRF_EGamemodeState.BRIEFING: 
-			{
-				GetGame().GetMenuManager().OpenMenu(ChimeraMenuPreset.CRF_PreviewMenu);
-				break;
-			}
-			case CRF_EGamemodeState.SLOTTING:
-			{
-				GetGame().GetMenuManager().OpenMenu(ChimeraMenuPreset.CRF_SlottingMenu);
-				break;
-			}
-			case CRF_EGamemodeState.GAME: 
-			{
-				m_RplToAuthorityManager.RequestInitilizePlayer(SCR_PlayerController.GetLocalPlayerId());
-				break;
-			}
-			case CRF_EGamemodeState.AAR: 
-			{
-				if (CRF_Gamemode.GetInstance().m_bUseAAR)
-					GetGame().GetMenuManager().OpenMenu(ChimeraMenuPreset.CRF_AARMenu);
-				break;
-			}
-		}
-	}
 	
 	/**
 	 * Opens the slotting menu for player assignment
@@ -815,6 +623,7 @@ class CRF_PlayerControllerManager : ScriptComponent
 		m_aScriptedMarkers.Clear();
 	}
 	
+	//------------------------------------------------------------------------------------------------
 	void UpdateMapMarkers(array<string> zoneStatus, array<string> zoneObjectNames, FactionKey bluforSide, FactionKey opforSide)
 	{
 		RemoveALLScriptedMarkers();
@@ -859,39 +668,16 @@ class CRF_PlayerControllerManager : ScriptComponent
 		}
 	}
 	
-	string SanitizeMissionName(string fullName)
-	{
-	    array<string> parts = {};
-		
-	    fullName.Split(" ", parts, true);
-	
-	    // Remove the first two tokens like "CRF" and "CO50"/"COTVT55"
-	    if (parts.Count() > 2)
-	    {
-	        string cleanName;
-	        for (int i = 2; i < parts.Count(); i++)
-	        {
-	            if (i > 2)
-	                cleanName += " ";
-	            cleanName += parts[i];
-	        }
-			cleanName.ToUpper();
-	        return cleanName;
-	    }
-	
-		fullName.ToUpper();
-	    return fullName; // fallback if unexpected format
-	}
-	
+	//------------------------------------------------------------------------------------------------
 	void DisplayTitleCard()
 	{
 		Widget titleCard = GetGame().GetWorkspace().CreateWidgets("{4D2AE199F111C14A}UI/layouts/HUD/Intro/CRF_Intro.layout");
-		TextWidget.Cast(titleCard.FindAnyWidget("TitleText")).SetText(SanitizeMissionName(GetGame().GetMissionName()));
+		TextWidget.Cast(titleCard.FindAnyWidget("TitleText")).SetText(CRF_MissionHelper.SanitizeMissionName(GetGame().GetMissionName()));
 		AudioSystem.PlaySound("{932C08A5A988F96A}Sounds/Intro/cinematicBoom.wav");
 		GetGame().GetCallqueue().CallLater(RemoveWidget, 4000, false, titleCard);
 	}
 	
-		
+	//------------------------------------------------------------------------------------------------
 	static void RemoveWidget(Widget widget)
 	{
 		if (widget)

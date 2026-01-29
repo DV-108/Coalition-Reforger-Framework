@@ -263,7 +263,7 @@ class CRF_SpectatorMenu: ChimeraMenuBase
 	void UpdateCompass()
 	{
 		// Get camera yaw angle
-		float yaw = -CRF_CameraManager.GetInstance().m_eCamera.GetYawPitchRoll()[0];
+		float yaw = -CRF_PlayerCameraManager.GetInstance().m_eCamera.GetYawPitchRoll()[0];
 		float yawFloat = -yaw;
 		
 		// Convert negative angles to 0-360 range
@@ -400,7 +400,7 @@ class CRF_SpectatorMenu: ChimeraMenuBase
 	 */
 	protected void UpdateSpectatorCamera(float tDelta)
 	{
-		CRF_CameraManager cameraManager = CRF_CameraManager.GetInstance();
+		CRF_PlayerCameraManager cameraManager = CRF_PlayerCameraManager.GetInstance();
 		
 		if (m_eSpecEntity)
 		{
@@ -456,7 +456,7 @@ class CRF_SpectatorMenu: ChimeraMenuBase
 			if (!CRF_GamemodeManager.IsSpectator(specEntity))
 				return;
 			
-			CRF_CameraManager camManager = CRF_CameraManager.GetInstance();
+			CRF_PlayerCameraManager camManager = CRF_PlayerCameraManager.GetInstance();
 			camManager.SetCameraOnRailsEntity(m_eSpecEntity);
 			
 			m_bFrameEventRegistered = true;
@@ -475,7 +475,7 @@ class CRF_SpectatorMenu: ChimeraMenuBase
 			if (!CRF_GamemodeManager.IsSpectator(specEntity))
 				return;
 			
-			CRF_CameraManager camManager = CRF_CameraManager.GetInstance();
+			CRF_PlayerCameraManager camManager = CRF_PlayerCameraManager.GetInstance();
 			camManager.SetCameraOnRailsEntity(null);
 			
 			m_bFrameEventRegistered = false;

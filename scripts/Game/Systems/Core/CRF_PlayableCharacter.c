@@ -5,12 +5,11 @@ class CRF_PlayableCharacterClass : ScriptComponentClass
 class CRF_PlayableCharacter : ScriptComponent
 {
 	// State variables
-	protected bool m_bIsSlotSpawned = false;
 	protected bool m_bCameraUpdateEnabled;
 	
 	// Component references
 	protected CRF_Gamemode m_Gamemode;
-	protected CRF_CameraManager m_CameraManager;
+	protected CRF_PlayerCameraManager m_CameraManager;
 	protected CRF_SlottingManager m_SlottingManager;
 	protected CRF_PlayerControllerManager m_PlayerControllerComponent;
 	protected SCR_PossessingManagerComponent m_PossessingManagerComponent;
@@ -33,7 +32,7 @@ class CRF_PlayableCharacter : ScriptComponent
 
 		// Initialize managers
 		m_SlottingManager = CRF_SlottingManager.GetInstance();
-		m_CameraManager = CRF_CameraManager.GetInstance();
+		m_CameraManager = CRF_PlayerCameraManager.GetInstance();
 		m_PlayerControllerComponent = CRF_PlayerControllerManager.GetInstance();
 		m_PossessingManagerComponent = SCR_PossessingManagerComponent.GetInstance();
 		
@@ -55,12 +54,6 @@ class CRF_PlayableCharacter : ScriptComponent
 			return false;
 		
 		return true;
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	void SetIsSlotSpawned()
-	{
-		m_bIsSlotSpawned = true;
 	}
 	
 	//------------------------------------------------------------------------------------------------

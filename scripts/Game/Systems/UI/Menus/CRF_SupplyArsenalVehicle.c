@@ -6,7 +6,7 @@ modded enum ChimeraMenuPreset
 class CRF_SupplyArsenalVehicle: ChimeraMenuBase
 {
 	VerticalLayoutWidget m_Items;
-	CRF_GearscriptManager m_GearscriptManager;
+	CRF_VehicleGearscriptManager m_VehcileGearscriptManager;
 	SCR_ButtonComponent m_SelectedButton;
 	IEntity m_Truck;
 	ref array<IEntity> m_aTrucks = {};
@@ -25,7 +25,7 @@ class CRF_SupplyArsenalVehicle: ChimeraMenuBase
 	{
 		m_InputManager = GetGame().GetInputManager();
 		m_bSupplyEnabled = SCR_ResourceSystemHelper.IsGlobalResourceTypeEnabled(EResourceType.SUPPLIES);
-		m_GearscriptManager = CRF_GearscriptManager.GetInstance();
+		m_VehcileGearscriptManager = CRF_VehicleGearscriptManager.GetInstance();
 		m_aTrucks.Clear();
 		m_Items = VerticalLayoutWidget.Cast(GetRootWidget().FindAnyWidget("ItemButtons"));
 		m_Notifications = VerticalLayoutWidget.Cast(GetRootWidget().FindAnyWidget("Notifications"));
@@ -81,7 +81,7 @@ class CRF_SupplyArsenalVehicle: ChimeraMenuBase
 		CRF_RplToAuthorityManager.GetInstance().UpdateSupplyArsneal(RplComponent.Cast(m_Truck.FindComponent(RplComponent)).Id());
 		foreach (IEntity truck: m_aTrucks)
 		{
-			DrawTruck(truck, manager, m_GearscriptManager.IsSupplyTruck(truck, factionKey), factionKey).m_OnClicked.Insert(SelectItem);
+			DrawTruck(truck, manager, m_VehcileGearscriptManager.IsSupplyTruck(truck, factionKey), factionKey).m_OnClicked.Insert(SelectItem);
 		}
 	}
 	
@@ -92,7 +92,7 @@ class CRF_SupplyArsenalVehicle: ChimeraMenuBase
 		manager.SetPreviewItemFromPrefab(itemPreview, truck.GetPrefabData().GetPrefabName());
 		if (m_bSupplyEnabled)
 		{
-			int supplies = m_GearscriptManager.GetTruckResupplyCost(truck.GetPrefabData().GetPrefabName());
+			int supplies = m_VehcileGearscriptManager.GetTruckResupplyCost(truck.GetPrefabData().GetPrefabName());
 			CRF_RplToAuthorityManager.GetInstance().RequestVehicleSupplies(RplComponent.Cast(truck.FindComponent(RplComponent)).Id());
 			GetGame().GetCallqueue().CallLater(RequestCurrentVehicleSupply, 500, false, truck, item, supplies);
 		}
