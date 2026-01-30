@@ -1,83 +1,10 @@
-class CRF_VehicleGearscriptManagerClass : ScriptComponentClass
+modded class CRF_GearscriptManager
 {
-}
-
-class CRF_VehicleGearscriptManager : ScriptComponent
-{
-	protected ref map<ResourceName, int> m_mVehicleSupplyCosts = new map<ResourceName, int>;
 	protected SCR_EntityCatalogManagerComponent m_CatalogManager; // PERFORMANCE OPTIMIZATION
-	protected ref array<Vehicle> m_aSpawnedVehicles = {};
-	protected ref array<IEntity> m_VehiclesInQueue = {};
+	ref array<IEntity> m_VehiclesInQueue = {};
 	
 	// Resource cache to avoid repeated Resource.Load() calls - PERFORMANCE OPTIMIZATION
 	protected ref map<ResourceName, ref Resource> m_mResourceCache = new map<ResourceName, ref Resource>();
-	
-	//------------------------------------------------------------------------------------------------
-	/**
-	 * @brief Get singleton instance of the VehicleGearscriptManager
-	 * @return Current instance or null if not found
-	 */
-	static CRF_VehicleGearscriptManager GetInstance()
-	{
-		BaseGameMode gameMode = GetGame().GetGameMode();
-		if (!gameMode)
-			return null;
-		
-		return CRF_VehicleGearscriptManager.Cast(gameMode.FindComponent(CRF_VehicleGearscriptManager));
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	override void OnPostInit(IEntity owner)
-	{
-		super.OnPostInit(owner);
-	
-		// Only run on in-game post init
-		if (!GetGame().InPlayMode())
-			return;
-		
-		m_CatalogManager = SCR_EntityCatalogManagerComponent.GetInstance(); // Cache catalog manager - PERFORMANCE OPTIMIZATION
-		#ifdef WORKBENCH
-		#else
-		if (!System.IsConsoleApp())
-			return;
-		#endif
-		SetEventMask(owner, EntityEvent.FRAME);
-	}	
-	
-	//------------------------------------------------------------------------------------------------
-	array<Vehicle> GetSpawnedVehicleArray()
-	{
-		return m_aSpawnedVehicles;
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	void AddVehicleToSpawnedArray(Vehicle vehicle)
-	{
-		if (m_aSpawnedVehicles.Contains(vehicle))
-			return;
-		
-		m_aSpawnedVehicles.Insert(vehicle);
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	void RemoveVehicleFromSpawnedArray(Vehicle vehicle)
-	{
-		if (!m_aSpawnedVehicles.Contains(vehicle))
-			return;
-		m_aSpawnedVehicles.RemoveItem(vehicle);
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	/**
-	 * @brief Load vehicle gear script config from resource
-	 * @param resourceName Resource to load
-	 * @return Loaded config or null if failed
-	 */
-	protected CRF_VehicleGearscriptConfig LoadVehicleGearScriptConfig(ResourceName resourceName)
-	{
-		return CRF_VehicleGearscriptConfig.Cast(BaseContainerTools.CreateInstanceFromContainer(
-			BaseContainerTools.LoadContainer(resourceName).GetResource().ToBaseContainer()));
-	}
 	
 	//------------------------------------------------------------------------------------------------
 	/**
@@ -98,6 +25,24 @@ class CRF_VehicleGearscriptManager : ScriptComponent
 	}
 	
 	//------------------------------------------------------------------------------------------------
+	override void OnPostInit(IEntity owner)
+	{
+	super.OnPostInit(owner);
+
+	// Only run on in-game post init
+	if (!GetGame().InPlayMode())
+		return;
+	
+	m_Gamemode = CRF_Gamemode.GetInstance();
+	m_CatalogManager = SCR_EntityCatalogManagerComponent.GetInstance(); // Cache catalog manager - PERFORMANCE OPTIMIZATION
+	#ifdef WORKBENCH
+	#else
+	if (!System.IsConsoleApp())
+		return;
+	#endif
+	SetEventMask(owner, EntityEvent.FRAME);
+	}	
+	
 	array<int> GetSupplyValuesForItems(array<ResourceName> items)
 	{
 		// Pre-allocate array capacity - PERFORMANCE OPTIMIZATION
@@ -149,7 +94,6 @@ class CRF_VehicleGearscriptManager : ScriptComponent
 		return itemSupply;
 	}
 	
-	//------------------------------------------------------------------------------------------------
 	float m_fUpdateBuffer = 0;
 	override void EOnFrame(IEntity owner, float timeSlice)
 	{
@@ -181,7 +125,6 @@ class CRF_VehicleGearscriptManager : ScriptComponent
 		super.EOnFrame(owner, timeSlice);
 	}
 	
-	//------------------------------------------------------------------------------------------------
 	bool FindFactionByClosestPlayer(IEntity vehicle)
 	{	
 		float closestPlayerDistance;
@@ -239,14 +182,17 @@ class CRF_VehicleGearscriptManager : ScriptComponent
 			
 		Vehicle.Cast(vehicle).m_sFactionKey = factionKey;
 		// Cache manager reference - PERFORMANCE OPTIMIZATION
-		game.GetCallqueue().CallLater(
-			SetVehicleGear, 500, false,
-			vehicle, Vehicle.Cast(vehicle).m_sFactionKey
-		);
+		CRF_GearscriptManager gearscriptManager = CRF_GearscriptManager.GetInstance();
+		if (gearscriptManager)
+		{
+			game.GetCallqueue().CallLater(
+				gearscriptManager.SetVehicleGear, 500, false,
+				vehicle, Vehicle.Cast(vehicle).m_sFactionKey
+			);
+		}
 		return true;
 	}	
 	
-	//------------------------------------------------------------------------------------------------
 	int GetSuppliesInTruck(IEntity truck)
 	{
 		SCR_VehicleInventoryStorageManagerComponent invManager = SCR_VehicleInventoryStorageManagerComponent.Cast(truck.FindComponent(SCR_VehicleInventoryStorageManagerComponent));
@@ -407,18 +353,19 @@ class CRF_VehicleGearscriptManager : ScriptComponent
 			
 			faction = game.GetFactionManager().GetFactionByKey(factionKey);
 			Vehicle.Cast(vehicle).m_sFactionKey = faction.GetFactionKey();
-		}		ref CRF_GearScriptContainer gsContainer = CRF_GearscriptManager.GetInstance().GetGearScriptSettings(faction.GetFactionKey());
+		}		
+		
+		ref CRF_GearScriptContainer gsContainer = GetGearScriptSettings(faction.GetFactionKey());
 		if (gsContainer.m_aSupplyTrucks.Contains(vehicle.GetPrefabData().GetPrefabName()))
 			SetTruckGear(vehicle, faction, gsContainer, true);
 		else
 			SetTruckGear(vehicle, faction, gsContainer, false);
-		
+			
 	}
 	
-	//------------------------------------------------------------------------------------------------
 	bool IsSupplyTruck(IEntity truck, string factionKey)
 	{
-		ref CRF_GearScriptContainer gsContainer = CRF_GearscriptManager.GetInstance().GetGearScriptSettings(factionKey);
+		ref CRF_GearScriptContainer gsContainer = GetGearScriptSettings(factionKey);
 		return gsContainer.m_aSupplyTrucks.Contains(truck.GetPrefabData().GetPrefabName());
 	}
 	
@@ -437,7 +384,7 @@ class CRF_VehicleGearscriptManager : ScriptComponent
 	 */
 	void SetTruckGear(IEntity truck, Faction faction, CRF_GearScriptContainer gsContainer, bool isSupply)
 	{
-		ref CRF_GearScriptConfig gearSriptConfig = CRF_GearscriptManager.GetInstance().LoadGearScriptConfig(gsContainer.m_rGearScript);
+		ref CRF_GearScriptConfig gearSriptConfig = LoadGearScriptConfig(gsContainer.m_rGearScript);
 		ref CRF_VehicleGearscriptConfig vehicleGearScriptConfig = LoadVehicleGearScriptConfig(gsContainer.m_rVehicleGearscriptValues);
 		SCR_VehicleInventoryStorageManagerComponent invManager = SCR_VehicleInventoryStorageManagerComponent.Cast(truck.FindComponent(SCR_VehicleInventoryStorageManagerComponent));
 		if (!invManager)
@@ -727,6 +674,10 @@ class CRF_VehicleGearscriptManager : ScriptComponent
 				continue;
 			
 			suppliesNeeded += SpawnMagazinesToVehicle(bulletsToAdd, magazineCount, magazinesToAdd, invManager, factionKey, isSupply, true, truck.GetPrefabData().GetPrefabName());
+		}
+		for (int i = 0; i < 4; i++)
+		{
+			invManager.TrySpawnPrefabToStorage("{33B2DFDCD0EBA3DB}Prefabs/Items/Equipment/Kits/RepairKit_01/RepairKit_01_wrench.et");
 		}
 		return suppliesNeeded;
 	}
@@ -1242,7 +1193,6 @@ class CRF_VehicleGearscriptManager : ScriptComponent
 		return false;
 	}
 	
-	//------------------------------------------------------------------------------------------------
 	void SpawnVehicle(CRF_VehicleSpawner spawner)
 	{
 		if (!spawner.m_sFactionKey)
@@ -1267,7 +1217,6 @@ class CRF_VehicleGearscriptManager : ScriptComponent
 		GetGame().GetCallqueue().CallLater(SetVehicle, 1000, false, vehicle, spawner);
 	}
 	
-	//------------------------------------------------------------------------------------------------
 	void SetVehicle(IEntity vehicleEntity, CRF_VehicleSpawner spawner)
 	{
 		spawner.m_eVehicle = vehicleEntity;
@@ -1285,49 +1234,5 @@ class CRF_VehicleGearscriptManager : ScriptComponent
 			if (!spawner.m_bShouldAddAmmo)
 				vehicle.m_bShouldAddAmmo = false;
 		}
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	// RplSave: Serialize vehicle supply costs for JIP sync
-	override bool RplSave(ScriptBitWriter writer)
-	{
-		// Write the count of vehicle supply cost entries
-		int count = m_mVehicleSupplyCosts.Count();
-		writer.WriteInt(count);
-		
-		// Write each vehicle resource and its supply cost
-		foreach (ResourceName vehicleResource, int supplyCost : m_mVehicleSupplyCosts)
-		{
-			writer.WriteResourceName(vehicleResource);
-			writer.WriteInt(supplyCost);
-		}
-		
-		return true;
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	// RplLoad: Deserialize vehicle supply costs for JIP sync
-	override bool RplLoad(ScriptBitReader reader)
-	{
-		// Read the count of vehicle supply cost entries
-		int count;
-		reader.ReadInt(count);
-		
-		// Clear existing data (for JIP clients)
-		m_mVehicleSupplyCosts.Clear();
-		
-		// Read each vehicle resource and its supply cost
-		for (int i = 0; i < count; i++)
-		{
-			ResourceName vehicleResource;
-			int supplyCost;
-			
-			reader.ReadResourceName(vehicleResource);
-			reader.ReadInt(supplyCost);
-			
-			m_mVehicleSupplyCosts.Set(vehicleResource, supplyCost);
-		}
-		
-		return true;
 	}
 }
