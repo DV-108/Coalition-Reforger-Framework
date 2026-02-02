@@ -83,7 +83,6 @@ class CRF_ClientInitializationManager : ScriptComponent
 		if (m_Gamemode.m_GamemodeState == CRF_EGamemodeState.GAME)
 		{
 			GetGame().GetMenuManager().CloseAllMenus();
-			ResetSettingsToStoredValues();
 			if (!CVON_VONGameModeComponent.GetInstance())
 				SetupRadioFrequency();
 		}; 
@@ -198,5 +197,33 @@ class CRF_ClientInitializationManager : ScriptComponent
 
 		vc.PublicResetVON();
 		vc.SetVONComponent(von);
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	void DisableAI(IEntity owner)
+	{
+		AIControlComponent aiComponent = AIControlComponent.Cast(owner.FindComponent(AIControlComponent));
+		if (!aiComponent)
+			return;
+		
+		AIAgent agent = aiComponent.GetAIAgent();
+		if (!agent)
+			return;
+		
+		agent.DeactivateAI();
+		
+		// Double-check deactivation next frame
+		GetGame().GetCallqueue().Call(DisableAIWrap, owner, aiComponent);
+	}
+
+	//------------------------------------------------------------------------------------------------
+	void DisableAIWrap(IEntity owner, AIControlComponent aiComponent)
+	{
+		if (!aiComponent)
+			return;
+		
+		AIAgent agent = aiComponent.GetAIAgent();
+		if (agent)
+			agent.DeactivateAI();
 	}
 }

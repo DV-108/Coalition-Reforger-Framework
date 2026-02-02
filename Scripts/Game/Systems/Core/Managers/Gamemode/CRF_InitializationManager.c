@@ -357,4 +357,30 @@ class CRF_InitializationManager : ScriptComponent
 		
 		return playerCharacter;
 	}
+	
+	//------------------------------------------------------------------------------------------------
+	void GetSafeSpawnTransform(vector baseTransform[4], float radius, out vector trasnformOut[4])
+	{
+		// Base Enfusion spawn already handles position validation
+		// Simply apply a small random offset for player spacing during mass spawns
+		vector outTransform[4] = baseTransform;
+		
+		// Add random offset to prevent exact position overlap
+		float angle = Math.RandomFloat01() * Math.PI2;
+		float dist = Math.RandomFloat01() * radius;
+		vector offset = Vector(Math.Cos(angle) * dist, 0, Math.Sin(angle) * dist);
+		
+		outTransform[3] = baseTransform[3] + offset;
+		
+		// Snap to terrain geometry
+		vector surface;
+		SCR_TerrainHelper.SnapToGeometry(surface, outTransform[3], {}, GetGame().GetWorld());
+		if (surface != vector.Zero)
+		{
+			outTransform[3] = surface;
+			SCR_TerrainHelper.OrientToTerrain(outTransform);
+		}
+		
+		trasnformOut = outTransform;
+	}
 }

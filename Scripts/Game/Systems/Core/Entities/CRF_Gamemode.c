@@ -622,9 +622,9 @@ class CRF_Gamemode : SCR_BaseGameMode
 
 			// Display respawn screen
 			GetGame().GetCallqueue().CallLater(
-				m_RplBroadcastManager.SendRespawnScreen, 
-				(delay + 150), 
-				false, 
+				m_RplBroadcastManager.SendRespawnScreen,
+				(delay + 150),
+				false,
 				playerId
 			);
 		}
@@ -641,26 +641,6 @@ class CRF_Gamemode : SCR_BaseGameMode
 
 		// Move player to spectator
 		GetGame().GetCallqueue().CallLater(OnControllableInitilizePlayerDelayed, delay, false, playerId, deathPosition[0], deathPosition[1], deathPosition[2], deathPosition[3], true);
-	}
-	
-	/**
-	* Can't use static vectors in callLater, so we just use this container method to act as a holder for the call later  
-	* @param playerId ID of the player to initialize
-	* @param locationZero Position 0 in the world vector to spawn the player
-	* @param locationOne Position 1 in the world vector to spawn the player
-	* @param locationTwo Position 2 in the world vector to spawn the player
-	* @param locationThree Position 3 in the world vector to spawn the player
-	*/
-	void OnControllableInitilizePlayerDelayed(int playerId, vector locationZero, vector locationOne, vector locationTwo, vector locationThree)
-	{
-		vector location[4];
-		
-		location[0] = locationZero;
-		location[1] = locationOne;
-		location[2] = locationTwo;
-		location[3] = locationThree;
-		
-		m_GamemodeManager.InitilizePlayer(playerId, location);
 	}
 	
 	void UpdateGearscriptResource(string factionKey, string resource)
@@ -820,30 +800,6 @@ class CRF_Gamemode : SCR_BaseGameMode
 				break;
 		}
    		return true;
-	}
-}
-//------------------------------------------------------------------------------------
-// Fix for manual camera to work with spectator menu
-//------------------------------------------------------------------------------------
-modded class SCR_ManualCamera
-{
-	/**
-	 * Determine if camera control is disabled by menu
-	 * Modified to allow camera control in spectator menu
-	 * @return True if camera should be disabled, false otherwise
-	 */
-	override protected bool IsDisabledByMenu()
-	{
-		if (!m_MenuManager)
-			return false;
-
-		if (m_MenuManager.IsAnyDialogOpen())
-			return true;
-
-		MenuBase topMenu = m_MenuManager.GetTopMenu();
-		
-		// Allow camera control in editor and spectator menus
-		return topMenu && (!topMenu.IsInherited(EditorMenuUI) && !topMenu.IsInherited(CRF_SpectatorMenu));
 	}
 }
 

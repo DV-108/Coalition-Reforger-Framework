@@ -60,31 +60,6 @@ modded class SCR_PlayerController
 		
 		CRF_PlayerControllerManager.GetInstance().InitilizePlayerControllerComp();
 	}
-
-	/**
-	 * Called when the player disconnects from the game
-	 * Ensures settings are reset to their stored values
-	 */
-	override void DisconnectFromGame()
-	{
-		// Check if gamemode instance exists, if not, exit early
-		if (!CRF_Gamemode.GetInstance())
-		{
-			// Call the parent implementation
-			super.DisconnectFromGame();
-			return;
-		};
-
-		// Get the CRF player controller comp
-		CRF_PlayerControllerManager playerControllerComp = CRF_PlayerControllerManager.GetInstance();
-		
-		// Can't do things if the pc comp doesnt exist
-		if (playerControllerComp)
-			// Reset settings to previously stored values
-			playerControllerComp.ResetSettingsToStoredValues();
-		
-		super.DisconnectFromGame();
-	}
 	
 	void InitializeRadioFromServer()
 	{

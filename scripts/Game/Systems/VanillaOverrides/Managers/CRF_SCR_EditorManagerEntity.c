@@ -141,31 +141,13 @@ modded class SCR_EditorManagerEntity
 	{	
 		// Get the active gamemode instance
 		CRF_Gamemode gamemode = CRF_Gamemode.GetInstance();
-		
-		// Verify gamemode exists and check player permissions
-		if (gamemode)
-		{
-			// Check if local entity is a playable character
-			if (SCR_PlayerController.GetLocalControlledEntity().FindComponent(CRF_PlayableCharacter))
-			{
-				CRF_PlayableCharacter playableChar = CRF_PlayableCharacter.Cast(
-					SCR_PlayerController.GetLocalControlledEntity().FindComponent(CRF_PlayableCharacter));
-					
-				// Return if player is not spectating
-				if (!CRF_GamemodeManager.IsSpectator())
-					return;
-			}
-			// Return if not a playable character and not spectating
-			else if (!CRF_GamemodeManager.IsSpectator())
-				return;
-		}
 
 		// Ensure local controlled entity exists
-		if (SCR_PlayerController.GetLocalControlledEntity() == null)
+		if (!gamemode || !SCR_PlayerController.GetLocalControlledEntity())
 			return;
 			
 		// Open appropriate menu based on gamemode state
-		switch (CRF_Gamemode.GetInstance().m_GamemodeState)
+		switch (gamemode.m_GamemodeState)
 		{
 			case CRF_EGamemodeState.BRIEFING: 
 			{

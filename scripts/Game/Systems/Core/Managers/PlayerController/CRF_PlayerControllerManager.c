@@ -85,9 +85,6 @@ class CRF_PlayerControllerManager : ScriptComponent
 		GetGame().GetInputManager().AddActionListener("SwitchSpectatorUI", EActionTrigger.DOWN, UpdateHUDVisible);
 		
 		GetGame().GetCallqueue().Call(AddMsgAction);
-		GetGame().GetCallqueue().Call(InitFPSLock);
-		GetGame().GetCallqueue().Call(InitAudioLock);
-		GetGame().GetCallqueue().Call(OpenCurrentStateMenu);
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -100,100 +97,6 @@ class CRF_PlayerControllerManager : ScriptComponent
 	void UpdateHUDVisible()
 	{
 		m_bHUDVisible = !m_bHUDVisible;
-	}
-
-	/**
-	 * Updates entity position and resets physics
-	 * @param position - New position/transform
-	 */
-	void UpdateEntityPos(vector position[4])
-	{
-		IEntity player = GetGame().GetPlayerController().GetControlledEntity();
-
-		// Align to terrain if not a character
-		if (!ChimeraCharacter.Cast(player))
-			SCR_TerrainHelper.OrientToTerrain(position);
-
-		// Teleport or transform entity
-		BaseGameEntity baseGameEntity = BaseGameEntity.Cast(player);
-		if (baseGameEntity)
-			baseGameEntity.Teleport(position);
-		else
-			player.SetWorldTransform(position);
-
-		// Reset physics to prevent unwanted movement
-		Physics phys = player.GetPhysics();
-		if (phys)
-		{
-			phys.SetVelocity(vector.Zero);
-			phys.SetAngularVelocity(vector.Zero);
-		}
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	// GAME SETTINGS MANAGEMENT
-	//------------------------------------------------------------------------------------------------
-	
-	/**
-	 * Initializes audio lock by storing current volume and setting to 0
-	 */
-	void InitAudioLock()
-	{
-		m_iAudioSetting = AudioSystem.GetMasterVolume(AudioSystem.SFX);
-		SetSFXVolume(0);
-	}
-	
-	/**
-	 * Sets SFX volume to specified level
-	 * @param volume - Volume level to set
-	 */
-	void SetSFXVolume(int volume)
-	{
-		AudioSystem.SetMasterVolume(AudioSystem.SFX, volume);
-	}
-	
-	/**
-	 * Sets FPS limit to specified value
-	 * @param video - Video settings container
-	 * @param fps - FPS limit to set
-	 */
-	void SetFPS(BaseContainer video, int fps)
-	{
-		video.Set("MaxFps", fps);
-		GetGame().UserSettingsChanged();
-	}
-	
-	/**
-	 * Retrieves and stores initial user FPS setting
-	 * @param video - Video settings container
-	 */
-	void GetInitialUserFPSValue(BaseContainer video)
-	{
-		video.Get("MaxFps", m_iFPS);
-	}
-	
-	/**
-	 * Initializes FPS lock by storing current value and setting to 30
-	 */
-	void InitFPSLock()
-	{
-		BaseContainer video = GetGame().GetEngineUserSettings().GetModule("VideoUserSettings");
-		//GetInitialUserFPSValue(video);
-		SetFPS(video, 30);
-	}
-	
-	/**
-	 * Restores user settings to original values
-	 */
-	void ResetSettingsToStoredValues()
-	{
-		BaseContainer video = GetGame().GetEngineUserSettings().GetModule("VideoUserSettings");
-		
-		// Restore FPS if initialized
-		SetFPS(video, 0);
-		
-		// Restore audio if initialized
-		SetSFXVolume(100);
 	}
 	
 	//------------------------------------------------------------------------------------------------

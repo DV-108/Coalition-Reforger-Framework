@@ -13,47 +13,23 @@ class CRF_SlottingManager : ScriptComponent
 	
 	// References to other managers
 	protected CRF_Gamemode m_Gamemode;
-	protected CRF_GamemodeManager m_GamemodeManager;
-	protected CRF_GearscriptManager m_GearscriptManager;
 	protected CRF_RplBroadcastManager m_RplBroadcastManager;
-	
-	protected static CRF_SlottingManager m_sInstance;
-	
-	// Resource caching for optimized spawning
-	protected ref map<ResourceName, Resource> m_mCachedResources = new map<ResourceName, Resource>();
-	
-	// Mass initialization flag for optimizing collision checks
-	protected bool m_bMassInitializationInProgress = false;
-	
-	void CRF_SlottingManager(IEntityComponentSource src, IEntity ent, IEntity parent)
-	{
-		m_sInstance = this;
-		// Initialize ScriptInvoker to avoid null checks - PERFORMANCE OPTIMIZATION
-		m_OnSlottingUpdate = new ScriptInvoker();
-	}
 	
 	//------------------------------------------------------------------------------------------------
 	// INITIALIZATION
-	//------------------------------------------------------------------------------------------------
-	static CRF_SlottingManager GetInstance()
-	{
-		return m_sInstance;
-	}
-	
 	//------------------------------------------------------------------------------------------------
 	override void OnPostInit(IEntity owner)
 	{
 		super.OnPostInit(owner);
 
 		m_Gamemode = CRF_Gamemode.GetInstance();
-		m_GamemodeManager = CRF_GamemodeManager.GetInstance();
-		m_GearscriptManager = CRF_GearscriptManager.GetInstance();
 		m_RplBroadcastManager = CRF_RplBroadcastManager.GetInstance();
 		
 		// Need to call next frame due to race conditions if the faction manager hasn't fully initilized.
 		GetGame().GetCallqueue().Call(InitilizeSlots);
 	}
-	
+
+	//------------------------------------------------------------------------------------------------
 	protected void InitilizeSlots()
 	{
 		InitilizeSlotsForFaction("BLUFOR", m_Gamemode.m_BluforSlots);
@@ -61,11 +37,90 @@ class CRF_SlottingManager : ScriptComponent
 		InitilizeSlotsForFaction("INDFOR", m_Gamemode.m_IndforSlots);
 		InitilizeSlotsForFaction("CIV", m_Gamemode.m_CivSlots);
 	}
+
+	//------------------------------------------------------------------------------------------------
+	void InitilizeSlotsForFaction(FactionKey factionKey, array <ref CRF_SlottingGroup> factionSlots)
+	{
+		if (factionKey.IsEmpty() || factionSlots.IsEmpty())
+			return;
+		
+		InitilizeGroupCallsignsForFaction(factionKey, factionSlots);
+		
+		if (RplSession.Mode() == RplMode.Client)
+			return;
+		
+		Faction faction = GetGame().GetFactionManager().GetFactionByKey(factionKey);
+		SCR_Faction scrFaction = SCR_Faction.Cast(faction);
+		
+		foreach (ref CRF_SlottingGroup slotGroup : factionSlots)
+		{	
+			CRF_EFlagType flagType = slotGroup.m_FlagType;
+			
+			if(scrFaction && scrFaction.GetFlagName(0))
+			{
+				TStringArray flagArray = {};
+				scrFaction.GetFlagNames(flagArray);
+				if((flagArray.Count() - 1) < flagType)
+					flagType = CRF_EFlagType.INFANTRY;
+			};
+			
+			SCR_AIGroup group = SCR_GroupsManagerComponent.GetInstance().CreateNewPlayableGroup(scrFaction);
+			group.SetFaction(scrFaction);
+			group.SetGroupFlag(flagType, true);
+			group.SetCanDeleteIfNoPlayer(false);
+			group.SetDeleteWhenEmpty(false);
+			group.SetMaxMembers(16);
+			
+			foreach(CRF_EGearRole role : slotGroup.m_aSlots)
+			{
+				CRF_GearScriptRolesConfig rolesConfig = CRF_GamemodeManager.RolesConfig();
+				CRF_RoleConfig roleConfig = rolesConfig.FindRoleConfig(role);
+				
+				if (!roleConfig || !rolesConfig)
+					return;
+					
+				// Create and configure new slot data
+				CRF_SlotDataContainer slotData = new CRF_SlotDataContainer;
+				
+				// Set group and faction
+				RplComponent groupRplComp = RplComponent.Cast(group.FindComponent(RplComponent));
+				slotData.SetSlotCurrentGroup(groupRplComp.Id());
+				slotData.SetSlotFactionKey(factionKey);
+				
+				// Set resource and character ID
+				slotData.SetSlotRole(role);
+						
+				// Add to slots map
+				m_iLatestSlotID++;
+				slotData.SetSlotId(m_iLatestSlotID);
+				m_mSlotsMap.Set(m_iLatestSlotID, slotData);
+				
+				// Broadcast new slot to all clients
+				m_RplBroadcastManager.UpdateSlotData(slotData);
+			}
+		}
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	protected void InitilizeGroupCallsignsForFaction(FactionKey factionKey, array <ref CRF_SlottingGroup> factionSlots)
+	{
+		array<ref SCR_CallsignInfo> callsignArray = new array<ref SCR_CallsignInfo>;
+		foreach (ref CRF_SlottingGroup slotGroup : factionSlots)
+		{
+			ref SCR_CallsignInfo callsignInfo = new SCR_CallsignInfo;
+			callsignInfo.SetCallsign(slotGroup.m_sCallsign);
+			callsignArray.Insert(callsignInfo);
+		}
+		
+		Faction faction = GetGame().GetFactionManager().GetFactionByKey(factionKey);
+		SCR_Faction scrFaction = SCR_Faction.Cast(faction);
+		
+		scrFaction.GetCallsignInfo().SetSquadArray(callsignArray);
+	}
 	
 	//------------------------------------------------------------------------------------------------
 	// SLOTTING UPDATE METHODS
 	//------------------------------------------------------------------------------------------------
-
 	void UpdateSlotCharacter(int slotId, RplId charId)
 	{
 		CRF_SlotDataContainer slotData = GetSlotData(slotId);
@@ -77,6 +132,7 @@ class CRF_SlottingManager : ScriptComponent
 		};
 	}
 	
+	//------------------------------------------------------------------------------------------------
 	void UpdateSlotRole(int slotId, CRF_EGearRole role)
 	{
 		CRF_SlotDataContainer slotData = GetSlotData(slotId);
@@ -88,6 +144,7 @@ class CRF_SlottingManager : ScriptComponent
 		};
 	}
 	
+	//------------------------------------------------------------------------------------------------
 	void UpdateSlotGroup(int slotId, RplId group)
 	{
 		CRF_SlotDataContainer slotData = GetSlotData(slotId);
@@ -99,6 +156,7 @@ class CRF_SlottingManager : ScriptComponent
 		};
 	}
 	
+	//------------------------------------------------------------------------------------------------
 	void UpdateSlotPlayerID(int slotId, int playerId = -1)
 	{	
 		CRF_SlotDataContainer slotData = GetSlotData(slotId);
@@ -110,6 +168,7 @@ class CRF_SlottingManager : ScriptComponent
 		};
 	}
 	
+	//------------------------------------------------------------------------------------------------
 	void UpdateSlotLockedState(int slotId, bool isLocked = false)
 	{
 		CRF_SlotDataContainer slotData = GetSlotData(slotId);
@@ -124,6 +183,7 @@ class CRF_SlottingManager : ScriptComponent
 		};
 	}
 	
+	//------------------------------------------------------------------------------------------------
 	void UpdateSlotDeathState(int slotId, bool input)
 	{
 		CRF_SlotDataContainer slotData = GetSlotData(slotId);
@@ -155,8 +215,6 @@ class CRF_SlottingManager : ScriptComponent
 		return m_mSlotsMap;
 	}
 	
-	//------------------------------------------------------------------------------------------------
-	// Get all slot IDs (useful for JIP sync and iteration)
 	//------------------------------------------------------------------------------------------------
 	array<int> GetAllSlotIds()
 	{
@@ -496,116 +554,6 @@ class CRF_SlottingManager : ScriptComponent
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	void GetSafeSpawnTransform(vector baseTransform[4], float radius, out vector trasnformOut[4])
-	{
-		// Base Enfusion spawn already handles position validation
-		// Simply apply a small random offset for player spacing during mass spawns
-		vector outTransform[4] = baseTransform;
-		
-		// Add random offset to prevent exact position overlap
-		float angle = Math.RandomFloat01() * Math.PI2;
-		float dist = Math.RandomFloat01() * radius;
-		vector offset = Vector(Math.Cos(angle) * dist, 0, Math.Sin(angle) * dist);
-		
-		outTransform[3] = baseTransform[3] + offset;
-		
-		// Snap to terrain geometry
-		vector surface;
-		SCR_TerrainHelper.SnapToGeometry(surface, outTransform[3], {}, GetGame().GetWorld());
-		if (surface != vector.Zero)
-		{
-			outTransform[3] = surface;
-			SCR_TerrainHelper.OrientToTerrain(outTransform);
-		}
-		
-		trasnformOut = outTransform;
-	}
-
-	//------------------------------------------------------------------------------------------------
-	void InitilizeSlotsForFaction(FactionKey factionKey, array <ref CRF_SlottingGroup> factionSlots)
-	{
-		if (factionKey.IsEmpty() || factionSlots.IsEmpty())
-			return;
-		
-		InitilizeGroupCallsignsForFaction(factionKey, factionSlots);
-		
-		if (RplSession.Mode() == RplMode.Client)
-			return;
-		
-		Faction faction = GetGame().GetFactionManager().GetFactionByKey(factionKey);
-		SCR_Faction scrFaction = SCR_Faction.Cast(faction);
-		
-		foreach (ref CRF_SlottingGroup slotGroup : factionSlots)
-		{	
-			CRF_EFlagType flagType = slotGroup.m_FlagType;
-			
-			if(scrFaction && scrFaction.GetFlagName(0))
-			{
-				TStringArray flagArray = {};
-				scrFaction.GetFlagNames(flagArray);
-				if((flagArray.Count() - 1) < flagType)
-					flagType = CRF_EFlagType.INFANTRY;
-			};
-			
-			SCR_AIGroup group = SCR_GroupsManagerComponent.GetInstance().CreateNewPlayableGroup(scrFaction);
-			group.SetFaction(scrFaction);
-			group.SetGroupFlag(flagType, true);
-			group.SetCanDeleteIfNoPlayer(false);
-			group.SetDeleteWhenEmpty(false);
-			group.SetMaxMembers(16);
-			
-			foreach(CRF_EGearRole role : slotGroup.m_aSlots)
-			{
-				CRF_GearScriptRolesConfig rolesConfig = CRF_GamemodeManager.RolesConfig();
-				CRF_RoleConfig roleConfig = rolesConfig.FindRoleConfig(role);
-				
-				if (!roleConfig || !rolesConfig)
-					return;
-					
-				// Create and configure new slot data
-				CRF_SlotDataContainer slotData = new CRF_SlotDataContainer;
-				
-				// Set group and faction
-				RplComponent groupRplComp = RplComponent.Cast(group.FindComponent(RplComponent));
-				slotData.SetSlotCurrentGroup(groupRplComp.Id());
-				slotData.SetSlotFactionKey(factionKey);
-				
-				// Set resource and character ID
-				slotData.SetSlotRole(role);
-						
-				// Add to slots map
-				m_iLatestSlotID++;
-				slotData.SetSlotId(m_iLatestSlotID);
-				m_mSlotsMap.Set(m_iLatestSlotID, slotData);
-				
-				// Broadcast new slot to all clients
-				m_RplBroadcastManager.UpdateSlotData(slotData);
-			}
-		}
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	protected void InitilizeGroupCallsignsForFaction(FactionKey factionKey, array <ref CRF_SlottingGroup> factionSlots)
-	{
-		array<ref SCR_CallsignInfo> callsignArray = new array<ref SCR_CallsignInfo>;
-		foreach (ref CRF_SlottingGroup slotGroup : factionSlots)
-		{
-			ref SCR_CallsignInfo callsignInfo = new SCR_CallsignInfo;
-			callsignInfo.SetCallsign(slotGroup.m_sCallsign);
-			callsignArray.Insert(callsignInfo);
-		}
-		
-		Faction faction = GetGame().GetFactionManager().GetFactionByKey(factionKey);
-		SCR_Faction scrFaction = SCR_Faction.Cast(faction);
-		
-		scrFaction.GetCallsignInfo().SetSquadArray(callsignArray);
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	// NEW CLIENT-SIDE METHODS: Receive targeted RPC slot updates
-	//------------------------------------------------------------------------------------------------
-	
-	//------------------------------------------------------------------------------------------------
 	// Client-side: Update single slot from RPC (called by CRF_RplBroadcastManager)
 	// Only updates if data actually changed (prevents unnecessary UI rebuilds)
 	//------------------------------------------------------------------------------------------------
@@ -646,70 +594,8 @@ class CRF_SlottingManager : ScriptComponent
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	// RESOURCE CACHING SYSTEM
-	//------------------------------------------------------------------------------------------------
-	
-	/**
-	 * Get a cached resource or load and cache it if not already cached
-	 * Reduces repeated Resource.Load() calls during mass spawning
-	 * @param resourceName The resource path to load
-	 * @return The loaded resource or null if invalid
-	 */
-	Resource GetCachedResource(ResourceName resourceName)
-	{
-		if (resourceName.IsEmpty())
-			return null;
-		
-		Resource res = m_mCachedResources.Get(resourceName);
-		if (!res)
-		{
-			res = Resource.Load(resourceName);
-			if (res)
-			{
-				m_mCachedResources.Set(resourceName, res);
-				Print(string.Format("[CRF_SlottingManager] Cached resource: %1", resourceName), LogLevel.VERBOSE);
-			}
-		}
-		return res;
-	}
-	
-	/**
-	 * Clear all cached resources
-	 * Call this when unloading mission or changing scenarios
-	 */
-	void ClearResourceCache()
-	{
-		m_mCachedResources.Clear();
-		Print("[CRF_SlottingManager] Resource cache cleared", LogLevel.VERBOSE);
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	// MASS INITIALIZATION FLAG
-	//------------------------------------------------------------------------------------------------
-	
-	/**
-	 * Set the mass initialization flag
-	 * Used to optimize collision checks during batch player spawning
-	 * @param inProgress True when batch spawning is active
-	 */
-	void SetMassInitializationInProgress(bool inProgress)
-	{
-		m_bMassInitializationInProgress = inProgress;
-	}
-	
-	/**
-	 * Check if mass initialization is currently in progress
-	 * @return True if batch spawning is active
-	 */
-	bool IsMassInitializationInProgress()
-	{
-		return m_bMassInitializationInProgress;
-	}
-	
-	//------------------------------------------------------------------------------------------------
 	// REPLICATION
 	//------------------------------------------------------------------------------------------------
-
 	override protected bool RplSave(ScriptBitWriter writer)
 	{
 		// Save slotData
@@ -737,5 +623,20 @@ class CRF_SlottingManager : ScriptComponent
 		}
 
 		return true;
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	// INSTANCE LOADING
+	//------------------------------------------------------------------------------------------------
+	protected static CRF_SlottingManager m_sInstance;
+	void CRF_SlottingManager(IEntityComponentSource src, IEntity ent, IEntity parent)
+	{
+		m_sInstance = this;
+		m_OnSlottingUpdate = new ScriptInvoker();
+	}
+	
+	static CRF_SlottingManager GetInstance()
+	{
+		return m_sInstance;
 	}
 }

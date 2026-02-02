@@ -5,13 +5,12 @@ class CRF_PlayerCameraManagerClass : ScriptComponentClass
 class CRF_PlayerCameraManager : ScriptComponent
 {
 	IEntity m_eCamera;                      // Stores local camera entity for spectator mode
-	protected vector m_vStoredCameraPos[4];   // Stores camera transform between sessions
 	
 	protected static CRF_PlayerCameraManager m_sInstance;
 	
 	protected bool m_bCameraOnRails;
 	
-	protected IEntity m_eCameraEntity;
+	protected IEntity m_eCameraPlayer;
 	protected vector m_vCameraOrbitPoint;
 	protected float m_vCameraOrbitDistance;
 	protected float m_vCameraOrbitHeight;
@@ -41,24 +40,17 @@ class CRF_PlayerCameraManager : ScriptComponent
 	//------------------------------------------------------------------------------------------------
 	
 	//------------------------------------------------------------------------------------------------
-	/*!
-	 * Updates stored camera position for persistence between sessions
-	 * @param cameraPosToStore - Array of 4 vectors representing camera transform
-	 */
-	void UpdateStoredCameraPos(vector cameraPosToStoreOne, vector cameraPosToStoreTwo, vector cameraPosToStoreThree, vector cameraPosToStoreFour)
+	void RemoveCameraOnRails()
 	{
-		m_vStoredCameraPos[0] = cameraPosToStoreOne;
-		m_vStoredCameraPos[1] = cameraPosToStoreTwo;
-		m_vStoredCameraPos[2] = cameraPosToStoreThree;
-		m_vStoredCameraPos[3] = cameraPosToStoreFour;
+		m_bCameraOnRails = false;
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	void SetCameraOnRailsEntity(IEntity entity)
+	void SetCameraOnRailsPlayer(IEntity player)
 	{
 		if (m_eCamera) {
 			ClearCameraOnRailsVariables();
-			m_eCameraEntity = entity;
+			m_eCameraPlayer = player;
 			InitalizeCameraOnRails();
 		}
 	}
@@ -95,7 +87,7 @@ class CRF_PlayerCameraManager : ScriptComponent
 	//------------------------------------------------------------------------------------------------
 	protected void ClearCameraOnRailsVariables()
 	{
-		m_eCameraEntity = null;
+		m_eCameraPlayer = null;
 		m_CameraPolyLine = null;
 		m_vCameraOrbitPoint = vector.Zero;
 		m_vCameraOrbitDistance = 0;
@@ -115,8 +107,8 @@ class CRF_PlayerCameraManager : ScriptComponent
 		} else {
 			switch (true) 
 			{
+				case (m_eCameraPlayer) : FrameUpdatePlayer(); break;
 				case (m_vCameraOrbitPoint != vector.Zero) : FrameUpdateOrbit(); break;
-				case (m_eCameraEntity) : FrameUpdateEntity(); break;
 				case (m_CameraPolyLine) : FrameUpdatePolyline(); break;
 			}
 		};
@@ -128,49 +120,38 @@ class CRF_PlayerCameraManager : ScriptComponent
 	 */
 	void InitilizeSpecCamera()
 	{
-		vector cameraPos[4];
-		cameraPos = SCR_PlayerController.Cast(GetGame().GetPlayerController()).m_vPlayersLastDeath;
-		
-		//If Respawns are enabled, everybody goes to the fixed spectator position
-		if (CRF_RespawnManager.GetInstance().m_bCurrentRespawnEnabled)
-			cameraPos[3] = Vector(0, 500, 0);
-		// Use provided death position if available
-		else if (CRF_GamemodeManager.IsValidSpawnVector(cameraPos[3])) {
-			cameraPos[3][1] = cameraPos[3][1] + 1.5; // Elevate camera slightly above death position
-		}
-		// Use stored camera position if available
-		else if (CRF_GamemodeManager.IsValidSpawnVector(m_vStoredCameraPos[3])) {
-			cameraPos = m_vStoredCameraPos;
-		} 
-		// Fallback to generic spawn position
-		else {
-			cameraPos[3] = CRF_Gamemode.GetInstance().GetGenericSpawn();
-		}
-			
-		// Set up camera entity
-		EntitySpawnParams cameraSpawnParams = new EntitySpawnParams();
-		cameraSpawnParams.TransformMode = ETransformMode.WORLD;
-		cameraSpawnParams.Transform = cameraPos;
-
-		// Spawn or reposition camera
 		if (!m_eCamera)
+		{
+			vector cameraPos[4];
+			cameraPos = SCR_PlayerController.Cast(GetGame().GetPlayerController()).m_vPlayersLastDeath;
+			
+			if (CRF_GamemodeManager.IsValidSpawnVector(cameraPos[3])) // Use provided death position if available
+				cameraPos[3][1] = cameraPos[3][1] + 1.5;
+			else // Fallback to generic spawn position
+				cameraPos[3] = CRF_Gamemode.GetInstance().GetGenericSpawn();
+				
+			// Set up camera entity
+			EntitySpawnParams cameraSpawnParams = new EntitySpawnParams();
+			cameraSpawnParams.TransformMode = ETransformMode.WORLD;
+			cameraSpawnParams.Transform = cameraPos;
+	
+			// Spawn or reposition camera
 			m_eCamera = GetGame().SpawnEntityPrefab(Resource.Load("{E1FF38EC8894C5F3}Prefabs/Systems/Editor/Camera/ManualCameraSpectate.et"), GetGame().GetWorld(), cameraSpawnParams);
-		else
-			m_eCamera.SetWorldTransform(cameraPos);
-		
-		// Level camera horizon
-		vector mat = m_eCamera.GetAngles();
-		m_eCamera.SetAngles(Vector(mat[0], mat[1], 0));
+			
+			// Level camera horizon
+			vector mat = m_eCamera.GetAngles();
+			m_eCamera.SetAngles(Vector(mat[0], mat[1], 0));
+		};
 		
 		// Switch to spectator camera
 		GetGame().GetCameraManager().SetCamera(CameraBase.Cast(m_eCamera));
 	};
 	
 	//------------------------------------------------------------------------------------------------
-	protected void FrameUpdateEntity()
+	protected void FrameUpdatePlayer()
 	{
 		// Get the slot component for camera positioning
-		SlotManagerComponent slotComp = SlotManagerComponent.Cast(m_eCameraEntity.FindComponent(SlotManagerComponent));
+		SlotManagerComponent slotComp = SlotManagerComponent.Cast(m_eCameraPlayer.FindComponent(SlotManagerComponent));
 		if (!slotComp)
 			return;
 		

@@ -457,7 +457,7 @@ class CRF_SpectatorMenu: ChimeraMenuBase
 				return;
 			
 			CRF_PlayerCameraManager camManager = CRF_PlayerCameraManager.GetInstance();
-			camManager.SetCameraOnRailsEntity(m_eSpecEntity);
+			camManager.SetCameraOnRailsPlayer(m_eSpecEntity);
 			
 			m_bFrameEventRegistered = true;
 		}
@@ -476,7 +476,7 @@ class CRF_SpectatorMenu: ChimeraMenuBase
 				return;
 			
 			CRF_PlayerCameraManager camManager = CRF_PlayerCameraManager.GetInstance();
-			camManager.SetCameraOnRailsEntity(null);
+			camManager.RemoveCameraOnRails();
 			
 			m_bFrameEventRegistered = false;
 		}
