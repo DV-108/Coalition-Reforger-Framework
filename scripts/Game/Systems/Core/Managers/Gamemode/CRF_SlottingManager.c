@@ -121,6 +121,12 @@ class CRF_SlottingManager : ScriptComponent
 	//------------------------------------------------------------------------------------------------
 	// SLOTTING UPDATE METHODS
 	//------------------------------------------------------------------------------------------------
+	ScriptInvoker GetOnSlottingUpdate()
+	{
+		return m_OnSlottingUpdate;
+	}
+	
+	//------------------------------------------------------------------------------------------------
 	void UpdateSlotCharacter(int slotId, RplId charId)
 	{
 		CRF_SlotDataContainer slotData = GetSlotData(slotId);
@@ -196,12 +202,6 @@ class CRF_SlottingManager : ScriptComponent
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	ScriptInvoker GetOnSlottingUpdate()
-	{
-		return m_OnSlottingUpdate;
-	}
-	
-	//------------------------------------------------------------------------------------------------
 	// SLOT DATA ACCESS METHODS
 	//------------------------------------------------------------------------------------------------
 	CRF_SlotDataContainer GetSlotData(int slotId)
@@ -272,7 +272,6 @@ class CRF_SlottingManager : ScriptComponent
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	// Helper method to check if group in slot is valid
 	protected bool IsValidGroupInSlot(CRF_SlotDataContainer slotData)
 	{
 		if (!slotData)
@@ -286,34 +285,6 @@ class CRF_SlottingManager : ScriptComponent
 			return false;
 			
 		return true;
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	// Helper method to get group from RplId
-	SCR_AIGroup GetGroupFromRplId(RplId groupId)
-	{
-		if (groupId == RplId.Invalid())
-			return null;
-			
-		RplComponent rplComp = RplComponent.Cast(Replication.FindItem(groupId));
-		if (!rplComp)
-			return null;
-			
-		return SCR_AIGroup.Cast(rplComp.GetEntity());
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	// Helper method to get character from RplId
-	static SCR_ChimeraCharacter GetCharacterFromRplId(RplId charId)
-	{
-		if (charId == RplId.Invalid())
-			return null;
-			
-		RplComponent rplComp = RplComponent.Cast(Replication.FindItem(charId));
-		if (!rplComp)
-			return null;
-			
-		return SCR_ChimeraCharacter.Cast(rplComp.GetEntity());
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -575,22 +546,6 @@ class CRF_SlottingManager : ScriptComponent
 			m_OnSlottingUpdate.Invoke();
 		
 		Print(string.Format("[CRF_SlottingManager] Client received slot %1 update", slotId), LogLevel.VERBOSE);
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	// Client-side: Remove slot from RPC (called by CRF_RplBroadcastManager)
-	//------------------------------------------------------------------------------------------------
-	void RemoveSlotClient(int slotId)
-	{
-		if (Replication.IsServer())
-			return;
-		
-		m_mSlotsMap.Remove(slotId);
-		
-		if (m_OnSlottingUpdate)
-			m_OnSlottingUpdate.Invoke();
-		
-		Print(string.Format("[CRF_SlottingManager] Client removed slot %1", slotId), LogLevel.VERBOSE);
 	}
 	
 	//------------------------------------------------------------------------------------------------

@@ -189,6 +189,22 @@ class CRF_RplBroadcastManager : ScriptComponent
 	//------------------------------------------------------------------------------------------------
 	// Internal methods that actually send the RPCs (called by flush or immediate mode)
 	//------------------------------------------------------------------------------------------------
+	
+	//------------------------------------------------------------------------------------------------
+	// SlottingManager: Update single slot data on all clients (ONLY USED FOR INITAL CREATION!!)
+	void UpdateSlotData(CRF_SlotDataContainer slotData)
+	{
+		if (!Replication.IsServer())
+			return;
+		
+		// Estimate bandwidth: slot data (~64 bytes avg)
+		LogTelemetry("UpdateSlotData", 64);
+		
+		RpcDo_UpdateSlotData(slotData);
+		Rpc(RpcDo_UpdateSlotData, slotData);
+	}
+	
+	//------------------------------------------------------------------------------------------------
 	protected void SendSlotPlayerIdUpdate(int slotId, int playerId)
 	{
 		LogTelemetry("UpdateSlotPlayerIdDelta", 8);
@@ -199,6 +215,7 @@ class CRF_RplBroadcastManager : ScriptComponent
 		#endif
 	}
 	
+	//------------------------------------------------------------------------------------------------
 	protected void SendSlotCharacterUpdate(int slotId, RplId characterId)
 	{
 		LogTelemetry("UpdateSlotCharacterDelta", 8);
@@ -209,6 +226,7 @@ class CRF_RplBroadcastManager : ScriptComponent
 		#endif
 	}
 	
+	//------------------------------------------------------------------------------------------------
 	protected void SendSlotGroupUpdate(int slotId, RplId groupId)
 	{
 		LogTelemetry("UpdateSlotGroupDelta", 8);
@@ -219,6 +237,7 @@ class CRF_RplBroadcastManager : ScriptComponent
 		#endif
 	}
 	
+	//------------------------------------------------------------------------------------------------
 	protected void SendSlotLockedUpdate(int slotId, bool isLocked)
 	{
 		LogTelemetry("UpdateSlotLockedDelta", 5);
@@ -229,6 +248,7 @@ class CRF_RplBroadcastManager : ScriptComponent
 		#endif
 	}
 	
+	//------------------------------------------------------------------------------------------------
 	protected void SendSlotDeathUpdate(int slotId, bool isDead)
 	{
 		LogTelemetry("UpdateSlotDeathDelta", 5);
@@ -239,6 +259,7 @@ class CRF_RplBroadcastManager : ScriptComponent
 		#endif
 	}
 	
+	//------------------------------------------------------------------------------------------------
 	protected void SendSlotRoleUpdate(int slotId, CRF_EGearRole role)
 	{
 		LogTelemetry("UpdateSlotRoleDelta", 8);
@@ -261,6 +282,7 @@ class CRF_RplBroadcastManager : ScriptComponent
 			FlushSlotUpdates();
 	}
 	
+	//------------------------------------------------------------------------------------------------
 	bool IsBatchingEnabled()
 	{
 		return m_bBatchingEnabled;
@@ -1432,8 +1454,12 @@ class CRF_RplBroadcastManager : ScriptComponent
 	{
 		if (!IsLocalPlayer(playerId))
 			return;
+		
+		// Get player character
+		IEntity playerCharacter = m_SlottingManager.GetCharacterFromRplId(playerCharID);
 
-		CRF_PlayerControllerManager.GetInstance().InitilizePlayerClient(playerCharID);
+		if (playerCharacter)
+			CRF_PlayerControllerManager.GetInstance().InitilizePlayerClient(playerCharacter);
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -1955,35 +1981,6 @@ class CRF_RplBroadcastManager : ScriptComponent
 	//================================================================================================
 	
 	//------------------------------------------------------------------------------------------------
-	// SlottingManager: Update single slot data on all clients (LEGACY - USE DELTA UPDATES INSTEAD)
-	// 
-	// ⚠️ PERFORMANCE WARNING: This method sends ~64 bytes per call
-	// ⚠️ Use UpdateSlot*Delta() methods instead for 90%+ bandwidth savings:
-	//    - UpdateSlotPlayerIdDelta()   : 8 bytes (vs 64)
-	//    - UpdateSlotCharacterDelta()  : 8 bytes (vs 64)
-	//    - UpdateSlotGroupDelta()      : 8 bytes (vs 64)
-	//    - UpdateSlotLockedDelta()     : 5 bytes (vs 64)
-	//    - UpdateSlotDeathDelta()      : 5 bytes (vs 64)
-	//
-	// Only use UpdateSlotData() for:
-	//   - Creating new slots (all fields are new)
-	//   - JIP sync (initial state transmission)
-	//
-	// Bandwidth: ~64 bytes vs 8-40 bytes for delta updates
-	//------------------------------------------------------------------------------------------------
-	void UpdateSlotData(CRF_SlotDataContainer slotData)
-	{
-		if (!Replication.IsServer())
-			return;
-		
-		// Estimate bandwidth: slot data (~64 bytes avg)
-		LogTelemetry("UpdateSlotData", 64);
-		
-		RpcDo_UpdateSlotData(slotData);
-		Rpc(RpcDo_UpdateSlotData, slotData);
-	}
-	
-	//------------------------------------------------------------------------------------------------
 	[RplRpc(RplChannel.Reliable, RplRcver.Broadcast)]
 	void RpcDo_UpdateSlotData(CRF_SlotDataContainer slotData)
 	{
@@ -1991,11 +1988,6 @@ class CRF_RplBroadcastManager : ScriptComponent
 		if (slottingManager)
 			slottingManager.UpdateSlotDataClient(slotData);
 	}
-	
-	//================================================================================================
-	// SLOTTING DELTA UPDATE RPC HANDLERS
-	// Client-side handlers for optimized field-specific updates
-	//================================================================================================
 	
 	//------------------------------------------------------------------------------------------------
 	[RplRpc(RplChannel.Reliable, RplRcver.Broadcast)]
@@ -2121,30 +2113,6 @@ class CRF_RplBroadcastManager : ScriptComponent
 			if (invoker)
 				invoker.Invoke();
 		}
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	// SlottingManager: Remove slot from all clients
-	//------------------------------------------------------------------------------------------------
-	void RemoveSlot(int slotId)
-	{
-		if (!Replication.IsServer())
-			return;
-		
-		// Bandwidth: Just slotId (4 bytes)
-		LogTelemetry("RemoveSlot", 4);
-		
-		RpcDo_RemoveSlot(slotId);
-		Rpc(RpcDo_RemoveSlot, slotId);
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	[RplRpc(RplChannel.Reliable, RplRcver.Broadcast)]
-	void RpcDo_RemoveSlot(int slotId)
-	{
-		CRF_SlottingManager slottingManager = CRF_SlottingManager.GetInstance();
-		if (slottingManager)
-			slottingManager.RemoveSlotClient(slotId);
 	}
 	
 	//------------------------------------------------------------------------------------------------

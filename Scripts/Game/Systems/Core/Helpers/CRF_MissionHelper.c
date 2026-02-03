@@ -1,4 +1,26 @@
 class CRF_MissionHelper {
+	
+	//------------------------------------------------------------------------------------------------
+	static vector GetAOCenter()
+	{
+		CRF_RespawnManager respawnMan = CRF_RespawnManager.GetInstance();
+		//We are cooked
+		if (!respawnMan)
+			return "0 0 0";
+		
+		vector spawnPointLocation[4];
+		array<string> facKey = {"BLUFOR", "OPFOR", "INDFOR", "CIV"};
+		vector registeredPosition[4] = {"0 0 0", "0 0 0", "0 0 0", "0 0 0"};
+		
+		foreach(int i, FactionKey factionKey : facKey)
+		{
+			respawnMan.FindSpawnPointLocation(factionKey, spawnPointLocation);
+			registeredPosition[i] = spawnPointLocation[3];
+		};
+		
+		return ComputeAOCenter(registeredPosition);
+	};
+	
 	//------------------------------------------------------------------------------------------------
 	static vector ComputeAOCenter(vector pts[4])
 	{
@@ -14,6 +36,9 @@ class CRF_MissionHelper {
 			sum += p;
 			count++;
 		}
+		
+		if (count == 1)
+			return pts[0];   // only one point
 	
 		if (count == 0)
 			return "0 0 0";   // no data

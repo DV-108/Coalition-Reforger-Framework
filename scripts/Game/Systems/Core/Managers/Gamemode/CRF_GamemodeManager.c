@@ -74,20 +74,6 @@ class CRF_GamemodeManager : SCR_BaseGameModeComponent
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	static bool IsValidSpawnVector(vector vectorToCheck)
-	{	
-		bool finalcheck = false;
-		bool zeroCheck = (vector.Distance(ZERO_SPAWN_VECTOR[3], vectorToCheck) > 5);
-		bool tenCheck = (vector.Distance("0 10000 0", vectorToCheck) > 5);
-		bool negCheck = (vectorToCheck[1] >= 0);
-		
-		if (zeroCheck && tenCheck && negCheck)
-			finalcheck = true;
-		
-		return finalcheck;
-	}
-	
-	//------------------------------------------------------------------------------------------------
 	// SPECTATOR MANAGEMENT
 	//------------------------------------------------------------------------------------------------
 	
@@ -257,104 +243,6 @@ class CRF_GamemodeManager : SCR_BaseGameModeComponent
 		}
 			
 		if (statusChanged && !m_bSuppressReplication)
-			Replication.BumpMe();
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	/**
-	* Set multiple player statuses in a batch to optimize replication
-	* @param playerStatuses Array of player status updates {playerId, role}
-	*/
-	void BatchSetPlayerStatus(array<ref array<string>> playerStatuses)
-	{
-		if (!Replication.IsServer())
-			return;
-		
-		bool anyChanged = false;
-		m_bSuppressReplication = true;
-		
-		foreach (ref array<string> statusUpdate : playerStatuses)
-		{
-			if (statusUpdate.Count() < 2)
-				continue;
-				
-			int playerId = statusUpdate[0].ToInt();
-			string role = statusUpdate[1];
-			
-			if (m_aModerators.Contains(playerId) || m_aDonators.Contains(playerId))
-				continue;
-				
-			switch (role) {
-				case "mod": {
-					m_aModerators.Insert(playerId);
-					anyChanged = true;
-					break;
-				}
-				case "don": {
-					m_aDonators.Insert(playerId);
-					anyChanged = true;
-					break;
-				}
-			}
-		}
-		
-		m_bSuppressReplication = false;
-		if (anyChanged)
-			Replication.BumpMe();
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	/**
-	* Batch update multiple gamemode properties to minimize replication calls
-	* @param newWorldTime Optional new world time string  
-	* @param playerStatuses Optional array of player status updates
-	*/
-	void BatchUpdateGamemodeState(string newWorldTime = "", array<ref array<string>> playerStatuses = null)
-	{
-		if (!Replication.IsServer())
-			return;
-			
-		bool anyChanged = false;
-		m_bSuppressReplication = true;
-		
-		// Update world time if provided
-		if (newWorldTime != "" && newWorldTime != m_sServerWorldTime)
-		{
-			SetServerWorldTimeSilent(newWorldTime);
-			anyChanged = true;
-		}
-		
-		// Update player statuses if provided
-		if (playerStatuses)
-		{
-			foreach (ref array<string> statusUpdate : playerStatuses)
-			{
-				if (statusUpdate.Count() < 2)
-					continue;
-					
-				int playerId = statusUpdate[0].ToInt();
-				string role = statusUpdate[1];
-				
-				if (m_aModerators.Contains(playerId) || m_aDonators.Contains(playerId))
-					continue;
-					
-				switch (role) {
-					case "mod": {
-						m_aModerators.Insert(playerId);
-						anyChanged = true;
-						break;
-					}
-					case "don": {
-						m_aDonators.Insert(playerId);
-						anyChanged = true;
-						break;
-					}
-				}
-			}
-		}
-		
-		m_bSuppressReplication = false;
-		if (anyChanged)
 			Replication.BumpMe();
 	}
 	

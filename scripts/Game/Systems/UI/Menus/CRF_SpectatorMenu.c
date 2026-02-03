@@ -476,7 +476,7 @@ class CRF_SpectatorMenu: ChimeraMenuBase
 				return;
 			
 			CRF_PlayerCameraManager camManager = CRF_PlayerCameraManager.GetInstance();
-			camManager.RemoveCameraOnRails();
+			camManager.RemoveCameraRails();
 			
 			m_bFrameEventRegistered = false;
 		}

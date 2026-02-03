@@ -20,7 +20,6 @@ class CRF_SpectatorCamera : SCR_ManualCamera
 		if (!slotComp)
 			return;
 		
-		// Get the first-person camera slot
 		EntitySlotInfo cameraPoint = slotComp.GetSlotByName("SpectatorEntity");
 		if (!cameraPoint)
 			return;

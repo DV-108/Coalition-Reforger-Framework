@@ -40,9 +40,19 @@ class CRF_PlayerCameraManager : ScriptComponent
 	//------------------------------------------------------------------------------------------------
 	
 	//------------------------------------------------------------------------------------------------
-	void RemoveCameraOnRails()
+	void RemoveCamera()
+	{
+		delete m_eCamera;
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	void RemoveCameraRails()
 	{
 		m_bCameraOnRails = false;
+		
+		// Level camera horizon
+		vector mat = m_eCamera.GetAngles();
+		m_eCamera.SetAngles(Vector(mat[0], mat[1], 0));
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -125,7 +135,7 @@ class CRF_PlayerCameraManager : ScriptComponent
 			vector cameraPos[4];
 			cameraPos = SCR_PlayerController.Cast(GetGame().GetPlayerController()).m_vPlayersLastDeath;
 			
-			if (CRF_GamemodeManager.IsValidSpawnVector(cameraPos[3])) // Use provided death position if available
+			if (cameraPos[3] != vector.Zero) // Use provided death position if available
 				cameraPos[3][1] = cameraPos[3][1] + 1.5;
 			else // Fallback to generic spawn position
 				cameraPos[3] = CRF_Gamemode.GetInstance().GetGenericSpawn();
@@ -136,7 +146,7 @@ class CRF_PlayerCameraManager : ScriptComponent
 			cameraSpawnParams.Transform = cameraPos;
 	
 			// Spawn or reposition camera
-			m_eCamera = GetGame().SpawnEntityPrefab(Resource.Load("{E1FF38EC8894C5F3}Prefabs/Systems/Editor/Camera/ManualCameraSpectate.et"), GetGame().GetWorld(), cameraSpawnParams);
+			m_eCamera = GetGame().SpawnEntityPrefabLocal(Resource.Load("{E1FF38EC8894C5F3}Prefabs/Systems/Editor/Camera/ManualCameraSpectate.et"), GetGame().GetWorld(), cameraSpawnParams);
 			
 			// Level camera horizon
 			vector mat = m_eCamera.GetAngles();
