@@ -18,6 +18,7 @@ class CRF_RplToAuthorityManager : ScriptComponent
 	protected CRF_GearscriptManager m_GearscriptManager;
 	protected CRF_RplBroadcastManager m_RplBroadcastManager;
 	protected CRF_BandwidthTelemetryManager m_TelemetryManager;
+	protected CRF_InitializationManager m_InitializationManager;
 	protected SCR_GroupsManagerComponent m_GroupsManagerComponent;
 	protected SCR_MapMarkerManagerComponent m_MapMarkerManager;
 	
@@ -60,6 +61,7 @@ class CRF_RplToAuthorityManager : ScriptComponent
 		m_GearscriptManager = CRF_GearscriptManager.GetInstance();
 		m_RplBroadcastManager = CRF_RplBroadcastManager.GetInstance();
 		m_TelemetryManager = CRF_BandwidthTelemetryManager.GetInstance();
+		m_InitializationManager = CRF_InitializationManager.GetInstance();
 		m_GroupsManagerComponent = SCR_GroupsManagerComponent.GetInstance();
 		m_MapMarkerManager = SCR_MapMarkerManagerComponent.GetInstance();
 	}
@@ -422,7 +424,7 @@ class CRF_RplToAuthorityManager : ScriptComponent
 		LogTelemetry("RpcAsk_RequestInitilizePlayer", CRF_BandwidthTelemetryManager.EstimateSize_Int());
 		
 		// Use staggered initialization system to prevent server overload
-		m_Gamemode.QueuePlayerInitialization(playerId);
+		m_InitializationManager.InitilizePlayer(playerId);
 	}
 	
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]

@@ -250,7 +250,7 @@ class CRF_SlottingManager : ScriptComponent
 			if (!factionKey.IsEmpty() && slotData.GetSlotFactionKey() != factionKey)
 				continue;
 			
-			SCR_AIGroup group = GetGroupFromRplId(slotData.GetSlotCurrentGroup());
+			SCR_AIGroup group = CRF_EntityHelper.GetGroupFromRplId(slotData.GetSlotCurrentGroup());
 			if (!group)
 				continue;
 				
@@ -349,7 +349,7 @@ class CRF_SlottingManager : ScriptComponent
 			return null;
 			
 		RplId groupId = slotData.GetSlotCurrentGroup();
-		return GetGroupFromRplId(groupId);
+		return CRF_EntityHelper.GetGroupFromRplId(groupId);
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -360,7 +360,7 @@ class CRF_SlottingManager : ScriptComponent
 			return null;
 			
 		RplId charId = slotData.GetSlotCurrentCharacter();
-		return GetCharacterFromRplId(charId);
+		return CRF_EntityHelper.GetCharacterFromRplId(charId);
 	}
 	
 	//------------------------------------------------------------------------------------------------

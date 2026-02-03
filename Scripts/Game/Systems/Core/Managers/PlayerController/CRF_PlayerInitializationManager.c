@@ -3,7 +3,7 @@ class CRF_PlayerInitializationManager : ScriptComponent
 {
 	protected CRF_Gamemode m_Gamemode;
 	protected CRF_RplToAuthorityManager m_RplToAuthorityManager;
-	protected CRF_Gamemode m_Gamemode;
+	//protected CRF_Gamemode m_Gamemode;
 	
 	protected static CRF_PlayerInitializationManager m_sInstance;
 	void CRF_PlayerInitializationManager(IEntityComponentSource src, IEntity ent, IEntity parent)
@@ -34,8 +34,11 @@ class CRF_PlayerInitializationManager : ScriptComponent
 	 * Cleans up previous camera, closes menus, and sets up player-specific settings
 	 * @param playerCharacter - The spectator entity the server created and set to this player
 	 */
-	void InitilizePlayerClient()
+	void InitilizePlayerClient(RplId playerCharID)
 	{		
+		// Get player character
+		IEntity playerCharacter = m_SlottingManager.GetCharacterFromRplId(playerCharID);
+		
 		// Close all menus
 		if (m_Gamemode.m_GamemodeState == CRF_EGamemodeState.GAME)
 		{

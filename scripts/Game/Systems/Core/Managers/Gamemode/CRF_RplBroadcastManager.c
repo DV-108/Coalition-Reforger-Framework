@@ -1454,12 +1454,8 @@ class CRF_RplBroadcastManager : ScriptComponent
 	{
 		if (!IsLocalPlayer(playerId))
 			return;
-		
-		// Get player character
-		IEntity playerCharacter = m_SlottingManager.GetCharacterFromRplId(playerCharID);
 
-		if (playerCharacter)
-			CRF_PlayerControllerManager.GetInstance().InitilizePlayerClient(playerCharacter);
+		CRF_PlayerInitializationManager.GetInstance().InitilizePlayerClient(playerCharID);
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -2149,6 +2145,7 @@ class CRF_RplBroadcastManager : ScriptComponent
 		Print("[CRF_RplBroadcastManager] Slotting phase changed - UI updated", LogLevel.VERBOSE);
 	}
 	
+	//------------------------------------------------------------------------------------------------
 	void BroadcastOutro()
 	{
 		#ifdef WORKBENCH
@@ -2158,6 +2155,7 @@ class CRF_RplBroadcastManager : ScriptComponent
 		#endif
 	}
 	
+	//------------------------------------------------------------------------------------------------
 	[RplRpc(RplChannel.Reliable, RplRcver.Broadcast)]
 	void RpcDo_BroadcastOutro()
 	{
@@ -2165,16 +2163,19 @@ class CRF_RplBroadcastManager : ScriptComponent
 		GetGame().GetCallqueue().CallLater(OpenOutro, 2831, false);
 	}
 	
+	//------------------------------------------------------------------------------------------------
 	void OpenOutro()
 	{
 		GetGame().GetMenuManager().OpenMenu(ChimeraMenuPreset.CRF_Outro);
 	}
 	
+	//------------------------------------------------------------------------------------------------
 	void BroadcastVehiclePosUpdate(vector pos, int playerId)
 	{
 		Rpc(RpcDo_BroadcastVehiclePosUpdate, pos, playerId);
 	}
 	
+	//------------------------------------------------------------------------------------------------
 	[RplRpc(RplChannel.Reliable, RplRcver.Broadcast)]
 	void RpcDo_BroadcastVehiclePosUpdate(vector pos, int playerId)
 	{

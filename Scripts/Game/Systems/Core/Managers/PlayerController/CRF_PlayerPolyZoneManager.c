@@ -5,7 +5,8 @@ class CRF_PlayerPolyZoneManagerClass: ScriptComponentClass
 class CRF_PlayerPolyZoneManager: ScriptComponent
 {
 	protected CRF_PolyZoneHUD m_PolyZoneHUD;
-			
+	
+	//------------------------------------------------------------------------------------------------
 	void UpdatePlayerHUD(IEntity owner)
 	{
 		SCR_PlayerController playerController = SCR_PlayerController.Cast(owner);
@@ -35,6 +36,8 @@ class CRF_PlayerPolyZoneManager: ScriptComponent
 		// Update on client side
 		Rpc(ShowEffects, effectsContainer)
 	}
+	
+	//------------------------------------------------------------------------------------------------
 	[RplRpc(RplChannel.Reliable, RplRcver.Owner)]
 	protected void ShowEffects(CRF_EffectsContainer effectsContainer)
 	{
@@ -48,6 +51,7 @@ class CRF_PlayerPolyZoneManager: ScriptComponent
 		}
 	}
 	
+	//------------------------------------------------------------------------------------------------
 	override void OnPostInit(IEntity owner)
 	{
 		SCR_HUDManagerComponent hudManager = SCR_HUDManagerComponent.Cast(owner.FindComponent(SCR_HUDManagerComponent));
@@ -72,6 +76,7 @@ class CRF_PlayerPolyZoneManager: ScriptComponent
 	}
 	
 	float m_fUpdateBuffer = 0;
+	//------------------------------------------------------------------------------------------------
 	override void EOnFixedFrame(IEntity owner, float timeSlice)
 	{
 		super.EOnFixedFrame(owner, timeSlice);
@@ -87,6 +92,7 @@ class CRF_EffectsContainer
 {
 	ref array<ref CRF_EffectContainer> m_aEffects = {};
 	
+	//------------------------------------------------------------------------------------------------
 	static void Encode(SSnapSerializerBase snapshot, ScriptCtx hint, ScriptBitSerializer packet) 
 	{
 		int effectsCount;
@@ -109,6 +115,8 @@ class CRF_EffectsContainer
 			packet.SerializeString(str);
 		}
 	}
+	
+	//------------------------------------------------------------------------------------------------
 	static bool Decode(ScriptBitSerializer packet, ScriptCtx hint, SSnapSerializerBase snapshot) 
 	{
 		int effectsCount;
@@ -132,6 +140,8 @@ class CRF_EffectsContainer
 		}
 		return true;
 	}
+	
+	//------------------------------------------------------------------------------------------------
 	static bool SnapCompare(SSnapSerializerBase lhs, SSnapSerializerBase rhs, ScriptCtx hint) 
 	{
 		int effectsCount1, effectsCount2;
@@ -168,6 +178,8 @@ class CRF_EffectsContainer
 		}
 		return true;
 	}
+	
+	//------------------------------------------------------------------------------------------------
 	static bool PropCompare(CRF_EffectsContainer prop, SSnapSerializerBase snapshot, ScriptCtx hint) 
 	{
 		int effectsCount;
@@ -197,6 +209,8 @@ class CRF_EffectsContainer
 		}
 		return true;
 	}
+	
+	//------------------------------------------------------------------------------------------------
 	static bool Extract(CRF_EffectsContainer prop, ScriptCtx hint, SSnapSerializerBase snapshot) 
 	{
 		int effectsCount = prop.m_aEffects.Count();
@@ -210,6 +224,8 @@ class CRF_EffectsContainer
 		}
 		return true;
 	}
+	
+	//------------------------------------------------------------------------------------------------
 	static bool Inject(SSnapSerializerBase snapshot, ScriptCtx hint, CRF_EffectsContainer prop) 
 	{	
 		int effectsCount;

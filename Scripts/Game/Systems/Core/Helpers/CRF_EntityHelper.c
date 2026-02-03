@@ -2,7 +2,7 @@ class CRF_EntityHelper
 {	
 	//------------------------------------------------------------------------------------------------
 	// Helper method to get group from RplId
-	SCR_AIGroup GetGroupFromRplId(RplId groupId)
+	static SCR_AIGroup GetGroupFromRplId(RplId groupId)
 	{
 		if (groupId == RplId.Invalid())
 			return null;

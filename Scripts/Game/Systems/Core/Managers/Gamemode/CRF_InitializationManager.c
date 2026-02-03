@@ -4,13 +4,24 @@ class CRF_InitializationManagerClass : ScriptComponentClass
 
 class CRF_InitializationManager : ScriptComponent
 {
+	protected static CRF_InitializationManager m_sInstance;
+	void CRF_InitializationManager(IEntityComponentSource src, IEntity ent, IEntity parent)
+	{
+		m_sInstance = this;
+	}
+	
+	static CRF_InitializationManager GetInstance()
+	{
+		return m_sInstance;
+	}
+	
 	//------------------------------------------------------------------------------------------------
 	/**
 	* Initialize a player into the game either as a playable character or spectator
 	* @param playerId ID of the player to initialize
 	* @param spawnLocation Location to spawn the player (Use "CRF_GamemodeManager.ZERO_SPAWN_VECTOR" as the input to have players spawn at their original slot location)
 	*/
-	void InitilizePlayer(int playerId, vector spawnLocation[4])
+	void InitilizePlayer(int playerId)
 	{
 		if (!IsValidSpawnVector(spawnLocation[3]) && spawnLocation != ZERO_SPAWN_VECTOR)
 		{
