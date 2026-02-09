@@ -1,49 +1,45 @@
 SCR_MapEntity MapEntity1 : "{731564B66F91B107}Prefabs/World/Game/MapEntity.et" {
- coords 7362.831 142.507 7715.496
+ coords 3985.72 299.926 7585.586
  "Map Geometry Data" "{BF5F2D022EA8CB36}Worlds/Bystrany/Bystrany_Map_v02.topo"
- "Satellite background image" "{E7F34FEC87C0BBF9}UI/Textures/Map/Worlds/Bystrany/Bystrany_Rasterized_Enhanced_Border.edds"
+ "Satellite background image" "{6A1DBBCA4452D2F4}UI/Textures/Map/Worlds/Bystrany/Bystrany_Satmap.edds"
 }
 SCR_AIWorld : "{E0A05C76552E7F58}Prefabs/AI/SCR_AIWorld.et" {
- coords 7049.741 117.721 8003.219
+ coords 3365.319 224.379 8394.489
 }
 CRF_Gamemode CRF_Lobby : "{6A996BBFCEB37E78}Prefabs/Systems/!Lobby/CRF_Lobby.et" {
  components {
-  CRF_RushGamemodeManager "{68851C466C60BF2F}" {
-   m_iNumberOfZones 2
-   m_iMCOMsPerZone 1
-  }
   SCR_TimeAndWeatherHandlerComponent "{64427EEC304DD9A0}" {
    m_bRandomStartingWeather 0
    m_aStartingWeatherAndTime {
     SCR_TimeAndWeatherState "{66EE8AEC3605B974}" {
      m_sWeatherPresetName "Rainy"
-     m_iStartingHour 12
+     m_iStartingHour 8
      m_iStartingMinutes 0
     }
    }
    m_bRandomWeatherChanges 1
   }
  }
- coords 7003.5 117.346 8102.207
- m_bRespawnEnabled 0
- m_bWaveRespawn 0
- m_iTimeToRespawn 60
- m_iTimeLimitMinutes 65
+ coords 3500.411 212.675 8710.11
+ m_bRespawnEnabled 1
+ m_bWaveRespawn 1
+ m_iTimeToRespawn 30
+ m_iTimeLimitMinutes 75
  m_bAllowEspionage 0
- m_bLockUnusedSlots 1
+ m_bLockUnusedSlots 0
  m_bSafestartInstantlyEnabled 1
  m_aMissionDescriptors {
   CRF_MissionDescriptor "{644250503DF684C0}" {
    m_sTitle "Mission: Situation"
-   m_sTextData "USMC forces have pushed RUS forces onto their heels. RUS forces are making a last stand attempt in Nova Olesov to hold the town from being overrun."\
+   m_sTextData "US Green Berets are tasked with securing the airfield."\
    ""\
-   "BLUFOR Composition: Motorized Infantry Platoon"\
-   "BLUFOR Assets: 2x PLT level combat ENG and 2x MATV (Armed)"\
+   "BLUFOR Composition: Mechanized Infantry Platoon"\
+   "BLUFOR Assets: 1x MMG, 1x MAT, 1x Sniper(Anti-Material), 1x Bradley and 1x Abrams"\
    ""\
-   "OPFOR Composition: Motorized Infantry Platoon"\
-   "OPFOR Assets: 2x MMG and 2X ENG Trucks"\
+   "OPFOR Composition: Unknown"\
+   "OPFOR Assets: Unknown"\
    ""\
-   "Time: 12:00 PM"\
+   "Time: 8:00am"\
    ""\
    "Weather: Rainy"
    m_aFactionKeys {
@@ -52,16 +48,18 @@ CRF_Gamemode CRF_Lobby : "{6A996BBFCEB37E78}Prefabs/Systems/!Lobby/CRF_Lobby.et"
   }
   CRF_MissionDescriptor "{64425051F2E00216}" {
    m_sTitle "BLUFOR Objectives"
-   m_sTextData "Destroy each Mcom in order (A then B)."\
-   ""\
-   ""
+   m_sTextData "1. Secure MRSP."\
+   "2.Secure the old checkpoints"\
+   "3. Secure the industrial area at the Airfield"\
+   "4. Secrue the Military Base."\
+   "5. Securce the Hangers"
    m_aFactionKeys +{
    }
    m_bShowForAnyFaction 0
   }
   CRF_MissionDescriptor "{64425051B9B5AF67}" {
    m_sTitle "OPFOR Objectives"
-   m_sTextData "Defend each Mcom in order (A then B)."
+   m_sTextData "Have fun, kill BLUFOR"
    m_aFactionKeys +{
    }
    m_bShowForAnyFaction 0
@@ -81,29 +79,20 @@ CRF_Gamemode CRF_Lobby : "{6A996BBFCEB37E78}Prefabs/Systems/!Lobby/CRF_Lobby.et"
    m_bShowForAnyFaction 0
   }
  }
- m_iFactionOneRatio 6
- m_iFactionTwoRatio 5
- m_sFactionOneKey "BLU"
- m_sFactionTwoKey "OPF"
+ m_iFactionOneRatio 0
+ m_iFactionTwoRatio 0
+ m_sFactionOneKey ""
+ m_sFactionTwoKey ""
  m_BluforSlots {
-  CRF_SlottingGroup "{68874B068861E552}" {
-   m_sCallsign "COY"
-   m_FlagType SIGNAL
-   m_aSlots {
-    COMPANY_COMMANDER
-    FIRST_SERGEANT
-   }
-  }
-  CRF_SlottingGroup "{68874B068861E603}" {
+  CRF_SlottingGroup "{688B1042C6184412}" {
    m_sCallsign "1PLT"
    m_FlagType SIGNAL
    m_aSlots {
     PLATOON_LEADER
     PLATOON_SERGEANT
-    COMBAT_ENGINEER
    }
   }
-  CRF_SlottingGroup "{68874B068861E680}" {
+  CRF_SlottingGroup "{688B1042C618452D}" {
    m_sCallsign "1-1"
    m_FlagType INFANTRY
    m_aSlots {
@@ -118,7 +107,7 @@ CRF_Gamemode CRF_Lobby : "{6A996BBFCEB37E78}Prefabs/Systems/!Lobby/CRF_Lobby.et"
     GRENADIER
    }
   }
-  CRF_SlottingGroup "{68874B068861E7D8}" {
+  CRF_SlottingGroup "{688B1042C6184659}" {
    m_sCallsign "1-2"
    m_FlagType INFANTRY
    m_aSlots {
@@ -133,7 +122,7 @@ CRF_Gamemode CRF_Lobby : "{6A996BBFCEB37E78}Prefabs/Systems/!Lobby/CRF_Lobby.et"
     GRENADIER
    }
   }
-  CRF_SlottingGroup "{68874B068861F85C}" {
+  CRF_SlottingGroup "{688B1042C618462A}" {
    m_sCallsign "1-3"
    m_FlagType INFANTRY
    m_aSlots {
@@ -148,161 +137,93 @@ CRF_Gamemode CRF_Lobby : "{6A996BBFCEB37E78}Prefabs/Systems/!Lobby/CRF_Lobby.et"
     GRENADIER
    }
   }
-  CRF_SlottingGroup "{68874B068861F8C1}" {
-   m_sCallsign "2PLT"
-   m_FlagType SIGNAL
-   m_aSlots {
-    PLATOON_LEADER
-    PLATOON_SERGEANT
-    COMBAT_ENGINEER
-   }
-  }
-  CRF_SlottingGroup "{68874B068861F948}" {
-   m_sCallsign "2-1"
-   m_FlagType INFANTRY
+  CRF_SlottingGroup "{688B1042C61846BD}" {
+   m_sCallsign "MMG"
+   m_FlagType MACHINEGUN
    m_aSlots {
     SQUAD_LEAD
     MEDIC
-    TEAM_LEAD
-    AUTOMATIC_RIFLEMAN
-    ASSISTANT_AUTOMATIC_RIFLEMAN
-    TEAM_LEAD
-    RIFLEMAN_ANTITANK
-    RIFLEMAN_ANTITANK
-    GRENADIER
+    MEDIUM_MACHINEGUN
+    ASSISTANT_MEDIUM_MACHINEGUN
+    MEDIUM_MACHINEGUN
+    ASSISTANT_MEDIUM_MACHINEGUN
    }
   }
-  CRF_SlottingGroup "{68874B068861F9F9}" {
-   m_sCallsign "2-2"
-   m_FlagType INFANTRY
+  CRF_SlottingGroup "{688B1042C6184730}" {
+   m_sCallsign "MAT"
+   m_FlagType ANTI_ARMOR
    m_aSlots {
     SQUAD_LEAD
     MEDIC
-    TEAM_LEAD
-    AUTOMATIC_RIFLEMAN
-    ASSISTANT_AUTOMATIC_RIFLEMAN
-    TEAM_LEAD
-    RIFLEMAN_ANTITANK
-    RIFLEMAN_ANTITANK
-    GRENADIER
+    MEDIUM_ANTITANK
+    ASSISTANT_MEDIUM_ANTITANK
+    MEDIUM_ANTITANK
+    ASSISTANT_MEDIUM_ANTITANK
    }
   }
-  CRF_SlottingGroup "{68874B068861FA19}" {
-   m_sCallsign "2-3"
-   m_FlagType INFANTRY
+  CRF_SlottingGroup "{688B1042C6184796}" {
+   m_sCallsign "SNIPER"
+   m_FlagType SNIPER
    m_aSlots {
-    SQUAD_LEAD
-    MEDIC
-    TEAM_LEAD
-    AUTOMATIC_RIFLEMAN
-    ASSISTANT_AUTOMATIC_RIFLEMAN
-    TEAM_LEAD
-    RIFLEMAN_ANTITANK
-    RIFLEMAN_ANTITANK
-    GRENADIER
+    SNIPER
+    SPOTTER
+   }
+  }
+  CRF_SlottingGroup "{688B1042C6185874}" {
+   m_sCallsign "IFV 1"
+   m_FlagType ARMORED
+   m_aSlots {
+    VEHICLE_LEAD
+    VEHICLE_GUNNER
+    VEHICLE_DRIVER
+   }
+  }
+  CRF_SlottingGroup "{688B1042C61858DC}" {
+   m_sCallsign "Tank 1"
+   m_FlagType ARMORED
+   m_aSlots {
+    VEHICLE_LEAD
+    VEHICLE_DRIVER
+    VEHICLE_GUNNER
    }
   }
  }
  m_OpforSlots {
-  CRF_SlottingGroup "{68874B068861FB7B}" {
-   m_sCallsign "1PLT"
+  CRF_SlottingGroup "{688B1042C618596B}" {
+   m_sCallsign "Weapons Team"
+   m_FlagType INFANTRY
+   m_aSlots {
+    SQUAD_LEAD
+    MEDIUM_ANTITANK
+    ASSISTANT_MEDIUM_ANTITANK
+    MEDIUM_MACHINEGUN
+    ASSISTANT_MEDIUM_MACHINEGUN
+   }
+  }
+  CRF_SlottingGroup "{688B1042C61859C5}" {
+   m_sCallsign "Crew 1"
+   m_FlagType ARMORED
+   m_aSlots {
+    VEHICLE_LEAD
+    VEHICLE_GUNNER
+    VEHICLE_DRIVER
+   }
+  }
+  CRF_SlottingGroup "{688B1042C61859AB}" {
+   m_sCallsign "Zeus"
    m_FlagType SIGNAL
    m_aSlots {
-    PLATOON_LEADER
-    PLATOON_SERGEANT
-   }
-  }
-  CRF_SlottingGroup "{68874B068861FBD1}" {
-   m_sCallsign "1-1"
-   m_FlagType INFANTRY
-   m_aSlots {
-    SQUAD_LEAD
-    MEDIC
-    TEAM_LEAD
-    AUTOMATIC_RIFLEMAN
-    ASSISTANT_AUTOMATIC_RIFLEMAN
-    TEAM_LEAD
-    RIFLEMAN_ANTITANK
-    RIFLEMAN_ANTITANK
-    GRENADIER
-   }
-  }
-  CRF_SlottingGroup "{68874B068861FC5A}" {
-   m_sCallsign "1-2"
-   m_FlagType INFANTRY
-   m_aSlots {
-    SQUAD_LEAD
-    MEDIC
-    TEAM_LEAD
-    AUTOMATIC_RIFLEMAN
-    ASSISTANT_AUTOMATIC_RIFLEMAN
-    TEAM_LEAD
-    RIFLEMAN_ANTITANK
-    RIFLEMAN_ANTITANK
-    GRENADIER
-   }
-  }
-  CRF_SlottingGroup "{68874B068861FC31}" {
-   m_sCallsign "1-3"
-   m_FlagType INFANTRY
-   m_aSlots {
-    SQUAD_LEAD
-    MEDIC
-    TEAM_LEAD
-    AUTOMATIC_RIFLEMAN
-    ASSISTANT_AUTOMATIC_RIFLEMAN
-    TEAM_LEAD
-    RIFLEMAN_ANTITANK
-    RIFLEMAN_ANTITANK
-    GRENADIER
-   }
-  }
-  CRF_SlottingGroup "{68874B068861FC97}" {
-   m_sCallsign "1-4"
-   m_FlagType INFANTRY
-   m_aSlots {
-    SQUAD_LEAD
-    MEDIC
-    TEAM_LEAD
-    AUTOMATIC_RIFLEMAN
-    ASSISTANT_AUTOMATIC_RIFLEMAN
-    TEAM_LEAD
-    RIFLEMAN_ANTITANK
-    RIFLEMAN_ANTITANK
-    GRENADIER
-   }
-  }
-  CRF_SlottingGroup "{68874B068861FD6C}" {
-   m_sCallsign "MMG"
-   m_FlagType MACHINEGUN
-   m_aSlots {
-    SQUAD_LEAD
-    MEDIC
-    MEDIUM_MACHINEGUN
-    ASSISTANT_MEDIUM_MACHINEGUN
-    MEDIUM_MACHINEGUN
-    ASSISTANT_MEDIUM_MACHINEGUN
-   }
-  }
-  CRF_SlottingGroup "{68874B068861FDCA}" {
-   m_sCallsign "MMG"
-   m_FlagType MACHINEGUN
-   m_aSlots {
-    SQUAD_LEAD
-    MEDIC
-    MEDIUM_MACHINEGUN
-    ASSISTANT_MEDIUM_MACHINEGUN
-    MEDIUM_MACHINEGUN
-    ASSISTANT_MEDIUM_MACHINEGUN
+    ZEUS
+    ZEUS
    }
   }
  }
- m_iBLUFORTickets 0
- m_iOPFORTickets 0
+ m_iBLUFORTickets 500
+ m_iOPFORTickets 500
  m_iINDFORTickets 0
  m_iCIVTickets 0
  m_BLUFORGearScriptSettings CRF_GearScriptContainer "{64570ACB9B419A7B}" {
-  m_rGearScript "{02F5D37299026EEF}Configs/Gearscripts/Custom/Yoko/CRF_GS_RHSUSMC_yoko.conf"
+  m_rGearScript "{7E848A03C000BA98}Configs/Gearscripts/Custom/Yoko/CRF_GS_Modern_GreenBeret_Yoko.conf"
   m_bEnableShareableMarkers 1
   m_bEnableBFT 1
   m_bEnableLeadershipRadios 1
@@ -310,7 +231,7 @@ CRF_Gamemode CRF_Lobby : "{6A996BBFCEB37E78}Prefabs/Systems/!Lobby/CRF_Lobby.et"
   m_bEnableRTORadios 1
  }
  m_OPFORGearScriptSettings CRF_GearScriptContainer "{64570ACB9B11EAAD}" {
-  m_rGearScript "{8550175E5377DF0E}Configs/Gearscripts/Standard/Modern/Variants/CRF_GS_RHSMSV_MMGoptic_Sandbags.conf"
+  m_rGearScript "{EC17EA82C390260C}Configs/Gearscripts/Standard/Modern/CRF_GS_RHSMSV.conf"
   m_bEnableShareableMarkers 1
   m_bEnableBFT 1
   m_bEnableLeadershipRadios 1
@@ -334,9 +255,9 @@ CRF_Gamemode CRF_Lobby : "{6A996BBFCEB37E78}Prefabs/Systems/!Lobby/CRF_Lobby.et"
   m_bEnableRTORadios 0
  }
 }
-BaseGameTriggerEntity WeatherFix {
- coords 7309.859 137.695 7735.967
- userScript "	void SpawnNewWeatherManager()"\
+SCR_BaseTriggerEntity Weatherfix {
+ coords 3491.836 222.206 8269.301
+ userScript "void SpawnNewWeatherManager()"\
  "	{"\
  "		GetGame().SpawnEntityPrefab(Resource.Load(\"{A3BAF78F6F03315B}Prefabs/World/Game/TimeAndWeatherManager.et\"));"\
  "		GetGame().GetCallqueue().CallLater(ApplyWeather, 1000, false);"\
