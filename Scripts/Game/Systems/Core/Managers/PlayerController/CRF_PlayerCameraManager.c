@@ -12,8 +12,9 @@ class CRF_PlayerCameraManager : ScriptComponent
 	
 	protected IEntity m_eCameraPlayer;
 	protected vector m_vCameraOrbitPoint;
-	protected float m_vCameraOrbitDistance;
-	protected float m_vCameraOrbitHeight;
+	protected float m_fCameraOrbitDistance;
+	protected float m_fCameraOrbitHeight;
+	protected float m_fCameraOrbitDegree;
 	protected PolylineShapeEntity m_CameraPolyLine;
 	
 	//------------------------------------------------------------------------------------------------
@@ -59,21 +60,20 @@ class CRF_PlayerCameraManager : ScriptComponent
 	void SetCameraOnRailsPlayer(IEntity player)
 	{
 		if (m_eCamera) {
-			ClearCameraOnRailsVariables();
-			m_eCameraPlayer = player;
 			InitalizeCameraOnRails();
+			m_eCameraPlayer = player;
 		}
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	void SetCameraOnRailsOrbit(vector point, float distance, float height)
+	void SetCameraOnRailsOrbit(vector point, float distance, float height, float degree)
 	{	
 		if (m_eCamera) {
-			ClearCameraOnRailsVariables();
-			m_vCameraOrbitPoint = point;
-			m_vCameraOrbitDistance = distance;
-			m_vCameraOrbitHeight = height;
 			InitalizeCameraOnRails();
+			m_vCameraOrbitPoint = point;
+			m_fCameraOrbitDistance = distance;
+			m_fCameraOrbitHeight = height;
+			m_fCameraOrbitDegree = degree;
 		}
 	}
 	
@@ -81,15 +81,15 @@ class CRF_PlayerCameraManager : ScriptComponent
 	void SetCameraOnRailsPolyline(PolylineShapeEntity poly)
 	{
 		if (m_eCamera) {
-			ClearCameraOnRailsVariables();
-			m_CameraPolyLine = poly;
 			InitalizeCameraOnRails();
+			m_CameraPolyLine = poly;
 		}
 	}
 	
 	//------------------------------------------------------------------------------------------------
 	protected void InitalizeCameraOnRails()
 	{
+		ClearCameraOnRailsVariables();
 		m_bCameraOnRails = true;
 		SetEventMask(GetOwner(), EntityEvent.FRAME);
 	}
@@ -100,8 +100,9 @@ class CRF_PlayerCameraManager : ScriptComponent
 		m_eCameraPlayer = null;
 		m_CameraPolyLine = null;
 		m_vCameraOrbitPoint = vector.Zero;
-		m_vCameraOrbitDistance = 0;
-		m_vCameraOrbitHeight = 0;
+		m_fCameraOrbitDistance = 0;
+		m_fCameraOrbitHeight = 0;
+		m_fCameraOrbitDegree = 0;
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -185,7 +186,24 @@ class CRF_PlayerCameraManager : ScriptComponent
 	//------------------------------------------------------------------------------------------------
 	protected void FrameUpdateOrbit()
 	{
-	
+		/*
+		vector origin = m_eCamera.GetOrigin();
+
+		float angleInRadians = m_fCameraOrbitDegree * (Math.PI / 180);
+		float cosTheta = Math.Cos(angleInRadians);
+		float sinTheta = Math.Sin(angleInRadians);
+		return new Point
+		{
+			X =
+				(int)
+				(cosTheta * (m_vCameraOrbitPoint.X - origin.X) -
+				sinTheta * (m_vCameraOrbitPoint.Y - origin.Y) + origin.X),
+			Y =
+				(int)
+				(sinTheta * (m_vCameraOrbitPoint.X - origin.X) +
+				cosTheta * (m_vCameraOrbitPoint.Y - origin.Y) + origin.Y)
+		};
+		*/
 	}
 	
 	//------------------------------------------------------------------------------------------------
