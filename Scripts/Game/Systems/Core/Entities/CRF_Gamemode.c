@@ -44,6 +44,12 @@ class CRF_Gamemode : SCR_BaseGameMode
 	[Attribute("true", UIWidgets.Hidden)]
 	bool m_bSafestartInstantlyEnabled;
 	
+	[Attribute("false", UIWidgets.Hidden)]
+	bool m_bUseSafestartTimeLimit;
+	
+	[Attribute("0", UIWidgets.Hidden)]
+	int m_iSafestartTimeLimit;
+	
 	[Attribute("", UIWidgets.Hidden)]
 	ref	array<ref CRF_MissionDescriptor> m_aMissionDescriptors;
 	
@@ -361,6 +367,20 @@ class CRF_Gamemode : SCR_BaseGameMode
 		// Skip processing on client
 		if (RplSession.Mode() == RplMode.Client)
 			return;
+
+		// Check if player is the mission designer and grant admin chat
+		string playerName = GetGame().GetPlayerManager().GetPlayerName(iPlayerID);
+		SCR_MissionHeader missionHeader = SCR_MissionHeader.Cast(GetGame().GetMissionHeader());
+		
+		if (missionHeader && missionHeader.m_sAuthor && !missionHeader.m_sAuthor.IsEmpty())
+		{
+			string authorName = missionHeader.m_sAuthor;
+			if (playerName.ToLower() == authorName.ToLower())
+			{
+				// Grant session admin (admin chat) to mission designer
+				GetGame().GetPlayerManager().GivePlayerRole(iPlayerID, EPlayerRole.SESSION_ADMINISTRATOR);
+			}
+		}
 
 		// Check if player is a moderator/donator and set privileges
 		string playerIdentity = GetGame().GetBackendApi().GetPlayerIdentityId(iPlayerID);
